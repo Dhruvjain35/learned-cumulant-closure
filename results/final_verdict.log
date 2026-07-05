@@ -1,0 +1,49 @@
+FINAL VERDICT: V3 vs V4(frozen density) on untouched seeds [11, 12, 13]
+
+  ka=0.030 gp=0.020  v3:X/X/X | v4:X/X/X
+  ka=0.030 gp=0.035  v3:X/X/X | v4:S/S/X
+  ka=0.030 gp=0.050  v3:X/X/S | v4:S/S/X
+  ka=0.030 gp=0.065  v3:S/S/S | v4:S/S/X
+  ka=0.030 gp=0.080  v3:S/S/S | v4:S/S/X
+  ka=0.030 gp=0.100  v3:S/S/S | v4:S/S/X
+  ka=0.035 gp=0.020  v3:X/X/X | v4:X/X/X
+  ka=0.035 gp=0.035  v3:X/X/S | v4:S/S/X
+  ka=0.035 gp=0.050  v3:X/S/S | v4:S/S/S
+  ka=0.035 gp=0.065  v3:S/S/S | v4:S/S/S
+  ka=0.035 gp=0.080  v3:S/S/S | v4:S/S/S
+  ka=0.035 gp=0.100  v3:S/S/S | v4:S/S/S
+  ka=0.040 gp=0.020  v3:S/X/X | v4:X/X/S
+  ka=0.040 gp=0.035  v3:X/S/S | v4:S/S/S
+  ka=0.040 gp=0.050  v3:S/S/S | v4:S/S/S
+  ka=0.040 gp=0.065  v3:S/S/S | v4:S/S/S
+  ka=0.040 gp=0.080  v3:S/S/S | v4:S/S/S
+  ka=0.040 gp=0.100  v3:S/S/S | v4:S/S/S
+  ka=0.045 gp=0.020  v3:S/S/S | v4:X/S/S
+  ka=0.045 gp=0.035  v3:S/X/S | v4:S/S/S
+  ka=0.045 gp=0.050  v3:S/S/S | v4:S/S/S
+  ka=0.045 gp=0.065  v3:S/S/S | v4:S/S/S
+  ka=0.045 gp=0.080  v3:S/S/S | v4:S/S/S
+  ka=0.045 gp=0.100  v3:S/S/S | v4:S/S/S
+  ka=0.050 gp=0.020  v3:S/S/S | v4:S/S/S
+  ka=0.050 gp=0.035  v3:S/S/S | v4:S/S/S
+  ka=0.050 gp=0.050  v3:S/S/S | v4:S/S/S
+  ka=0.050 gp=0.065  v3:S/S/S | v4:S/S/S
+  ka=0.050 gp=0.080  v3:S/S/S | v4:S/S/S
+  ka=0.050 gp=0.100  v3:S/S/S | v4:S/S/S
+
+per-seed summary (stability | median conditional NRMSE):
+  v3 seed 11:  76.7%  |  0.044
+  v3 seed 12:  76.7%  |  0.051
+  v3 seed 13:  86.7%  |  0.058
+  v4 seed 11:  86.7%  |  0.036
+  v4 seed 12:  90.0%  |  0.044
+  v4 seed 13:  73.3%  |  0.047
+  v3 POOLED:  80.0%  |  median 0.052
+  v4 POOLED:  83.3%  |  median 0.043
+
+sanity cells (seed 11):
+  (0.7,0.15,0.02,0.15): v3=0.026  v4=0.022
+  (0.7,0.15,0.02,0.4): v3=0.029  v4=0.033
+  (0.7,0.15,0.3,0.15): v3=0.023  v4=0.015
+  (1.1,0.15,0.02,0.15): v3=0.038  v4=0.041
+saved results/final_verdict.npz
