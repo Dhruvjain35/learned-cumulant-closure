@@ -1,0 +1,15 @@
+closure trained on M=2,3; dominant types (val>0.8): 3
+
+(1) M=5 self-consistency: scalable+closure loop vs EXACT mesolve (disordered, seed 7)
+    plain err=1.2962  learned err=0.4691  improvement=2.8x
+
+(2) large M: plain cumulant & learned closure vs EXACT reference (disordered, seed 7)
+      M  tracked  plain err  learned err  refErr   winner   sec
+      8      330     1.9671       1.3067   0.096  learned    70
+     10      501     2.5032       2.3976   0.119  learned   424
+
+(3) very large M (sigma=0.15): closure stability where NO exact solve is possible
+      M  tracked  stable  n_peak   z_end   sec
+     12      708    True   8.771  -0.962    14
+     16     1230    True  11.819  -0.986    23
+     20     1896    True  14.767  -0.982    39
