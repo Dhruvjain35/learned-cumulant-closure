@@ -1,0 +1,3 @@
+M=8 plotted (MC err 0.096)
+M=10 plotted (MC err 0.119)
+saved results/retrain_closure.png
