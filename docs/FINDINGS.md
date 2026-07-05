@@ -993,19 +993,20 @@ OVERSHOOTS the peak (n~2.8 vs exact 2.31 at t=3) before diverging, and is EXPENS
 zero-next-cumulant truncations through 4th order, NONE gave a stable, accurate burst closure in the evaluated
 disordered open-cavity cells:
   - 2nd-order:   OVERSHOOTS peak +29%  (stable)
-  - kappa4=0 3rd: UNDERSHOOTS peak -28% (stable in control; DIVERGES in the low-loss pocket)
-  - kappa5=0 4th: DIVERGES everywhere (finite-time), and overshoots before blowing up
-  - V7:          +/-0.7%, stable, cheap, scalable
-LIKELY MECHANISM (why this differs from the spin-only free-space Dicke benchmark, where 4th order becomes exact
-at N=4): our model has an UNBOUNDED cavity Fock mode; high-order cumulant truncations of a bosonic mode are prone
-to finite-time divergence. The benchmark's finite spin Hilbert space closes cleanly at order N; a cavity mode
-does not.
+  - kappa4=0 3rd: UNDERSHOOTS peak -28% (stable in control; runaway growth triggering the guard in the low-loss pocket)
+  - kappa5=0 4th: reproducible RUNAWAY GROWTH triggering the divergence guard in all evaluated M=3 cells, and
+                  overshoots the peak before the runaway
+  - V7:          +/-0.7%, stable; avoids high-order engine construction
+HYPOTHESIS (not tested; discussion only): why this differs from the spin-only free-space Dicke benchmark, where
+4th order becomes exact at N=4 -- our model has an unbounded cavity Fock mode, and high-order cumulant truncations
+of a bosonic mode MAY be prone to this runaway behavior, since a finite spin Hilbert space closes at a bounded
+order while a Fock mode does not. This is a discussion point, not an established mechanism.
 
 WHAT THIS SETTLES (and what it does NOT): it settles the fairness/necessity question FOR THE TESTED TRUNCATIONS
 -- none through 4th order gave a stable, accurate, practical burst closure in the evaluated cells, so V7 is a
 MEANINGFUL PRACTICAL CLOSURE for this regime, not a fancy substitute for a working standard method. It does NOT
 claim no such method could exist, and does NOT make the project field-defining. Scope: kappa5=0 tested at M=3
-(M=4 not built -- construction already large/variable at M=3 and grows rapidly; M=3 already settles the outcome).
+(M=4 not built -- construction was substantial and highly variable already at M=3; M=3 already settles the outcome).
 Scripts: t4_truncation.py, t4_eval.py,
 t4_diag.py; diagnostic results/t4_diag.log. ROBUST ACROSS HELD-OUT DISORDER REALIZATIONS (deterministic draws
 50/51/52, NOT stochastic-solver validation): T4 kappa5=0 unstable in ALL 6 M=3 cells (both regimes); plain

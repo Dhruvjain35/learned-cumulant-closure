@@ -35,10 +35,10 @@ Signed burst-peak error vs. an exact master-equation solve, in the evaluated dis
 | closure | burst peak vs. exact | stability | cost |
 |---|---|---|---|
 | mean-field | no burst from these ICs | — | trivial |
-| **2nd-order cumulant** | overshoots ≈ **+29%** | stable | cheap |
-| κ4 = 0 (3rd-order) | undershoots ≈ **−28%** | **diverges** in the low-loss pocket | O(M⁴) |
-| κ5 = 0 (4th-order) | overshoots then **diverges** | finite-time blow-up (M = 3, both regimes) | large / erratic |
-| **V7 (learned)** | ≈ **±1%** | stable | cheap, scales |
+| **2nd-order cumulant** | overshoots ≈ **+29%** | stable | no high-order engine to construct |
+| κ4 = 0 (3rd-order) | undershoots ≈ **−28%** | runaway growth (guard triggered) in the low-loss pocket | heavier than 2nd; M = 4 pocket case failed |
+| κ5 = 0 (4th-order) | overshoots, then **runaway growth** | guard triggered in all M = 3 cells (both regimes) | substantial, highly variable at M = 3 |
+| **V7 (learned)** | ≈ **±1%** | stable | no high-order engine to construct; per-rollout time not separately logged |
 
 Among the tested zero-next-cumulant truncations through fourth order, none produced a stable, accurate burst
 closure in these cells. *(Scope: exact-referenced at the tested molecule counts; behaviour beyond the exact

@@ -528,8 +528,9 @@ t~9.65) at M=3 in BOTH regimes -- confirmed NOT a numerics artifact: 4 solvers (
 stiff implicit Radau and BDF) all diverge at the IDENTICAL time and magnitude (8.8e5). It also overshoots the
 peak before diverging, and is expensive/erratic even at M=3 (build 72-1068s across draws). So among the TESTED
 zero-next-cumulant truncations through 4th order, NONE gave a stable, accurate burst closure in the EVALUATED
-cells: 2nd overshoots (+29%), kappa4=0 3rd undershoots (-28%, diverges in pocket), kappa5=0 4th diverges
-everywhere (held-out draws 50-52); V7 is +/-0.7%, stable, cheap, scalable. (Do NOT claim no such method could
+cells: 2nd overshoots (+29%), kappa4=0 3rd undershoots (-28%, runaway growth triggering the guard in the pocket),
+kappa5=0 4th shows runaway growth triggering the guard in all evaluated cells (held-out draws 50-52); V7 is
++/-0.7%, stable, and avoids the high-order engine construction. (Do NOT claim no such method could
 exist; only the tested truncations failed in the evaluated cells.) Likely cause of divergence (differs from spin-only
 Dicke benchmark where 4th order helps): the unbounded cavity Fock mode, whose moment hierarchy is prone to
 finite-time truncation divergence. Fairness question settled in V7's favor; NOT field-defining.
