@@ -1,0 +1,12 @@
+T3 (kappa4=0) burst-peak rung, seed=50, M=[2, 3, 4]:
+
+  regime    M | ref F_peak  T3 F_peak  T3 signed plain(ref)
+  POCKET    2 |     0.0487     0.0352     -0.277 (plain ~+0.29)
+  POCKET    3 |     0.0694     0.0502     -0.277 (plain ~+0.29)
+  POCKET    4 | T3 UNSTABLE/failed
+  CONTROL   2 |     0.2116     0.1586     -0.251 (plain ~+0.29)
+  CONTROL   3 |     0.2994     0.2229     -0.255 (plain ~+0.29)
+  CONTROL   4 |     0.3807     0.2821     -0.259 (plain ~+0.29)
+
+(1094s) INTERPRETATION: if T3 signed error is also large/positive -> third-order
+truncation does NOT fix the burst peak; the learned closure's recovery is a structured correction.
