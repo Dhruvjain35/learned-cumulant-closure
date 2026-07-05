@@ -1,0 +1,57 @@
+order-3 monomials: 112   canonical types: [('a', 'a', 'a'), ('a', 'a', 'sm'), ('a', 'a', 'sp'), ('a', 'a', 'sz'), ('a', 'sm', 'sm'), ('a', 'sm', 'sz'), ('a', 'sp', 'sm'), ('a', 'sp', 'sp'), ('a', 'sp', 'sz'), ('a', 'sz', 'sz'), ('ad', 'a', 'a'), ('ad', 'a', 'sm'), ('ad', 'a', 'sp'), ('ad', 'a', 'sz'), ('ad', 'ad', 'a'), ('ad', 'ad', 'ad'), ('ad', 'ad', 'sm'), ('ad', 'ad', 'sp'), ('ad', 'ad', 'sz'), ('ad', 'sm', 'sm'), ('ad', 'sm', 'sz'), ('ad', 'sp', 'sm'), ('ad', 'sp', 'sp'), ('ad', 'sp', 'sz'), ('ad', 'sz', 'sz'), ('sm', 'sm', 'sm'), ('sm', 'sm', 'sz'), ('sm', 'sz', 'sz'), ('sp', 'sm', 'sm'), ('sp', 'sm', 'sz'), ('sp', 'sp', 'sm'), ('sp', 'sp', 'sp'), ('sp', 'sp', 'sz'), ('sp', 'sz', 'sz'), ('sz', 'sz', 'sz')]
+loading cached per-type dataset...
+   type ('a', 'a', 'a')   :   6000 samples  val_score=0.000
+   type ('a', 'a', 'sm')  :  18000 samples  val_score=0.000
+   type ('a', 'a', 'sp')  :  18000 samples  val_score=0.000
+   type ('a', 'a', 'sz')  :  18000 samples  val_score=0.000
+   type ('a', 'sm', 'sm') :  18000 samples  val_score=0.000
+   type ('a', 'sm', 'sz') :  36000 samples  val_score=0.000
+   type ('a', 'sp', 'sm') :  36000 samples  val_score=0.000
+   type ('a', 'sp', 'sp') :  18000 samples  val_score=0.000
+   type ('a', 'sp', 'sz') :  36000 samples  val_score=0.991
+   type ('a', 'sz', 'sz') :  18000 samples  val_score=0.000
+   type ('ad', 'a', 'a')  :   6000 samples  val_score=0.000
+   type ('ad', 'a', 'sm') :  18000 samples  val_score=0.000
+   type ('ad', 'a', 'sp') :  18000 samples  val_score=0.000
+   type ('ad', 'a', 'sz') :  18000 samples  val_score=0.499
+   type ('ad', 'ad', 'a') :   6000 samples  val_score=0.000
+   type ('ad', 'ad', 'ad'):   6000 samples  val_score=0.000
+   type ('ad', 'ad', 'sm'):  18000 samples  val_score=0.000
+   type ('ad', 'ad', 'sp'):  18000 samples  val_score=0.000
+   type ('ad', 'ad', 'sz'):  18000 samples  val_score=0.000
+   type ('ad', 'sm', 'sm'):  18000 samples  val_score=0.000
+   type ('ad', 'sm', 'sz'):  36000 samples  val_score=0.991
+   type ('ad', 'sp', 'sm'):  36000 samples  val_score=0.000
+   type ('ad', 'sp', 'sp'):  18000 samples  val_score=0.000
+   type ('ad', 'sp', 'sz'):  36000 samples  val_score=0.000
+   type ('ad', 'sz', 'sz'):  18000 samples  val_score=0.000
+   type ('sm', 'sm', 'sm'):   6000 samples  val_score=0.000
+   type ('sm', 'sm', 'sz'):  18000 samples  val_score=0.000
+   type ('sm', 'sz', 'sz'):  18000 samples  val_score=0.000
+   type ('sp', 'sm', 'sm'):  18000 samples  val_score=0.000
+   type ('sp', 'sm', 'sz'):  36000 samples  val_score=0.989
+   type ('sp', 'sp', 'sm'):  18000 samples  val_score=0.000
+   type ('sp', 'sp', 'sp'):   6000 samples  val_score=0.000
+   type ('sp', 'sp', 'sz'):  18000 samples  val_score=0.000
+   type ('sp', 'sz', 'sz'):  18000 samples  val_score=0.000
+   type ('sz', 'sz', 'sz'):   6000 samples  val_score=0.497
+
+HELD-OUT M=3 seed 7: learned steps 200/200
+
+[M=3 held-out (local closure)] windowed max error (over 3 observables):
+   t<=15: plain=0.8528  learned(local)=0.0185  BEATS
+   t<=20: plain=0.8528  learned(local)=0.0233  BEATS
+   t<=25: plain=0.8528  learned(local)=0.0233  BEATS
+   t<=30: plain=0.8528  learned(local)=0.0233  BEATS
+   t<=40: plain=0.8528  learned(local)=0.0233  BEATS
+
+TRANSFER to M=4 (closure trained only at M=3): learned steps 200/200
+
+[M=4 transfer (local closure trained at M=3)] windowed max error (over 3 observables):
+   t<=15: plain=1.3654  learned(local)=0.3968  BEATS
+   t<=20: plain=1.3654  learned(local)=0.3968  BEATS
+   t<=25: plain=1.3654  learned(local)=0.3968  BEATS
+   t<=30: plain=1.3654  learned(local)=0.3968  BEATS
+   t<=40: plain=1.3654  learned(local)=0.3968  BEATS
+
+saved results/local_closure.png
