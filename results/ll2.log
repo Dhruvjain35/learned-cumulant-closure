@@ -1,0 +1,19 @@
+generating training data (exact trajectories)...
+   train samples: (6000, 120), targets (6000, 224)
+   closure network trained (val score ~ 0.172)
+
+HELD-OUT seed 7, sigma=0.15  (closure never saw this realization)
+closure stable in loop: True   (learned steps completed: 200/200)
+observable         plain-cumulant err    LEARNED-closure err   improvement
+<a^dag a>                      0.8528                28.2154          0.0x
+mean<sz>                       0.5968                19.0178          0.0x
+mean Re<s+ s->                 0.1404               164.7665          0.0x
+
+windowed max error (learned closure is accurate until it destabilizes):
+   t<=15: plain max err=0.8528   learned max err=0.0979  learned BEATS plain
+   t<=20: plain max err=0.8528   learned max err=0.1741  learned BEATS plain
+   t<=25: plain max err=0.8528   learned max err=0.7218  learned BEATS plain
+   t<=30: plain max err=0.8528   learned max err=0.9243  learned worse
+   t<=40: plain max err=0.8528   learned max err=164.7665  learned worse
+
+saved results/learned_loop.png
