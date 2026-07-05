@@ -134,11 +134,8 @@ python run.py src/baselines/t4_eval.py
 - **No claim of exclusivity.** Tensor-network, trajectory, and higher-order-closure methods can address parts of
   this problem; this repository reports what these specific closures do in these specific cells.
 
-## Provenance
-
-The physics model, the validation targets,
-and every reported number come from the runnable code in this repository, gated by the checks in
-[`docs/PROTOCOL.md`](docs/PROTOCOL.md).
+- The physics model, the validation targets, and every reported number come from the runnable code in this repository, gated by the checks in
+  [`docs/PROTOCOL.md`](docs/PROTOCOL.md).
 
 ## License
 
