@@ -1,0 +1,77 @@
+order-3 monomials: 112   canonical types: [('a', 'a', 'a'), ('a', 'a', 'sm'), ('a', 'a', 'sp'), ('a', 'a', 'sz'), ('a', 'sm', 'sm'), ('a', 'sm', 'sz'), ('a', 'sp', 'sm'), ('a', 'sp', 'sp'), ('a', 'sp', 'sz'), ('a', 'sz', 'sz'), ('ad', 'a', 'a'), ('ad', 'a', 'sm'), ('ad', 'a', 'sp'), ('ad', 'a', 'sz'), ('ad', 'ad', 'a'), ('ad', 'ad', 'ad'), ('ad', 'ad', 'sm'), ('ad', 'ad', 'sp'), ('ad', 'ad', 'sz'), ('ad', 'sm', 'sm'), ('ad', 'sm', 'sz'), ('ad', 'sp', 'sm'), ('ad', 'sp', 'sp'), ('ad', 'sp', 'sz'), ('ad', 'sz', 'sz'), ('sm', 'sm', 'sm'), ('sm', 'sm', 'sz'), ('sm', 'sz', 'sz'), ('sp', 'sm', 'sm'), ('sp', 'sm', 'sz'), ('sp', 'sp', 'sm'), ('sp', 'sp', 'sp'), ('sp', 'sp', 'sz'), ('sp', 'sz', 'sz'), ('sz', 'sz', 'sz')]
+generating training data (exact trajectories)...
+   type ('a', 'a', 'a')   :   6000 samples  val_score=0.000
+   type ('a', 'a', 'sm')  :  18000 samples  val_score=0.000
+   type ('a', 'a', 'sp')  :  18000 samples  val_score=0.000
+   type ('a', 'a', 'sz')  :  18000 samples  val_score=0.000
+   type ('a', 'sm', 'sm') :  18000 samples  val_score=0.000
+   type ('a', 'sm', 'sz') :  36000 samples  val_score=0.000
+   type ('a', 'sp', 'sm') :  36000 samples  val_score=0.000
+   type ('a', 'sp', 'sp') :  18000 samples  val_score=0.000
+   type ('a', 'sp', 'sz') :  36000 samples  val_score=0.991
+   type ('a', 'sz', 'sz') :  18000 samples  val_score=0.000
+   type ('ad', 'a', 'a')  :   6000 samples  val_score=0.000
+   type ('ad', 'a', 'sm') :  18000 samples  val_score=0.000
+   type ('ad', 'a', 'sp') :  18000 samples  val_score=0.000
+   type ('ad', 'a', 'sz') :  18000 samples  val_score=0.499
+   type ('ad', 'ad', 'a') :   6000 samples  val_score=0.000
+   type ('ad', 'ad', 'ad'):   6000 samples  val_score=0.000
+   type ('ad', 'ad', 'sm'):  18000 samples  val_score=0.000
+   type ('ad', 'ad', 'sp'):  18000 samples  val_score=0.000
+   type ('ad', 'ad', 'sz'):  18000 samples  val_score=0.000
+   type ('ad', 'sm', 'sm'):  18000 samples  val_score=0.000
+   type ('ad', 'sm', 'sz'):  36000 samples  val_score=0.991
+   type ('ad', 'sp', 'sm'):  36000 samples  val_score=0.000
+   type ('ad', 'sp', 'sp'):  18000 samples  val_score=0.000
+   type ('ad', 'sp', 'sz'):  36000 samples  val_score=0.000
+   type ('ad', 'sz', 'sz'):  18000 samples  val_score=0.000
+   type ('sm', 'sm', 'sm'):   6000 samples  val_score=0.000
+   type ('sm', 'sm', 'sz'):  18000 samples  val_score=0.000
+   type ('sm', 'sz', 'sz'):  18000 samples  val_score=0.000
+   type ('sp', 'sm', 'sm'):  18000 samples  val_score=0.000
+   type ('sp', 'sm', 'sz'):  36000 samples  val_score=0.989
+   type ('sp', 'sp', 'sm'):  18000 samples  val_score=0.000
+   type ('sp', 'sp', 'sp'):   6000 samples  val_score=0.000
+   type ('sp', 'sp', 'sz'):  18000 samples  val_score=0.000
+   type ('sp', 'sz', 'sz'):  18000 samples  val_score=0.000
+   type ('sz', 'sz', 'sz'):   6000 samples  val_score=0.497
+
+HELD-OUT M=3 seed 7: learned steps 200/200
+
+[M=3 held-out (local closure)] windowed max error (over 3 observables):
+   t<=15: plain=0.8528  learned(local)=0.0185  BEATS
+   t<=20: plain=0.8528  learned(local)=0.0233  BEATS
+   t<=25: plain=0.8528  learned(local)=0.0233  BEATS
+   t<=30: plain=0.8528  learned(local)=0.0233  BEATS
+   t<=40: plain=0.8528  learned(local)=0.0233  BEATS
+Traceback (most recent call last):
+  File "/Users/dhruvjain/polariton-research/spike/local_closure.py", line 256, in <module>
+    main()
+  File "/Users/dhruvjain/polariton-research/spike/local_closure.py", line 230, in main
+    learned4_traj = run_loop(eng4, m04, ts4, lc.closure_fn(eng4, det4))
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/dhruvjain/polariton-research/spike/local_closure.py", line 176, in run_loop
+    sol = solve_ivp(rhs, (ts[0], ts[-1]), pack(m0), t_eval=ts, rtol=1e-6, atol=1e-8, method="RK45")
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/dhruvjain/polariton-research/sim/golden/.venv/lib/python3.12/site-packages/scipy/integrate/_ivp/ivp.py", line 623, in solve_ivp
+    solver = method(fun, t0, y0, tf, vectorized=vectorized, **options)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/dhruvjain/polariton-research/sim/golden/.venv/lib/python3.12/site-packages/scipy/integrate/_ivp/rk.py", line 94, in __init__
+    self.f = self.fun(self.t, self.y)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/dhruvjain/polariton-research/sim/golden/.venv/lib/python3.12/site-packages/scipy/integrate/_ivp/base.py", line 158, in fun
+    return self.fun_single(t, y)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/dhruvjain/polariton-research/sim/golden/.venv/lib/python3.12/site-packages/scipy/integrate/_ivp/base.py", line 24, in fun_wrapped
+    return np.asarray(fun(t, y), dtype=dtype)
+                      ^^^^^^^^^
+  File "/Users/dhruvjain/polariton-research/spike/local_closure.py", line 174, in rhs
+    k3 = closure(m) if closure else {}
+         ^^^^^^^^^^
+  File "/Users/dhruvjain/polariton-research/spike/local_closure.py", line 130, in fn
+    ctx = self.context(mdict)
+          ^^^^^^^^^^^^^^^^^^^
+  File "/Users/dhruvjain/polariton-research/spike/local_closure.py", line 88, in context
+    nc = mdict[(1, 1, tuple([0] * self.M))].real
+         ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyError: (1, 1, (0, 0, 0))
