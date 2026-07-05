@@ -1,0 +1,39 @@
+v3-RATIO trained/loaded (316s); v2 frozen
+
+Q1: center regime, M=5, seeds 7/8/9 (paired; same realization per method). Q4: absolutes.
+  seed 7: plain[nn=0.412 nz=0.236 mab=0.953 pk=0.928]  v2[nn=0.101 nz=0.084 mab=0.282 pk=0.043]  v3rat[nn=0.032 nz=0.029 mab=0.074 pk=0.002]
+  seed 8: plain[nn=0.416 nz=0.243 mab=0.966 pk=0.913]  v2[nn=0.088 nz=0.065 mab=0.293 pk=0.050]  v3rat[nn=0.034 nz=0.022 mab=0.081 pk=0.006]
+  seed 9: plain[nn=0.421 nz=0.252 mab=1.061 pk=0.925]  v2[nn=0.079 nz=0.084 mab=0.237 pk=0.042]  v3rat[nn=0.023 nz=0.016 mab=0.060 pk=0.001]
+  paired NRMSE_n improvement per seed: ['0.380', '0.382', '0.397']  (all>0: True)
+Q1b: IC f=0.75 stress across the same seeds:
+  seed 7: plain[nn=0.407 nz=0.156 mab=0.591 pk=0.523]  v2[UNSTABLE]  v3rat[nn=0.136 nz=0.055 mab=0.182 pk=0.019]
+  seed 8: plain[nn=0.399 nz=0.157 mab=0.587 pk=0.506]  v2[nn=0.800 nz=0.359 mab=1.766 pk=0.082]  v3rat[nn=0.084 nz=0.038 mab=0.125 pk=0.010]
+  seed 9: plain[nn=0.397 nz=0.167 mab=0.642 pk=0.516]  v2[UNSTABLE]  v3rat[nn=0.089 nz=0.034 mab=0.124 pk=0.017]
+
+Q2 map A: gcoll x sigma at (kappa=0.15, gphi=0.02), M=5, seed 7. cell: plainNN/v3NN flag
+  gc=0.30: 0.30/0.03E  0.30/0.03E  0.30/0.03E  0.29/0.02E  0.27/0.02E  0.27/0.02E
+  gc=0.40: 0.32/0.02E  0.32/0.02I  0.32/0.01I  0.32/0.01I  0.32/0.01E  0.31/0.01E
+  gc=0.55: 0.37/0.03E  0.37/0.03I  0.37/0.03I  0.37/0.03I  0.37/0.03E  0.37/0.03E
+  gc=0.70: 0.41/0.04E  0.41/0.04I  0.41/0.03I  0.41/0.03I  0.42/0.03E  0.42/0.03E
+  gc=0.85: 0.45/0.04E  0.45/0.04I  0.45/0.04I  0.45/0.03I  0.46/0.03E  0.46/0.03E
+  gc=1.00: 0.48/0.04E  0.48/0.04I  0.48/0.03I  0.49/0.03I  0.49/0.03E  0.49/0.03E
+  gc=1.10: 0.50/0.05E  0.50/0.05E  0.50/0.04E  0.51/0.03E  0.51/0.03E  0.51/0.03E
+Q2 map B: kappa x gphi at (gcoll=0.7, sigma=0.15), M=5, seed 7
+  ka=0.03: 0.58/0.45E  0.54/0.37E  0.44/infE  0.34/0.35E  0.25/0.23E  0.22/0.34E
+  ka=0.05: 0.56/0.06E  0.51/0.04I  0.42/infI  0.32/0.03I  0.24/0.10E  0.21/0.18E
+  ka=0.10: 0.49/0.03E  0.46/0.03I  0.39/0.05I  0.31/0.03I  0.24/0.02E  0.21/0.06E
+  ka=0.15: 0.43/0.03E  0.41/0.03I  0.36/0.05I  0.30/0.02I  0.25/0.03E  0.22/0.02E
+  ka=0.30: 0.34/0.02E  0.33/0.02I  0.32/0.03I  0.29/0.02I  0.26/0.02E  0.24/0.02E
+  ka=0.40: 0.32/0.03E  0.31/0.03E  0.31/0.03E  0.29/0.03E  0.27/0.03E  0.25/0.04E
+  interpolation: 26/26 cells win; paired bootstrap median improvement 0.341  95% CI [0.312, 0.394]  (CI>0: True)
+  extrapolation: 48/50 cells win; paired bootstrap median improvement 0.292  95% CI [0.263, 0.358]  (CI>0: True)
+  v3rat unstable cells: [('B', 0.03, 0.05), ('B', 0.05, 0.05)]
+
+Q3: M=8,10 at the V0 regime (0.8, 0.1, 0.02, 0.15) vs seeded mcsolve (exact refs).
+  M=8 seed 7 (MCerr 0.096): plain[nn=0.478 nz=0.378 mab=1.967 pk=1.636]  v2[nn=0.288 nz=0.425 mab=0.856 pk=0.285]  v3rat[nn=0.161 nz=0.193 mab=0.455 pk=0.184]  (10s)
+  M=8 seed 8 (MCerr 0.091): plain[nn=0.479 nz=0.373 mab=2.088 pk=1.611]  v2[nn=0.260 nz=0.344 mab=0.794 pk=0.261]  v3rat[nn=0.053 nz=0.057 mab=0.230 pk=0.161]  (67s)
+  M=8 seed 9 (MCerr 0.097): plain[nn=0.478 nz=0.380 mab=2.015 pk=1.614]  v2[nn=0.286 nz=0.421 mab=0.845 pk=0.265]  v3rat[nn=0.096 nz=0.087 mab=0.343 pk=0.158]  (65s)
+  M=10 seed 7 (MCerr 0.119): plain[nn=0.484 nz=0.382 mab=2.503 pk=2.071]  v2[nn=0.280 nz=0.449 mab=0.890 pk=0.578]  v3rat[UNSTABLE]  (30s)
+  M=10 seed 8 (MCerr 0.107): plain[nn=0.500 nz=0.400 mab=2.813 pk=2.039]  v2[nn=0.303 nz=0.453 mab=0.958 pk=0.541]  v3rat[nn=0.109 nz=0.094 mab=0.445 pk=0.352]  (341s)
+
+saved results/campaign_eval.npz
