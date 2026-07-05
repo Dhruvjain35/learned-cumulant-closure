@@ -1,0 +1,7 @@
+T3 (kappa4=0) engine gate, M=3 (kappa=0.15, gphi=0.02, sigma=0.15, train-rng seed 5):
+  built: tracked=172 full=348 order4=176 (46s)
+  t=0: max|d_assembled - d_exact| = 1.03e-14  PASS
+  t=2: max|d_assembled - d_exact| = 1.67e-14  PASS
+  t=4: max|d_assembled - d_exact| = 1.33e-14  PASS
+  t=6: max|d_assembled - d_exact| = 5.71e-15  PASS
+T3 ENGINE GATE: PASS
