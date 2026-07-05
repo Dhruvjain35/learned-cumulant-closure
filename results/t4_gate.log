@@ -1,0 +1,13 @@
+# results/t4_gate.log -- captured output of src/baselines/t4_truncation.py __main__
+# (kappa5=0 engine assembly gate + kappa4-consistency self-check; validation capture, frozen model)
+# generated: 2026-07-05T19:41:16Z
+
+closure formula reproduces T3 kappa4 terms at n=4: True
+
+T4 (kappa5=0) engine GATE, M=3 (kappa=0.03, gphi=0.02, sigma=0.15, seed 5):
+  built: tracked=348 full=588 order5=240 (84s)
+  t=0: max|d_assembled - d_exact| = 3.07e-14  PASS
+  t=2: max|d_assembled - d_exact| = 2.02e-14  PASS
+  t=4: max|d_assembled - d_exact| = 1.55e-14  PASS
+  t=6: max|d_assembled - d_exact| = 1.23e-14  PASS
+T4 ENGINE GATE: PASS
