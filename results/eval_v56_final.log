@@ -1,0 +1,34 @@
+PROVENANCE: seeds 19/20 = V6 development per ledger (never used before this script);
+            pocket refs = exact mesolve; far-M refs = seeded mcsolve (MC err printed);
+            pocket-pool tuple coverage is kappa {0.03,0.04,0.05} x gphi {0.035,0.05,0.065}:
+            the gphi=0.02 column is EXTRAPOLATION for every model (outside both pools);
+            V0-regime tuple is outside every training pool. v4/v4p are descriptive only.
+
+DEEP POCKET (kappa x gphi, M=5): per-cell NRMSE_n or X, seeds 19/20
+  ka=0.030 gp=0.020  v3:X/X/X | v5:X/0.07/X | v6:0.08/0.05/0.08 | v4(desc):X/0.09/X | v4p(desc):X/X/X
+  ka=0.030 gp=0.035  v3:X/X/X | v5:0.07/0.06/X | v6:0.05/0.04/0.05 | v4(desc):0.05/0.05/0.16 | v4p(desc):0.08/0.11/0.10
+  ka=0.030 gp=0.050  v3:0.13/0.10/X | v5:0.06/0.07/0.09 | v6:0.04/0.04/0.05 | v4(desc):0.04/0.05/0.09 | v4p(desc):0.07/0.08/0.08
+  ka=0.035 gp=0.020  v3:X/X/X | v5:0.34/0.07/0.38 | v6:0.07/0.04/0.06 | v4(desc):X/0.06/X | v4p(desc):0.09/X/X
+  ka=0.035 gp=0.035  v3:X/X/X | v5:0.04/0.05/0.08 | v6:0.04/0.04/0.04 | v4(desc):0.03/0.04/0.10 | v4p(desc):0.07/0.12/X
+  ka=0.035 gp=0.050  v3:0.09/0.07/X | v5:0.04/0.06/0.07 | v6:0.03/0.04/0.04 | v4(desc):0.02/0.03/0.07 | v4p(desc):0.06/0.08/0.08
+
+FAR-M (V0 regime, mcsolve refs):
+  M=9 seed 21 (MCerr 0.099): v3=0.108  v5=0.171  v6=0.105  v4(desc)=0.087  v4p(desc)=0.129
+  M=9 seed 22 (MCerr 0.101): v3=0.098  v5=0.162  v6=0.102  v4(desc)=0.091  v4p(desc)=0.118
+  M=9 seed 23 (MCerr 0.100): v3=0.094  v5=0.180  v6=0.100  v4(desc)=0.078  v4p(desc)=0.134
+  M=10 seed 21 (MCerr 0.114): v3=0.161  v5=0.200  v6=0.126  v4(desc)=0.115  v4p(desc)=0.165
+  M=10 seed 22 (MCerr 0.109): v3=0.136  v5=0.195  v6=0.121  v4(desc)=0.115  v4p(desc)=0.149
+  M=10 seed 23 (MCerr 0.110): v3=0.122  v5=0.230  v6=0.114  v4(desc)=0.102  v4p(desc)=0.154
+
+SANITY (seed 21):
+  (0.7,0.15,0.02,0.15): v3=0.023  v5=0.023  v6=0.024  v4(desc)=0.023  v4p(desc)=0.031
+  (0.7,0.15,0.02,0.4): v3=0.078  v5=0.090  v6=0.075  v4(desc)=0.085  v4p(desc)=0.094
+  (0.7,0.15,0.3,0.15): v3=0.025  v5=0.024  v6=0.055  v4(desc)=0.013  v4p(desc)=0.026
+  (1.1,0.15,0.02,0.15): v3=0.032  v5=0.076  v6=0.056  v4(desc)=0.045  v4p(desc)=0.080
+
+DECISION TEMPLATE (mechanical; v4 columns descriptive, excluded):
+  v3: pocket stab 22% med 0.095 | far-M stab 100% med 0.115 | sanity med 0.029
+  v5: pocket stab 83% med 0.068 | far-M stab 100% med 0.187 | sanity med 0.050
+  v6: pocket stab 100% med 0.043 | far-M stab 100% med 0.110 | sanity med 0.055
+  -> TEMPLATE 4: V6 fails. Negative result; escalation is a separate scope decision.
+saved results/eval_v56_s21_22_23.npz
