@@ -1,0 +1,5 @@
+training on M=2,3 (seeds 0-5)...
+   trained; dominant cumulant types (val>0.8): 3
+
+ M       gate  nc_peak/Nc  stable  plain err (t<=40)  learned err  improvement
+ 4    1.6e-15        0.28    True             1.0532       0.4142         2.5x
