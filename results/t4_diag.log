@@ -1,0 +1,17 @@
+exact n(t) at t=1,2,3,5,10: [0.49, 1.732, 2.287, 0.576, 0.957]
+exact n_peak=2.312 at t=2.8
+
+build T3 (kappa4=0)...
+  T3 LSODA: ok=True tend=40.0 n@(1,2,3,5,10)=[0.488, 1.543, 1.332, 0.82, 0.677]
+
+build T4 (kappa5=0)... (~90s)
+  built in 98s (tracked=348)
+
+  T4 LSODA  rtol=1e-05: ok=False tend=9.65 maxy=8.8e+05 n_peak=4.492  n@(1,2,3,5,10)=[0.491, 1.8, 2.824, 0.354, -40.426]  (5s)
+  T4 LSODA  rtol=1e-08: ok=False tend=9.65 maxy=8.8e+05 n_peak=4.492  n@(1,2,3,5,10)=[0.491, 1.8, 2.824, 0.354, -40.419]  (192s)
+  T4 Radau  rtol=1e-06: ok=False tend=9.65 maxy=8.8e+05 n_peak=4.492  n@(1,2,3,5,10)=[0.491, 1.8, 2.824, 0.354, -40.419]  (166s)
+  T4 BDF    rtol=1e-06: ok=False tend=9.65 maxy=8.8e+05 n_peak=4.492  n@(1,2,3,5,10)=[0.491, 1.8, 2.824, 0.354, -40.423]  (14s)
+
+READ: if T4 diverges (tend<40, maxy huge) under Radau/BDF + tight tol too, the kappa5=0 instability
+is GENUINE, not a solver artifact. If it tracks exact n(t) early then blows up, it's a real closure
+pathology (finite-time divergence), the strongest form of outcome O3.
