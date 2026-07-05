@@ -1,0 +1,10 @@
+loaded cached training dataset (M=2,3, seeds 0-5)
+   trained; dominant cumulant types (val>0.8): 3
+
+ M       gate  nc_peak/Nc  stable  plain err (t<=40)  learned err  improvement
+ 4    1.6e-15        0.28    True             1.0534       0.4142         2.5x
+ 5    6.4e-15        0.31    True             1.2962       0.4691         2.8x
+
+TRANSFER TREND (trained only on M=2,3):
+   M=4: learned closure stable, error 0.414 vs plain 1.053  (beats plain 2.5x)
+   M=5: learned closure stable, error 0.469 vs plain 1.296  (beats plain 2.8x)
