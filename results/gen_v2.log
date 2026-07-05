@@ -1,0 +1,26 @@
+M=4 sigma=0.05 seed=0: nc_peak/Nc=0.28  3s
+M=4 sigma=0.05 seed=1: nc_peak/Nc=0.28  3s
+M=4 sigma=0.05 seed=2: nc_peak/Nc=0.28  3s
+M=4 sigma=0.05 seed=3: nc_peak/Nc=0.28  3s
+M=4 sigma=0.15 seed=0: nc_peak/Nc=0.28  3s
+M=4 sigma=0.15 seed=1: nc_peak/Nc=0.28  3s
+M=4 sigma=0.15 seed=2: nc_peak/Nc=0.28  4s
+M=4 sigma=0.15 seed=3: nc_peak/Nc=0.27  4s
+M=4 sigma=0.30 seed=0: nc_peak/Nc=0.28  4s
+M=4 sigma=0.30 seed=1: nc_peak/Nc=0.27  4s
+M=4 sigma=0.30 seed=2: nc_peak/Nc=0.26  4s
+M=4 sigma=0.30 seed=3: nc_peak/Nc=0.24  4s
+M=5 sigma=0.05 seed=0: nc_peak/Nc=0.31  52s
+M=5 sigma=0.05 seed=1: nc_peak/Nc=0.31  53s
+M=5 sigma=0.05 seed=2: nc_peak/Nc=0.31  55s
+M=5 sigma=0.05 seed=3: nc_peak/Nc=0.31  62s
+M=5 sigma=0.15 seed=0: nc_peak/Nc=0.31  68s
+M=5 sigma=0.15 seed=1: nc_peak/Nc=0.31  59s
+M=5 sigma=0.15 seed=2: nc_peak/Nc=0.30  57s
+M=5 sigma=0.15 seed=3: nc_peak/Nc=0.30  55s
+M=5 sigma=0.30 seed=0: nc_peak/Nc=0.31  47s
+M=5 sigma=0.30 seed=1: nc_peak/Nc=0.30  14s
+M=5 sigma=0.30 seed=2: nc_peak/Nc=0.27  14s
+M=5 sigma=0.30 seed=3: nc_peak/Nc=0.27  15s
+
+saved results/transfer_train_v2.npz: 912000 old (M=2,3) + 906000 new (M=4,5) samples
