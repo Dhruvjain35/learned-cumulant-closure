@@ -4,7 +4,7 @@
 
 ### Recovering the superradiant burst where the standard cumulant hierarchy breaks
 
-Second-order cumulants **overshoot** the superradiant burst peak. Fourth-order **diverges**. A small,
+Second-order cumulants **overshoot** the superradiant burst peak. Fourth-order **runs away**. A small,
 structure-preserving **learned third-cumulant closure** stays stable and tracks the exact reference — in the
 open, *disordered* cavity–emitter regime where the standard truncation hierarchy doesn't. Every extension that
 *didn't* survive is kept in the record.
@@ -23,8 +23,9 @@ open, *disordered* cavity–emitter regime where the standard truncation hierarc
 
 > On the **superradiant burst peak** of an open, disordered Tavis–Cummings ensemble — a measurable
 > collective-emission observable — the standard second-order cumulant closure is off by ≈ **+29%**, the tested
-> κ4 = 0 third-order closure by ≈ **−28%** (and it diverges in the low-loss pocket), and the κ5 = 0 fourth-order
-> closure **diverges outright**. A frozen, physics-routed **learned closure (V7)** stays within ≈ **±1%** of the
+> κ4 = 0 third-order closure by ≈ **−28%** (and it runs away in the low-loss pocket), and the κ5 = 0 fourth-order
+> closure **runs away** — its integration triggers a divergence guard. A frozen, physics-routed **learned closure
+> (V7)** stays within ≈ **±1%** of the
 > exact reference in the tested cells. This repo has the engines, the learned closure, the mechanism analysis,
 > the rejected hypotheses, and a cross-platform reproduction package.
 
@@ -68,6 +69,22 @@ zero (→ overshoot); κ4 = 0 mis-signs them (→ undershoot); V7 reconstructs t
 exact and V7 overlie; κ4 = 0 (T3) mis-estimates it; plain sits at zero. (c) Closed-loop ablation: removing
 either channel degrades or destabilizes V7. See `docs/FINDINGS.md`, Result 25.*
 
+## Runtime — is V7 actually faster?
+
+A frozen wall-clock benchmark on the same M=3 cells (build vs. rollout vs. total; medians over the evaluated
+cells, one machine — full method and caveats in
+[`results/runtime_baseline_comparison.md`](results/runtime_baseline_comparison.md)):
+
+<div align="center">
+<img src="results/runtime_benchmark_fig.png" width="82%" alt="Frozen-runtime benchmark: build and rollout wall-clock (log scale) for 2nd-order, V7, kappa4=0 (T3), and kappa5=0 (T4) on M=3 cells; V7 build matches 2nd-order, V7 total sits far below the higher-order truncations."/>
+</div>
+
+V7 reuses the second-order engine's ≈ 3 s build and adds a learned per-step evaluation instead of constructing a
+higher-order engine, so its median **total** (≈ 4.6 s) sits close to second order (≈ 3.1 s) and roughly **4×**
+and **18×** below the κ4 = 0 (≈ 21 s) and κ5 = 0 (≈ 81 s) truncations. Its **per-rollout** cost (≈ 1.5 s) is ≈ 76×
+the second-order rollout — measured at M = 3 on one machine, so this is a build-dominated total-time advantage,
+**not** a "cheap," "fast," or "near-second-order" claim.
+
 ## Repository layout
 
 ```
@@ -82,6 +99,7 @@ src/
 ├── validation/    engine gates and equivalence checks
 ├── figures/       figure-generating scripts
 └── tools/         export exact replication parameters
+scripts/           runtime benchmark, frozen-trajectory export, and plotting utilities (read-only over results)
 docs/              FINDINGS (every result incl. rejected hypotheses), PROTOCOL, REPLICATION package
 results/           figures, small result artifacts, frozen V7 model pickles, replication params
 replicate_cumulant.jl · julia_setup.jl   cross-platform reproduction (Julia)
