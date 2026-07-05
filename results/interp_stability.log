@@ -1,0 +1,133 @@
+  ('sp', 'sm', 'sz') q21 resample 1/15: 44 active terms
+  ('sp', 'sm', 'sz') q21 resample 2/15: 44 active terms
+  ('sp', 'sm', 'sz') q21 resample 3/15: 43 active terms
+  ('sp', 'sm', 'sz') q21 resample 4/15: 45 active terms
+  ('sp', 'sm', 'sz') q21 resample 5/15: 45 active terms
+  ('sp', 'sm', 'sz') q21 resample 6/15: 45 active terms
+  ('sp', 'sm', 'sz') q21 resample 7/15: 44 active terms
+  ('sp', 'sm', 'sz') q21 resample 8/15: 45 active terms
+  ('sp', 'sm', 'sz') q21 resample 9/15: 44 active terms
+  ('sp', 'sm', 'sz') q21 resample 10/15: 44 active terms
+  ('sp', 'sm', 'sz') q21 resample 11/15: 42 active terms
+  ('sp', 'sm', 'sz') q21 resample 12/15: 46 active terms
+  ('sp', 'sm', 'sz') q21 resample 13/15: 43 active terms
+  ('sp', 'sm', 'sz') q21 resample 14/15: 45 active terms
+  ('sp', 'sm', 'sz') q21 resample 15/15: 46 active terms
+
+('sp', 'sm', 'sz') q21: terms with selection freq >= 0.8 and sign-cons >= 0.9: 42
+    d1/k                         freq=1.00 sign-cons=1.00
+    d2/k                         freq=1.00 sign-cons=1.00
+    nc/M                         freq=1.00 sign-cons=1.00
+    z                            freq=1.00 sign-cons=1.00
+    coh                          freq=1.00 sign-cons=1.00
+    g/k                          freq=1.00 sign-cons=1.00
+    gphi/k                       freq=1.00 sign-cons=1.00
+    s3r^2                        freq=1.00 sign-cons=1.00
+    s3r coh                      freq=1.00 sign-cons=1.00
+    p12r^2                       freq=1.00 sign-cons=1.00
+    p12r z                       freq=1.00 sign-cons=1.00
+    p12r g/k                     freq=1.00 sign-cons=1.00
+    p12r k                       freq=1.00 sign-cons=1.00
+    p12i^2                       freq=1.00 sign-cons=1.00
+    p12i d1/k                    freq=1.00 sign-cons=1.00
+
+  ('sp', 'sm', 'sz') q27 resample 1/15: 63 active terms
+  ('sp', 'sm', 'sz') q27 resample 2/15: 63 active terms
+  ('sp', 'sm', 'sz') q27 resample 3/15: 65 active terms
+  ('sp', 'sm', 'sz') q27 resample 4/15: 59 active terms
+  ('sp', 'sm', 'sz') q27 resample 5/15: 65 active terms
+  ('sp', 'sm', 'sz') q27 resample 6/15: 64 active terms
+  ('sp', 'sm', 'sz') q27 resample 7/15: 62 active terms
+  ('sp', 'sm', 'sz') q27 resample 8/15: 65 active terms
+  ('sp', 'sm', 'sz') q27 resample 9/15: 64 active terms
+  ('sp', 'sm', 'sz') q27 resample 10/15: 65 active terms
+  ('sp', 'sm', 'sz') q27 resample 11/15: 64 active terms
+  ('sp', 'sm', 'sz') q27 resample 12/15: 62 active terms
+  ('sp', 'sm', 'sz') q27 resample 13/15: 64 active terms
+  ('sp', 'sm', 'sz') q27 resample 14/15: 62 active terms
+  ('sp', 'sm', 'sz') q27 resample 15/15: 62 active terms
+
+('sp', 'sm', 'sz') q27: terms with selection freq >= 0.8 and sign-cons >= 0.9: 58
+    s3r                          freq=1.00 sign-cons=1.00
+    p12i                         freq=1.00 sign-cons=1.00
+    d1/k                         freq=1.00 sign-cons=1.00
+    d2/k                         freq=1.00 sign-cons=1.00
+    z                            freq=1.00 sign-cons=1.00
+    coh                          freq=1.00 sign-cons=1.00
+    g/k                          freq=1.00 sign-cons=1.00
+    h_nc                         freq=1.00 sign-cons=1.00
+    h_coh                        freq=1.00 sign-cons=1.00
+    p12r^2                       freq=1.00 sign-cons=1.00
+    p12r z                       freq=1.00 sign-cons=1.00
+    p12r g/k                     freq=1.00 sign-cons=1.00
+    p12r h_nc                    freq=1.00 sign-cons=1.00
+    p12r h_z                     freq=1.00 sign-cons=1.00
+    p12r h_coh                   freq=1.00 sign-cons=1.00
+
+  ('a', 'sp', 'sz') q21 resample 1/15: 48 active terms
+  ('a', 'sp', 'sz') q21 resample 2/15: 55 active terms
+  ('a', 'sp', 'sz') q21 resample 3/15: 55 active terms
+  ('a', 'sp', 'sz') q21 resample 4/15: 51 active terms
+  ('a', 'sp', 'sz') q21 resample 5/15: 51 active terms
+  ('a', 'sp', 'sz') q21 resample 6/15: 50 active terms
+  ('a', 'sp', 'sz') q21 resample 7/15: 52 active terms
+  ('a', 'sp', 'sz') q21 resample 8/15: 54 active terms
+  ('a', 'sp', 'sz') q21 resample 9/15: 51 active terms
+  ('a', 'sp', 'sz') q21 resample 10/15: 52 active terms
+  ('a', 'sp', 'sz') q21 resample 11/15: 51 active terms
+  ('a', 'sp', 'sz') q21 resample 12/15: 48 active terms
+  ('a', 'sp', 'sz') q21 resample 13/15: 50 active terms
+  ('a', 'sp', 'sz') q21 resample 14/15: 50 active terms
+  ('a', 'sp', 'sz') q21 resample 15/15: 50 active terms
+
+('a', 'sp', 'sz') q21: terms with selection freq >= 0.8 and sign-cons >= 0.9: 46
+    s3r                          freq=1.00 sign-cons=1.00
+    p12r                         freq=1.00 sign-cons=1.00
+    p12i                         freq=1.00 sign-cons=1.00
+    d3/k                         freq=1.00 sign-cons=1.00
+    nc/M                         freq=1.00 sign-cons=1.00
+    z                            freq=1.00 sign-cons=1.00
+    coh                          freq=1.00 sign-cons=1.00
+    g/k                          freq=1.00 sign-cons=1.00
+    k                            freq=1.00 sign-cons=1.00
+    gphi/k                       freq=1.00 sign-cons=1.00
+    s3r p12i                     freq=1.00 sign-cons=1.00
+    s3r nc/M                     freq=1.00 sign-cons=1.00
+    s3r coh                      freq=1.00 sign-cons=1.00
+    s3r g/k                      freq=1.00 sign-cons=1.00
+    p12r^2                       freq=1.00 sign-cons=1.00
+
+  ('a', 'sp', 'sz') q27 resample 1/15: 77 active terms
+  ('a', 'sp', 'sz') q27 resample 2/15: 82 active terms
+  ('a', 'sp', 'sz') q27 resample 3/15: 81 active terms
+  ('a', 'sp', 'sz') q27 resample 4/15: 76 active terms
+  ('a', 'sp', 'sz') q27 resample 5/15: 80 active terms
+  ('a', 'sp', 'sz') q27 resample 6/15: 77 active terms
+  ('a', 'sp', 'sz') q27 resample 7/15: 83 active terms
+  ('a', 'sp', 'sz') q27 resample 8/15: 77 active terms
+  ('a', 'sp', 'sz') q27 resample 9/15: 76 active terms
+  ('a', 'sp', 'sz') q27 resample 10/15: 78 active terms
+  ('a', 'sp', 'sz') q27 resample 11/15: 74 active terms
+  ('a', 'sp', 'sz') q27 resample 12/15: 80 active terms
+  ('a', 'sp', 'sz') q27 resample 13/15: 73 active terms
+  ('a', 'sp', 'sz') q27 resample 14/15: 76 active terms
+  ('a', 'sp', 'sz') q27 resample 15/15: 77 active terms
+
+('a', 'sp', 'sz') q27: terms with selection freq >= 0.8 and sign-cons >= 0.9: 73
+    s3r                          freq=1.00 sign-cons=1.00
+    p12r                         freq=1.00 sign-cons=1.00
+    p12i                         freq=1.00 sign-cons=1.00
+    d2/k                         freq=1.00 sign-cons=1.00
+    d3/k                         freq=1.00 sign-cons=1.00
+    nc/M                         freq=1.00 sign-cons=1.00
+    coh                          freq=1.00 sign-cons=1.00
+    gphi/k                       freq=1.00 sign-cons=1.00
+    dnc                          freq=1.00 sign-cons=1.00
+    dz                           freq=1.00 sign-cons=1.00
+    h_coh                        freq=1.00 sign-cons=1.00
+    s3r^2                        freq=1.00 sign-cons=1.00
+    s3r coh                      freq=1.00 sign-cons=1.00
+    s3r g/k                      freq=1.00 sign-cons=1.00
+    s3r h_coh                    freq=1.00 sign-cons=1.00
+
+saved results/interp_stability.npz
