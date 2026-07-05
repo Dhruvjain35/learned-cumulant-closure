@@ -1,0 +1,19 @@
+staircase at V0 regime (0.8, 0.1, 0.02, 0.15), M=[6, 7, 8, 9, 10], seeds=[7, 8, 9], mcsolve ntraj=200 (cached by M,seed)
+  M=6 seed 7 (MCerr 0.081): plain[nn=0.479 nz=0.366 mab=1.462 pk=1.216]  v2[nn=0.271 nz=0.353 mab=0.647 pk=0.046]  v3rat[nn=0.057 nz=0.048 mab=0.190 pk=0.018]  (21s)
+  M=6 seed 8 (MCerr 0.077): plain[nn=0.485 nz=0.386 mab=1.576 pk=1.220]  v2[nn=0.227 nz=0.295 mab=0.566 pk=0.053]  v3rat[nn=0.045 nz=0.044 mab=0.125 pk=0.041]  (21s)
+  M=6 seed 9 (MCerr 0.078): plain[nn=0.504 nz=0.397 mab=1.663 pk=1.227]  v2[nn=0.282 nz=0.376 mab=0.677 pk=0.057]  v3rat[nn=0.059 nz=0.052 mab=0.184 pk=0.031]  (19s)
+  M=7 seed 7 (MCerr 0.084): plain[nn=0.468 nz=0.370 mab=1.646 pk=1.459]  v2[nn=0.264 nz=0.414 mab=0.721 pk=0.220]  v3rat[nn=0.088 nz=0.063 mab=0.285 pk=0.157]  (32s)
+  M=7 seed 8 (MCerr 0.085): plain[nn=0.468 nz=0.364 mab=1.753 pk=1.434]  v2[nn=0.235 nz=0.329 mab=0.690 pk=0.199]  v3rat[nn=0.041 nz=0.035 mab=0.177 pk=0.149]  (31s)
+  M=7 seed 9 (MCerr 0.083): plain[nn=0.467 nz=0.366 mab=1.778 pk=1.439]  v2[nn=0.289 nz=0.410 mab=0.753 pk=0.204]  v3rat[nn=0.064 nz=0.052 mab=0.241 pk=0.145]  (42s)
+  M=8 seed 7 (MCerr 0.096): plain[nn=0.478 nz=0.378 mab=1.967 pk=1.636]  v2[nn=0.288 nz=0.425 mab=0.856 pk=0.285]  v3rat[nn=0.161 nz=0.193 mab=0.455 pk=0.184]  (74s)
+  M=8 seed 8 (MCerr 0.091): plain[nn=0.479 nz=0.373 mab=2.088 pk=1.611]  v2[nn=0.260 nz=0.344 mab=0.794 pk=0.261]  v3rat[nn=0.053 nz=0.057 mab=0.230 pk=0.161]  (82s)
+  M=8 seed 9 (MCerr 0.097): plain[nn=0.478 nz=0.380 mab=2.015 pk=1.614]  v2[nn=0.286 nz=0.421 mab=0.845 pk=0.265]  v3rat[nn=0.096 nz=0.087 mab=0.343 pk=0.158]  (91s)
+  M=9 seed 7 (MCerr 0.104): plain[nn=0.474 nz=0.373 mab=2.170 pk=1.801]  v2[nn=0.275 nz=0.431 mab=0.926 pk=0.417]  v3rat[UNSTABLE]  (212s)
+  M=9 seed 8 (MCerr 0.104): plain[nn=0.491 nz=0.388 mab=2.403 pk=1.760]  v2[nn=0.284 nz=0.402 mab=0.887 pk=0.375]  v3rat[nn=0.088 nz=0.078 mab=0.361 pk=0.227]  (209s)
+  M=9 seed 9 (MCerr 0.102): plain[nn=0.471 nz=0.359 mab=2.265 pk=1.800]  v2[nn=0.281 nz=0.403 mab=0.921 pk=0.414]  v3rat[nn=0.214 nz=0.271 mab=0.664 pk=0.265]  (183s)
+  M=10 seed 7 (MCerr 0.119): plain[nn=0.484 nz=0.382 mab=2.503 pk=2.071]  v2[nn=0.280 nz=0.449 mab=0.890 pk=0.578]  v3rat[UNSTABLE]  (589s)
+  M=10 seed 8 (MCerr 0.107): plain[nn=0.500 nz=0.400 mab=2.813 pk=2.039]  v2[nn=0.303 nz=0.453 mab=0.958 pk=0.541]  v3rat[nn=0.109 nz=0.094 mab=0.445 pk=0.352]  (663s)
+  M=10 seed 9 (MCerr 0.118): plain[nn=0.484 nz=0.382 mab=2.587 pk=2.069]  v2[nn=0.290 nz=0.455 mab=0.940 pk=0.574]  v3rat[UNSTABLE]  (584s)
+
+v3-RATIO stability per M (of 3 seeds): {6: 3, 7: 3, 8: 3, 9: 2, 10: 1}
+saved results/staircase.npz
