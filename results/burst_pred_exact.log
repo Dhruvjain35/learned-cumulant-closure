@@ -1,0 +1,23 @@
+BURST-vs-M kill test (EXACT mesolve, Nc_ref=16); seeds=[50, 51, 52]; M=[2, 3, 4, 5]
+
+=== POCKET  (gc,ka,gp)=(0.7, 0.03, 0.02)  branch=v6 ===
+   M |  plain relF  plain d_tpk |   V7 relF  V7 d_tpk | ref F_peak ref t_peak  nc/Nc
+   2 |       0.277        0.201 |     0.003     0.000 |      0.049       2.61   0.10
+   3 |       0.284        0.000 |     0.006     0.000 |      0.069       2.81   0.14
+   4 |       0.289        0.000 |     0.007     0.000 |      0.089       3.02   0.19
+   5 |       0.288        0.201 |     0.006     0.000 |      0.109       3.22   0.23
+
+=== CONTROL  (gc,ka,gp)=(0.7, 0.15, 0.02)  branch=v4 ===
+   M |  plain relF  plain d_tpk |   V7 relF  V7 d_tpk | ref F_peak ref t_peak  nc/Nc
+   2 |       0.290        0.134 |     0.001     0.067 |      0.212       2.55   0.09
+   3 |       0.289        0.000 |     0.001     0.000 |      0.300       2.81   0.13
+   4 |       0.295        0.000 |     0.001     0.000 |      0.383       3.02   0.16
+   5 |       0.300        0.201 |     0.002     0.000 |      0.464       3.22   0.20
+
+=== PRE-REGISTERED KILL RULES (exact window M<=5) ===
+  K1  plain-cumulant error GROWS with M in pocket? F_peak:False  t_peak:False  -> K1 TRIGGERED (flat/non-monotone) -> null
+  K2  V7 F_peak err (0.005) < plain (0.285) in pocket? -> K2 not triggered (V7 helps)
+  K3  control plain F_peak err=0.293 (want small), V7=0.001 (want <= plain-ish) -> CHECK: specificity weak
+
+DECISION: extend to mcsolve M=6..12 ONLY if K1 and K2 both survive.
+(223s) saved results/burst_pred_exact.npz
