@@ -1,0 +1,4 @@
+v6: fitted on 2223435 samples, 27 cols, 338s
+v5: fitted on 2223435 samples, 21 cols, 364s
+v4p: fitted on 2223435 samples, 21 cols, 339s
+saved contributions; V5/V6 rows identical by construction (same index arrays)
