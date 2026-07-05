@@ -1,0 +1,39 @@
+ENV: {'platform': 'macOS-26.4-arm64-arm-64bit', 'processor': 'arm', 'python': '3.12.13', 'numpy': '2.4.6', 'scipy': '1.17.1', 'qutip': '5.3.0', 'tolerances': 'rtol=1e-5, atol=1e-7 (truncation rollouts); run_from/run_v6 defaults (2nd/V7)', 'horizon': 't in [0,40.0], 200 points', 'trunc_Nc': 10}
+
+[CONTROL draw 50]  V7 branch=v4
+  2nd-order  build~3.02s roll~0.019s
+  V7         build~3.03s roll~1.521s
+  T3         build~20.49s roll~1.239s end_t=40.00
+  T4         build~74.9s roll~6.0s guard_t=12.06
+
+[CONTROL draw 51]  V7 branch=v4
+  2nd-order  build~3.09s roll~0.019s
+  V7         build~3.03s roll~1.473s
+  T3         build~18.33s roll~1.197s end_t=40.00
+  T4         build~77.7s roll~45.0s guard_t=12.06
+
+[CONTROL draw 52]  V7 branch=v4
+  2nd-order  build~3.03s roll~0.020s
+  V7         build~3.07s roll~1.527s
+  T3         build~18.76s roll~7.657s end_t=40.00
+  T4         build~72.5s roll~4.3s guard_t=12.06
+
+[POCKET draw 50]  V7 branch=v6
+  2nd-order  build~3.02s roll~0.022s
+  V7         build~2.99s roll~1.566s
+  T3         build~18.86s roll~1.292s end_t=40.00
+  T4         build~77.3s roll~4.2s guard_t=9.25
+
+[POCKET draw 51]  V7 branch=v6
+  2nd-order  build~3.14s roll~0.022s
+  V7         build~3.00s roll~1.516s
+  T3         build~18.68s roll~1.414s end_t=40.00
+  T4         build~74.5s roll~4.4s guard_t=9.25
+
+[POCKET draw 52]  V7 branch=v6
+  2nd-order  build~3.04s roll~0.021s
+  V7         build~3.39s roll~1.496s
+  T3         build~19.76s roll~1.333s end_t=40.00
+  T4         build~89.8s roll~88.0s guard_t=9.25
+
+(1728s) saved results/runtime_baseline_comparison.csv + runtime_baseline_env.npz
