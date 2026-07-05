@@ -1,0 +1,15 @@
+lc_old (M=2,3):      dominant types {('a', 'sp', 'sz'): 0.981, ('ad', 'sm', 'sz'): 0.975, ('sp', 'sm', 'sz'): 0.985}
+lc_new (M=2,3,4,5):  dominant types {('a', 'sp', 'sz'): 0.974, ('ad', 'sm', 'sz'): 0.971, ('sp', 'sm', 'sz'): 0.956}
+
+closed loop, held-out disorder (seed 7, sigma 0.15), vs exact reference:
+  M      ref    plain  old(2,3)  new(2-5)  rel_n old  rel_n new  MCerr   sec
+  5  mesolve   1.2962    0.4691    0.3483      0.137      0.102  0.000    18  (M=5 IS in new training; held-out seed only)
+  8  mcsolve   1.9671    1.3067    0.8559      0.253      0.166  0.096    12  
+ 10  mcsolve   2.5032    2.3976    0.8898      0.381      0.141  0.119    16  
+
+stability of lc_new at very large M (no exact reference possible):
+   M=12: stable=True  n_peak=8.322  z_end=-1.013  (12s)
+   M=16: stable=True  n_peak=11.225  z_end=-1.005  (20s)
+   M=20: stable=True  n_peak=14.089  z_end=-1.004  (33s)
+
+saved results/retrain_eval.npz
