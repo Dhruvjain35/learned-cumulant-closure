@@ -1,0 +1,21 @@
+staircase re-run, V3 vs FROZEN V4, V0 regime, cached mcsolve refs, seeds [7, 8, 9]
+  M=6 seed 7 (MCerr 0.081): v3[nn=0.057 nz=0.048 mab=0.190 pk=0.018]  v4[nn=0.048 nz=0.037 mab=0.183 pk=0.014]  (18s)
+  M=6 seed 8 (MCerr 0.077): v3[nn=0.045 nz=0.044 mab=0.125 pk=0.041]  v4[nn=0.027 nz=0.034 mab=0.085 pk=0.011]  (18s)
+  M=6 seed 9 (MCerr 0.078): v3[nn=0.059 nz=0.052 mab=0.184 pk=0.031]  v4[nn=0.043 nz=0.037 mab=0.134 pk=0.004]  (16s)
+  M=7 seed 7 (MCerr 0.084): v3[nn=0.088 nz=0.063 mab=0.285 pk=0.157]  v4[UNSTABLE]  (46s)
+  M=7 seed 8 (MCerr 0.085): v3[nn=0.041 nz=0.035 mab=0.177 pk=0.149]  v4[nn=0.035 nz=0.027 mab=0.139 pk=0.071]  (30s)
+  M=7 seed 9 (MCerr 0.083): v3[nn=0.064 nz=0.052 mab=0.241 pk=0.145]  v4[nn=0.055 nz=0.046 mab=0.222 pk=0.082]  (33s)
+  M=8 seed 7 (MCerr 0.096): v3[nn=0.161 nz=0.193 mab=0.455 pk=0.184]  v4[UNSTABLE]  (92s)
+  M=8 seed 8 (MCerr 0.091): v3[nn=0.053 nz=0.057 mab=0.230 pk=0.161]  v4[nn=0.050 nz=0.061 mab=0.206 pk=0.092]  (72s)
+  M=8 seed 9 (MCerr 0.097): v3[nn=0.096 nz=0.087 mab=0.343 pk=0.158]  v4[nn=0.083 nz=0.082 mab=0.424 pk=0.099]  (78s)
+  M=9 seed 7 (MCerr 0.104): v3[UNSTABLE]  v4[UNSTABLE]  (223s)
+  M=9 seed 8 (MCerr 0.104): v3[nn=0.088 nz=0.078 mab=0.361 pk=0.227]  v4[nn=0.087 nz=0.077 mab=0.415 pk=0.159]  (165s)
+  M=9 seed 9 (MCerr 0.102): v3[nn=0.214 nz=0.271 mab=0.664 pk=0.265]  v4[nn=0.192 nz=0.255 mab=0.717 pk=0.208]  (171s)
+  M=10 seed 7 (MCerr 0.119): v3[UNSTABLE]  v4[UNSTABLE]  (468s)
+  M=10 seed 8 (MCerr 0.107): v3[nn=0.109 nz=0.094 mab=0.445 pk=0.352]  v4[nn=0.105 nz=0.083 mab=0.557 pk=0.318]  (408s)
+  M=10 seed 9 (MCerr 0.118): v3[UNSTABLE]  v4[UNSTABLE]  (484s)
+
+v3 stability per M (of 3): {6: 3, 7: 3, 8: 3, 9: 2, 10: 1}
+
+v4 stability per M (of 3): {6: 3, 7: 2, 8: 2, 9: 2, 10: 1}
+saved results/staircase_v4.npz
