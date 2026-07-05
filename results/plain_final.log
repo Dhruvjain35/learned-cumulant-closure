@@ -1,0 +1,26 @@
+[in:deep] ka=0.030 gp=0.020 s32: plain=0.552
+[in:deep] ka=0.030 gp=0.020 s33: plain=0.560
+[in:deep] ka=0.030 gp=0.020 s34: plain=0.578
+[in:edge] ka=0.045 gp=0.020 s32: plain=0.530
+[in:edge] ka=0.045 gp=0.020 s33: plain=0.536
+[in:edge] ka=0.045 gp=0.020 s34: plain=0.550
+[in:edge] ka=0.045 gp=0.050 s32: plain=0.430
+[in:edge] ka=0.045 gp=0.050 s33: plain=0.435
+[in:edge] ka=0.045 gp=0.050 s34: plain=0.439
+[in:edge] ka=0.030 gp=0.050 s32: plain=0.445
+[in:edge] ka=0.030 gp=0.050 s33: plain=0.451
+[in:edge] ka=0.030 gp=0.050 s34: plain=0.456
+[out:seam] ka=0.050 gp=0.020 s32: plain=0.523
+[out:seam] ka=0.050 gp=0.020 s33: plain=0.529
+[out:seam] ka=0.050 gp=0.020 s34: plain=0.541
+[out:seam] ka=0.050 gp=0.050 s32: plain=0.426
+[out:seam] ka=0.050 gp=0.050 s33: plain=0.430
+[out:seam] ka=0.050 gp=0.050 s34: plain=0.434
+[out:resid] ka=0.030 gp=0.065 s32: plain=0.406
+[out:resid] ka=0.030 gp=0.065 s33: plain=0.411
+[out:resid] ka=0.030 gp=0.065 s34: plain=0.414
+[sanity] (0.7,0.15,0.02,0.15): plain=0.414
+[sanity] (0.7,0.15,0.02,0.4): plain=0.438
+[sanity] (0.7,0.15,0.3,0.15): plain=0.219
+[sanity] (1.1,0.15,0.02,0.15): plain=0.506
+saved results/plain_final_s32_33_34.npz
