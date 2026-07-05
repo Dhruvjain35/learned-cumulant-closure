@@ -1,0 +1,29 @@
+V7 FINAL VERDICT on seeds [26, 27, 28] (ledger; router box kappa<=0.045 & gphi<=0.05, frozen)
+
+branch equivalence: |V7 - V6|_in = 0.00e+00, |V7 - V4|_out = 0.00e+00  -> PASS
+
+REGION: pocket + seam (M=5). per-seed NRMSE_n or X;  V7[branch] | v4 | v6
+  deep corner   [in ] ka=0.030 gp=0.020  s26: V7[v6]=0.116 v4=X v6=0.116 | s27: V7[v6]=0.062 v4=X v6=0.062 | s28: V7[v6]=0.066 v4=X v6=0.066
+  inside edge   [in ] ka=0.045 gp=0.020  s26: V7[v6]=0.058 v4=0.065 v6=0.058 | s27: V7[v6]=0.043 v4=0.025 v6=0.043 | s28: V7[v6]=0.045 v4=0.283 v6=0.045
+  inside edge   [in ] ka=0.045 gp=0.050  s26: V7[v6]=0.039 v4=0.044 v6=0.039 | s27: V7[v6]=0.027 v4=0.035 v6=0.027 | s28: V7[v6]=0.040 v4=0.054 v6=0.040
+  inside edge   [in ] ka=0.030 gp=0.050  s26: V7[v6]=0.039 v4=X v6=0.039 | s27: V7[v6]=0.037 v4=0.043 v6=0.037 | s28: V7[v6]=0.057 v4=0.094 v6=0.057
+  outside seam  [out] ka=0.050 gp=0.020  s26: V7[v4]=0.056 v4=0.056 v6=0.064 | s27: V7[v4]=0.031 v4=0.031 v6=0.045 | s28: V7[v4]=0.027 v4=0.027 v6=0.042
+  outside seam  [out] ka=0.050 gp=0.050  s26: V7[v4]=0.041 v4=0.041 v6=0.039 | s27: V7[v4]=0.021 v4=0.021 v6=0.025 | s28: V7[v4]=0.058 v4=0.058 v6=0.037
+  outside seam  [out] ka=0.030 gp=0.065  s26: V7[v4]=X v4=X v6=0.035 | s27: V7[v4]=0.035 v4=0.035 v6=0.038 | s28: V7[v4]=0.072 v4=0.072 v6=0.054
+
+REGION: far-M (V0 regime -> routes to V4 by box):
+  M=9 seed 26 (MCerr 0.096): V7[v4]=0.067
+  M=9 seed 27 (MCerr 0.104): V7[v4]=0.140
+  M=9 seed 28 (MCerr 0.103): V7[v4]=X
+  M=10 seed 26 (MCerr 0.105): V7[v4]=0.092
+  M=10 seed 27 (MCerr 0.116): V7[v4]=0.138
+  M=10 seed 28 (MCerr 0.120): V7[v4]=X
+
+REGION: normal sanity (seed 26; all route to V4):
+  (0.7,0.15,0.02,0.15): V7[v4]=0.033
+  (0.7,0.15,0.02,0.4): V7[v4]=0.115
+  (0.7,0.15,0.3,0.15): V7[v4]=0.013
+  (1.1,0.15,0.02,0.15): V7[v4]=0.052
+
+SUMMARY: in-box V7 stability 100% med 0.044; far-M stability 67%; sanity med 0.042
+saved results/eval_v7_s26_27_28.npz
