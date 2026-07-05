@@ -1,0 +1,22 @@
+trained v3-RAW and v3-RATIO on identical pilot data; v2 loaded (frozen)
+
+NOTE mean-field: identically frozen from these ICs (all coherences 0 -> every MF derivative 0);
+superradiance needs the fluctuations MF discards. Bottom rung of the hierarchy by physics.
+
+cell                    nc/NC |   plain      v2   v3raw   v3rat  (NRMSE_n; z in log)
+I1  interp g,k           0.26 |   0.411   0.124   0.063   0.072  z: 0.313/0.116/0.073/0.078  (13s)
+I2  interp all           0.25 |   0.322     inf   0.110   0.134  z: 0.168/inf/0.184/0.149  (21s)
+I3  center/new seed      0.26 |   0.412   0.101   0.465   0.098  z: 0.236/0.084/0.472/0.100  (15s)
+E1  high dephasing       0.21 |   0.219   0.322   0.128   0.049  z: 0.170/0.536/0.180/0.032  (15s)
+E2  high disorder        0.25 |   0.420   0.070   0.049   0.048  z: 0.255/0.085/0.060/0.034  (15s)
+E3  strong coupling      0.29 |   0.505   0.223     inf   0.072  z: 0.284/0.264/inf/0.049  (29s)
+E4  weak coupling        0.18 |   0.296   0.131   0.058   0.054  z: 0.186/0.141/0.061/0.045  (9s)
+E5  high kappa           0.19 |   0.315   0.109   0.118   0.070  z: 0.104/0.084/0.220/0.071  (14s)
+E6  low kappa            0.30 |   0.539   1.452     inf   0.377  z: 0.830/2.228/inf/0.640  (26s)
+IC  f=0.75 stress        0.15 |   0.407   6.658  44.863   0.127  z: 0.156/2.441/28.038/0.061
+
+DECISION TABLE
+  v3raw: interpolation FAIL (median NRMSE_n 0.288 vs plain 0.409); extrapolation wins 4/6 cells
+  v3rat: interpolation PASS (median NRMSE_n 0.113 vs plain 0.409); extrapolation wins 6/6 cells
+  KILL CONDITION (both reps lose ALL extrapolation cells): not triggered
+saved results/pilot_eval.npz
