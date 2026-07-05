@@ -1,0 +1,74 @@
+
+BRANCH N (q21 features, selection seeds [35, 36]):
+  rung 5: terms ['coh', 'z', 'nc/M z', 'p12r z', 's3r coh']
+    [normal] ka=0.150 gp=0.020 s35: formula=0.408 plain=0.420 V7=0.028 share=0.03
+    [normal] ka=0.150 gp=0.020 s36: formula=0.386 plain=0.414 V7=0.024 share=0.07
+    [seam] ka=0.050 gp=0.020 s35: formula=0.634 plain=0.545 V7=0.028 share=-0.17
+    [seam] ka=0.050 gp=0.020 s36: formula=0.626 plain=0.526 V7=0.024 share=-0.20
+    [seam] ka=0.050 gp=0.050 s35: formula=0.509 plain=0.440 V7=0.020 share=-0.17
+    [seam] ka=0.050 gp=0.050 s36: formula=0.502 plain=0.428 V7=0.056 share=-0.20
+    [farM] M=9 s35: formula=0.524 (MCerr 0.104)
+    [farM] M=9 s36: formula=0.503 (MCerr 0.104)
+    [farM] M=10 s35: formula=0.529 (MCerr 0.116)
+    [farM] M=10 s36: formula=0.503 (MCerr 0.119)
+  rung 5: stability 100%, median advantage share -0.17
+  rung 10: terms ['coh', 'z', 'nc/M z', 'p12r z', 's3r coh', 'p12r g/k', 'nc/M', 's3r^2']...
+    [normal] ka=0.150 gp=0.020 s35: formula=0.296 plain=0.420 V7=0.028 share=0.32
+    [normal] ka=0.150 gp=0.020 s36: formula=0.280 plain=0.414 V7=0.024 share=0.34
+    [seam] ka=0.050 gp=0.020 s35: formula=0.461 plain=0.545 V7=0.028 share=0.16
+    [seam] ka=0.050 gp=0.020 s36: formula=0.455 plain=0.526 V7=0.024 share=0.14
+    [seam] ka=0.050 gp=0.050 s35: formula=0.406 plain=0.440 V7=0.020 share=0.08
+    [seam] ka=0.050 gp=0.050 s36: formula=0.403 plain=0.428 V7=0.056 share=0.07
+    [farM] M=9 s35: formula=0.397 (MCerr 0.104)
+    [farM] M=9 s36: formula=0.386 (MCerr 0.104)
+    [farM] M=10 s35: formula=0.410 (MCerr 0.116)
+    [farM] M=10 s36: formula=0.396 (MCerr 0.119)
+  rung 10: stability 100%, median advantage share 0.15
+  rung 20: terms ['coh', 'z', 'nc/M z', 'p12r z', 's3r coh', 'p12r g/k', 'nc/M', 's3r^2']...
+    [normal] ka=0.150 gp=0.020 s35: formula=0.314 plain=0.420 V7=0.028 share=0.27
+    [normal] ka=0.150 gp=0.020 s36: formula=0.299 plain=0.414 V7=0.024 share=0.29
+    [seam] ka=0.050 gp=0.020 s35: formula=0.544 plain=0.545 V7=0.028 share=0.00
+    [seam] ka=0.050 gp=0.020 s36: formula=0.540 plain=0.526 V7=0.024 share=-0.03
+    [seam] ka=0.050 gp=0.050 s35: formula=0.428 plain=0.440 V7=0.020 share=0.03
+    [seam] ka=0.050 gp=0.050 s36: formula=0.424 plain=0.428 V7=0.056 share=0.01
+    [farM] M=9 s35: formula=0.327 (MCerr 0.104)
+    [farM] M=9 s36: formula=0.295 (MCerr 0.104)
+    [farM] M=10 s35: formula=0.323 (MCerr 0.116)
+    [farM] M=10 s36: formula=0.300 (MCerr 0.119)
+  rung 20: stability 100%, median advantage share 0.02
+  -> NO compact formula qualifies for branch N: V7 stands as a validated computational closure there
+
+BRANCH B (q27 features, selection seeds [35, 36]):
+  rung 5: terms ['h_nc', 'coh', 'p12r g/k', 'g/k h_nc', 'h_coh']
+    [box] ka=0.030 gp=0.020 s35: formula=0.641 plain=0.582 V7=0.065 share=-0.11
+    [box] ka=0.030 gp=0.020 s36: formula=0.652 plain=0.556 V7=0.074 share=-0.20
+    [box] ka=0.045 gp=0.020 s35: formula=0.602 plain=0.554 V7=0.043 share=-0.10
+    [box] ka=0.045 gp=0.020 s36: formula=0.605 plain=0.533 V7=0.051 share=-0.15
+    [box] ka=0.030 gp=0.050 s35: formula=0.507 plain=0.462 V7=0.035 share=-0.10
+    [box] ka=0.030 gp=0.050 s36: formula=0.518 plain=0.449 V7=0.054 share=-0.18
+    [box] ka=0.045 gp=0.050 s35: formula=0.488 plain=0.445 V7=0.026 share=-0.10
+    [box] ka=0.045 gp=0.050 s36: formula=0.493 plain=0.433 V7=0.038 share=-0.15
+  rung 5: stability 100%, median advantage share -0.13
+  rung 10: terms ['h_nc', 'coh', 'p12r g/k', 'g/k h_nc', 'h_coh', 'coh g/k', 'd1/k', 'd2/k']...
+    [box] ka=0.030 gp=0.020 s35: formula=0.684 plain=0.582 V7=0.065 share=-0.20
+    [box] ka=0.030 gp=0.020 s36: formula=0.687 plain=0.556 V7=0.074 share=-0.27
+    [box] ka=0.045 gp=0.020 s35: formula=0.630 plain=0.554 V7=0.043 share=-0.15
+    [box] ka=0.045 gp=0.020 s36: formula=0.627 plain=0.533 V7=0.051 share=-0.19
+    [box] ka=0.030 gp=0.050 s35: formula=0.524 plain=0.462 V7=0.035 share=-0.15
+    [box] ka=0.030 gp=0.050 s36: formula=0.530 plain=0.449 V7=0.054 share=-0.20
+    [box] ka=0.045 gp=0.050 s35: formula=0.501 plain=0.445 V7=0.026 share=-0.13
+    [box] ka=0.045 gp=0.050 s36: formula=0.500 plain=0.433 V7=0.038 share=-0.17
+  rung 10: stability 100%, median advantage share -0.18
+  rung 20: terms ['h_nc', 'coh', 'p12r g/k', 'g/k h_nc', 'h_coh', 'coh g/k', 'd1/k', 'd2/k']...
+    [box] ka=0.030 gp=0.020 s35: formula=0.497 plain=0.582 V7=0.065 share=0.16
+    [box] ka=0.030 gp=0.020 s36: formula=0.502 plain=0.556 V7=0.074 share=0.11
+    [box] ka=0.045 gp=0.020 s35: formula=0.466 plain=0.554 V7=0.043 share=0.17
+    [box] ka=0.045 gp=0.020 s36: formula=0.464 plain=0.533 V7=0.051 share=0.14
+    [box] ka=0.030 gp=0.050 s35: formula=0.426 plain=0.462 V7=0.035 share=0.09
+    [box] ka=0.030 gp=0.050 s36: formula=0.431 plain=0.449 V7=0.054 share=0.04
+    [box] ka=0.045 gp=0.050 s35: formula=0.405 plain=0.445 V7=0.026 share=0.10
+    [box] ka=0.045 gp=0.050 s36: formula=0.404 plain=0.433 V7=0.038 share=0.07
+  rung 20: stability 100%, median advantage share 0.10
+  -> NO compact formula qualifies for branch B: V7 stands as a validated computational closure there
+
+saved formula selection verdicts
