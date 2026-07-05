@@ -1,0 +1,33 @@
+support model fitted (2s); d0 per dominant type: {('a', 'sp', 'sp'): 1.64, ('a', 'sp', 'sm'): 1.68, ('a', 'sp', 'sz'): 1.45, ('a', 'sm', 'sm'): 1.25, ('a', 'sm', 'sz'): 1.3, ('a', 'sz', 'sz'): 1.31, ('a', 'a', 'sp'): 1.37, ('a', 'a', 'sm'): 1.15, ('a', 'a', 'sz'): 1.16, ('a', 'a', 'a'): 1.04, ('ad', 'a', 'sm'): 1.48, ('ad', 'a', 'sz'): 1.21, ('ad', 'a', 'a'): 1.17, ('sp', 'sm', 'sm'): 1.74, ('sp', 'sm', 'sz'): 1.52, ('sm', 'sm', 'sm'): 1.29, ('sm', 'sm', 'sz'): 1.34, ('sm', 'sz', 'sz'): 1.39, ('sz', 'sz', 'sz'): 1.39}
+
+pocket cells (dev seeds 7/8), base closure with risk logging (fade OFF):
+  ka=0.030 gp=0.020 sd=8: UNSTABLE onset= 29.5 trigger=never lead= 29.5
+  ka=0.030 gp=0.035 sd=7: UNSTABLE onset= 25.7 trigger=never lead= 25.7
+  ka=0.030 gp=0.035 sd=8: UNSTABLE onset= 29.5 trigger=never lead= 29.5
+  ka=0.030 gp=0.050 sd=7: UNSTABLE onset= 26.9 trigger=never lead= 26.9
+  ka=0.030 gp=0.065 sd=7: UNSTABLE onset= 32.8 trigger=never lead= 32.8
+  ka=0.030 gp=0.080 sd=7: UNSTABLE onset= 38.8 trigger=never lead= 38.8
+  ka=0.035 gp=0.020 sd=7: UNSTABLE onset= 26.1 trigger=never lead= 26.1
+  ka=0.035 gp=0.020 sd=8: UNSTABLE onset= 27.3 trigger=never lead= 27.3
+  ka=0.035 gp=0.035 sd=7: UNSTABLE onset= 27.3 trigger=2.7 lead= 24.7
+  ka=0.035 gp=0.035 sd=8: UNSTABLE onset= 32.4 trigger=never lead= 32.4
+  ka=0.035 gp=0.050 sd=7: UNSTABLE onset= 31.2 trigger=2.6 lead= 28.5
+  ka=0.040 gp=0.020 sd=7: UNSTABLE onset= 30.2 trigger=2.5 lead= 27.7
+  ka=0.040 gp=0.020 sd=8: UNSTABLE onset= 32.4 trigger=never lead= 32.4
+  ka=0.040 gp=0.035 sd=7: UNSTABLE onset= 27.5 trigger=2.7 lead= 24.8
+  ka=0.040 gp=0.035 sd=8: UNSTABLE onset= 37.0 trigger=never lead= 37.0
+  ka=0.040 gp=0.050 sd=7: UNSTABLE onset= 32.4 trigger=2.6 lead= 29.7
+  ka=0.045 gp=0.020 sd=8: UNSTABLE onset= 39.2 trigger=never lead= 39.2
+  ka=0.045 gp=0.035 sd=7: UNSTABLE onset= 29.5 trigger=2.6 lead= 27.0
+  ka=0.045 gp=0.050 sd=7: UNSTABLE onset= 33.6 trigger=2.6 lead= 31.0
+  ka=0.050 gp=0.050 sd=7: UNSTABLE onset= 34.8 trigger=2.8 lead= 32.0
+
+lead >= 2.0 in 20/20 unstable rollouts (100%; required >= 80%)
+
+false-alarm control: stable Q1 center-regime rollouts (in-support), seeds 7/8/9:
+  seed 7: stable=True  time-fraction d/d0>=1: 7.2%
+  seed 8: stable=True  time-fraction d/d0>=1: 12.7%
+  seed 9: stable=True  time-fraction d/d0>=1: 11.0%
+
+PRE-REGISTERED VERDICT: FAIL (coverage 100%, worst false-alarm 12.7%)
+saved results/risk_validation.npz
