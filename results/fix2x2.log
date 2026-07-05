@@ -1,0 +1,46 @@
+2x2 arms ready (dens model fitted/loaded). Judgment: pocket grid x seeds 9,10 (untouched).
+
+  ka=0.030 gp=0.020  base:X/S | dens:X/X | gate:X/X | both:X/S
+  ka=0.030 gp=0.035  base:X/X | dens:S/S | gate:S/X | both:S/S
+  ka=0.030 gp=0.050  base:S/X | dens:S/S | gate:S/X | both:S/S
+  ka=0.030 gp=0.065  base:S/S | dens:S/S | gate:S/S | both:S/S
+  ka=0.030 gp=0.080  base:S/S | dens:S/S | gate:S/S | both:S/S
+  ka=0.030 gp=0.100  base:S/S | dens:S/S | gate:S/S | both:S/S
+  ka=0.035 gp=0.020  base:X/X | dens:S/X | gate:S/X | both:S/S
+  ka=0.035 gp=0.035  base:X/X | dens:S/S | gate:S/X | both:S/S
+  ka=0.035 gp=0.050  base:S/X | dens:S/S | gate:S/S | both:S/S
+  ka=0.035 gp=0.065  base:S/S | dens:S/S | gate:S/S | both:S/S
+  ka=0.035 gp=0.080  base:S/S | dens:S/S | gate:S/S | both:S/S
+  ka=0.035 gp=0.100  base:S/S | dens:S/S | gate:S/S | both:S/S
+  ka=0.040 gp=0.020  base:S/S | dens:S/X | gate:S/S | both:S/S
+  ka=0.040 gp=0.035  base:X/X | dens:S/S | gate:S/S | both:S/S
+  ka=0.040 gp=0.050  base:S/S | dens:S/S | gate:S/S | both:S/S
+  ka=0.040 gp=0.065  base:S/S | dens:S/S | gate:S/S | both:S/S
+  ka=0.040 gp=0.080  base:S/S | dens:S/S | gate:S/S | both:S/S
+  ka=0.040 gp=0.100  base:S/S | dens:S/S | gate:S/S | both:S/S
+  ka=0.045 gp=0.020  base:S/S | dens:S/S | gate:S/S | both:S/S
+  ka=0.045 gp=0.035  base:S/X | dens:S/S | gate:S/S | both:S/S
+  ka=0.045 gp=0.050  base:S/S | dens:S/S | gate:S/S | both:S/S
+  ka=0.045 gp=0.065  base:S/S | dens:S/S | gate:S/S | both:S/S
+  ka=0.045 gp=0.080  base:S/S | dens:S/S | gate:S/S | both:S/S
+  ka=0.045 gp=0.100  base:S/S | dens:S/S | gate:S/S | both:S/S
+  ka=0.050 gp=0.020  base:S/S | dens:S/S | gate:S/S | both:S/S
+  ka=0.050 gp=0.035  base:S/S | dens:S/S | gate:S/S | both:S/S
+  ka=0.050 gp=0.050  base:S/S | dens:S/S | gate:S/S | both:S/S
+  ka=0.050 gp=0.065  base:S/S | dens:S/S | gate:S/S | both:S/S
+  ka=0.050 gp=0.080  base:S/S | dens:S/S | gate:S/S | both:S/S
+  ka=0.050 gp=0.100  base:S/S | dens:S/S | gate:S/S | both:S/S
+
+ARM SUMMARY over pocket grid x seeds 9,10 (pre-registered criteria; r = |k3|/B_common):
+   arm  stab%  medNRMSE(st)  P(r>.90)%  P(r>.99)%   max r  max|k3|
+  base   80.0         0.044        4.7        4.4    4.76    1.128
+  dens   93.3         0.031        2.0        1.8    4.76    1.139
+  gate   90.0         0.107       80.4       80.0    1.00    0.734
+  both   98.3         0.097       78.9       78.5    1.11    0.697
+
+SANITY (out-of-pocket, seed 9; any regression vs base disqualifies the arm):
+  (0.7,0.15,0.02,0.15): base=0.023  dens=0.024  gate=0.104  both=0.102
+  (0.7,0.15,0.02,0.4): base=0.069  dens=0.049  gate=0.085  both=0.070
+  (0.7,0.15,0.3,0.15): base=0.023  dens=0.014  gate=0.050  both=0.053
+  (1.1,0.15,0.02,0.15): base=0.035  dens=0.046  gate=0.188  both=0.145
+saved results/fix2x2.npz
