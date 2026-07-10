@@ -62,7 +62,7 @@ V7's **rollout** is ≈ **76×** the 2nd-order rollout (1.52 s vs 0.020 s).
 ## One conservative sentence (safe for the manuscript)
 
 > In the evaluated M=3 cells, V7's median total wall-clock time (≈4.6 s) was close to the second-order closure
-> (≈3.1 s) and roughly 4× and 18× below the tested κ4=0 and κ5=0 truncations (≈21 s and ≈81 s), because V7
+> (≈3.1 s) and roughly 4.5× and 18× below the tested κ4=0 and κ5=0 truncations (≈21 s and ≈81 s), because V7
 > reuses the second-order engine and adds a learned per-step evaluation rather than constructing a higher-order
 > engine; its per-rollout time (≈1.5 s) is substantially above the second-order rollout (≈0.02 s).
 

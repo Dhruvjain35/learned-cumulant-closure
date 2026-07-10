@@ -23,9 +23,9 @@ open, *disordered* cavity–emitter regime where the standard truncation hierarc
 
 > On the **superradiant burst peak** of an open, disordered Tavis–Cummings ensemble — a measurable
 > collective-emission observable — the standard second-order cumulant closure is off by ≈ **+29%**, the tested
-> κ4 = 0 third-order closure by ≈ **−28%** (and it runs away in the low-loss pocket), and the κ5 = 0 fourth-order
+> κ4 = 0 third-order closure by ≈ **−25% to −28%** (and it runs away in the low-loss pocket), and the κ5 = 0 fourth-order
 > closure **runs away** — its integration triggers a divergence guard. A frozen, physics-routed **learned closure
-> (V7)** stays within ≈ **±1%** of the
+> (V7)** stays within ≈ **±0.7%** of the
 > exact reference in the tested cells. This repo has the engines, the learned closure, the mechanism analysis,
 > the rejected hypotheses, and a cross-platform reproduction package.
 
@@ -37,9 +37,9 @@ Signed burst-peak error vs. an exact master-equation solve, in the evaluated dis
 |---|---|---|---|
 | mean-field | no burst from these ICs | — | trivial |
 | **2nd-order cumulant** | overshoots ≈ **+29%** | stable | no high-order engine to construct |
-| κ4 = 0 (3rd-order) | undershoots ≈ **−28%** | runaway growth (guard triggered) in the low-loss pocket | heavier than 2nd; M = 4 pocket case failed |
+| κ4 = 0 (3rd-order) | undershoots ≈ **−25% to −28%** | runaway growth (guard triggered) in the low-loss pocket | heavier than 2nd; M = 4 pocket case failed |
 | κ5 = 0 (4th-order) | overshoots, then **runaway growth** | guard triggered in all M = 3 cells (both regimes) | substantial, highly variable at M = 3 |
-| **V7 (learned)** | ≈ **±1%** | stable | no high-order engine to construct; per-rollout time not separately logged |
+| **V7 (learned)** | ≈ **±0.7%** | stable | no high-order engine to construct; per-rollout time not near second order |
 
 Among the tested zero-next-cumulant truncations through fourth order, none produced a stable, accurate burst
 closure in these cells. *(Scope: exact-referenced at the tested molecule counts; behaviour beyond the exact
@@ -53,13 +53,15 @@ ceiling is reported as an estimate, not a result.)*
 
 *Stability (%) and median conditional NRMSE for each closure across regimes (in-box / seam / sanity / far-M),
 measured against the exact reference on held-out disorder draws. V7 (right column) carries the lowest error while
-staying stable everywhere it is defined.*
+staying stable everywhere it is defined. The on-figure tag "bit-identical" means V7 exactly reproduces its own
+routed frozen branch (max diff = 0.0; see `src/evaluation/eval_v7.py`), not the scalable-vs-dense
+machine-precision (≤ 5e-14) gate.*
 
 ## Why it fails, mechanistically
 
 The burst-peak error is carried by **two connected third-cumulant channels**: photon-number–inversion
 `⟨a†a σᶻ⟩` (dominant) and photon-polarization–inversion `⟨a σ⁺ σᶻ⟩` (secondary). Second order sets both to
-zero (→ overshoot); κ4 = 0 mis-signs them (→ undershoot); V7 reconstructs them.
+zero (→ overshoot); κ4 = 0 over-corrects them (→ undershoot); V7 reconstructs them.
 
 <div align="center">
 <img src="assets/img/mechanism.png" width="92%" alt="Mechanism figure: which kappa3 channels carry the correction, the dominant channel's kappa3 trajectory for exact vs V7 vs T3 vs plain, and closed-loop ablation."/>
@@ -80,7 +82,7 @@ cells, one machine — full method and caveats in
 </div>
 
 V7 reuses the second-order engine's ≈ 3 s build and adds a learned per-step evaluation instead of constructing a
-higher-order engine, so its median **total** (≈ 4.6 s) sits close to second order (≈ 3.1 s) and roughly **4×**
+higher-order engine, so its median **total** (≈ 4.6 s) sits close to second order (≈ 3.1 s) and roughly **4.5×**
 and **18×** below the κ4 = 0 (≈ 21 s) and κ5 = 0 (≈ 81 s) truncations. Its **per-rollout** cost (≈ 1.5 s) is ≈ 76×
 the second-order rollout — measured at M = 3 on one machine, so this is a build-dominated total-time advantage,
 **not** a "cheap," "fast," or "near-second-order" claim.
@@ -154,6 +156,11 @@ python run.py src/baselines/t4_eval.py
 
 - The physics model, the validation targets, and every reported number come from the runnable code in this repository, gated by the checks in
   [`docs/PROTOCOL.md`](docs/PROTOCOL.md).
+
+## How to cite
+
+If you use this code or its results, please cite it via [`CITATION.cff`](CITATION.cff) (GitHub's "Cite this
+repository" button). The physics and methods references are in [`references.bib`](references.bib).
 
 ## License
 

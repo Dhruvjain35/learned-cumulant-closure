@@ -986,8 +986,9 @@ set-partition moment-cumulant closure (VERIFIED to reproduce T3's hardcoded kapp
 gate PASSES at ~1e-14 (assembled d<k>/dt == exact <L^dagger[k]> on all-exact moments) -> the engine is correct.
 
 RESULT (outcome O3, strongest for V7): the kappa5=0 fourth-order truncation GENUINELY DIVERGES -- finite-time
-blow-up at t~9.65, M=3, BOTH regimes. This is NOT a solver artifact: FOUR integrators (LSODA at rtol 1e-5 AND
-1e-8, plus stiff implicit Radau and BDF) all diverge at the IDENTICAL time and magnitude (8.8e5). It also
+blow-up at M=3 in BOTH regimes (guard times differ by regime: POCKET t~9.65, CONTROL t~12.06). This is NOT a
+solver artifact: on the POCKET draw-50 cell, FOUR integrators (LSODA at rtol 1e-5 AND 1e-8, plus stiff implicit
+Radau and BDF) all diverge at the IDENTICAL time (t~9.65) and magnitude (8.8e5). It also
 OVERSHOOTS the peak (n~2.8 vs exact 2.31 at t=3) before diverging, and is EXPENSIVE (~100s to build at M=3;
 348 tracked moments; construction cost large and highly variable even at M=3). So among the TESTED
 zero-next-cumulant truncations through 4th order, NONE gave a stable, accurate burst closure in the evaluated

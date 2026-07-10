@@ -28,5 +28,7 @@ Notes:
   Both trigger the guard; the runaway is consistent across these settings, not tied to one integrator.
 - `130cf44` = the packaging-pass commit that adds `results/t4_gate.log` and the burst-trace artifacts
   (filled in after commit; see `git log --oneline -- results/t4_gate.log`).
-- No memory measurements exist in the repository; no runtime is claimed for V7 (see the section and the poster
-  do-not-use list).
+- No memory measurements exist in the repository; no runtime is claimed for V7 *in this baselines/necessity
+  section* (see the section and the poster do-not-use list). V7 runtime is characterized separately in the
+  frozen benchmark `results/runtime_baseline_comparison.md`, which reports a build-dominated total-time
+  comparison (V7 total ≈4.6 s), not a speed claim.

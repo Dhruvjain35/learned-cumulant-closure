@@ -4,7 +4,8 @@
 #   python3 -m venv .venv && . .venv/bin/activate && pip install -r requirements.txt
 #
 # Versions below are lower bounds known to work with this codebase; newer patch releases are expected to be fine.
-# Note: numpy 2.x is required (the code uses np.trapezoid, added in numpy 2.0).
+# Note: numpy>=2.0 matches the environment used for the frozen results; the code also falls back to np.trapz on
+# numpy 1.x (see src/evaluation/burst_pred.py), so this pin matches the record rather than being a hard requirement.
 numpy>=2.0
 scipy>=1.11
 qutip>=5.0

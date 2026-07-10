@@ -1,8 +1,8 @@
 # Related work
 
-Verified primary sources only (see [`../references.bib`](../references.bib)). Entries whose author/venue fields
-are not fully confirmed are flagged in [`MANUSCRIPT_CLAIM_AUDIT.md`](MANUSCRIPT_CLAIM_AUDIT.md) and must be
-confirmed before submission. This work claims a specific combination and a specific mechanistic finding; it does
+Verified primary sources only (see [`../references.bib`](../references.bib)). All author/venue/DOI fields were
+verified against primary sources during the citation lock (see [`CITATION_AUDIT.md`](CITATION_AUDIT.md)); the only
+remaining external step is a specialist literature check of the novelty positioning. This work claims a specific combination and a specific mechanistic finding; it does
 **not** claim the individual ingredients are new.
 
 | Prior work | What it establishes | Overlap with this work | What this work does **not** claim | Remaining distinction |
