@@ -9,7 +9,8 @@ structure-preserving **learned third-cumulant closure** stays stable and tracks 
 open, *disordered* cavity–emitter regime where the standard truncation hierarchy doesn't. Every extension that
 *didn't* survive is kept in the record.
 
-![Python](https://img.shields.io/badge/python-3.12-3776AB?logo=python&logoColor=white)
+[![CI](https://github.com/Dhruvjain35/learned-cumulant-closure/actions/workflows/ci.yml/badge.svg)](https://github.com/Dhruvjain35/learned-cumulant-closure/actions/workflows/ci.yml)
+&nbsp;![Python](https://img.shields.io/badge/python-3.12-3776AB?logo=python&logoColor=white)
 &nbsp;![Julia](https://img.shields.io/badge/julia-≥1.9-9558B2?logo=julia&logoColor=white)
 &nbsp;![Reference](https://img.shields.io/badge/reference-exact_QuTiP-1f77b4)
 &nbsp;![Science](https://img.shields.io/badge/science-frozen-2ca02c)
