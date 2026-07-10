@@ -1,0 +1,13 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: "Learned Cumulant Closure"
+abstract: >-
+  A permutation-equivariant, Hermiticity-preserving learned third-cumulant closure that
+  recovers the superradiant burst peak of an open, disordered Tavis-Cummings ensemble,
+  validated against exact QuTiP references.
+authors:
+  - family-names: Jain
+    given-names: Dhruv
+year: 2026
+license: MIT
+repository-code: "https://github.com/Dhruvjain35/learned-cumulant-closure"
