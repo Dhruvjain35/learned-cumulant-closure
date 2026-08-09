@@ -73,8 +73,13 @@ def run_both(M, tmax, nt, seed=SEED):
 
     _, tp = pilot_eval.run_from(eng, m0, None)
     if route(KAPPA, GPHI) == "v6":
+        # run_v6 takes its own tmax/nt with defaults of 40.0/200, so patching the module
+        # constants does NOT reach it. They must be passed explicitly, or the V6 branch is
+        # silently evaluated over the standard window while the plain baseline is extended --
+        # which is exactly the bug this line fixes.
         _, t7, _ = run_v6(eng, m0, ClosureApplyV6(_load("v6"), eng, det, regime,
-                                                  xform=ratio_transform), lambdas(KAPPA, GPHI))
+                                                  xform=ratio_transform), lambdas(KAPPA, GPHI),
+                          tmax=tmax, nt=nt)
     else:
         _, t7 = pilot_eval.run_from(eng, m0, ClosureApplyV3(_load("v3dens"), eng, det, regime,
                                                             xform=ratio_transform))
