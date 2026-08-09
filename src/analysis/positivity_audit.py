@@ -60,8 +60,8 @@ def photon(eng, traj):
     return np.array([row[c].real for row in traj])
 
 
-def audit(M):
-    eng, w, g = cell(M)
+def audit(M, seed=SEED):
+    eng, w, g = cell(M, seed)
     det = w - WC
     regime = (GC, KAPPA, GPHI)
     out = {}
@@ -92,32 +92,42 @@ def audit(M):
 
 def main():
     smoke = "--smoke" in sys.argv
-    Ms = [5, 8] if smoke else [5, 8, 12, 16, 20]
+    Ms = [5, 8] if smoke else [5, 8, 10, 12, 16, 20]
+    seeds = [SEED] if smoke else [7, 8, 9]
 
     print("Positivity audit -- bounds that need no exact reference")
     print(f"  -1 <= <sz_i> <= 1 per emitter, <a^d a> >= 0;  g_c={GC} kappa={KAPPA} gphi={GPHI}")
+    print("  Swept over seeds: the documented stability boundary in this corner is seed-dependent,")
+    print("  so a single seed would misrepresent it in either direction.")
     print()
-    print(f"  {'M':>3} {'closure':>7} {'min <sz>':>10} {'below -1 by':>12} {'max <sz>':>9} "
-          f"{'min n':>9} {'% samples out':>14}")
+    print(f"  {'M':>3} {'closure':>7} {'seeds OK':>9} {'worst min <sz>':>15} "
+          f"{'worst below -1':>15} {'worst min n':>12}")
     rows = []
     for M in Ms:
-        a = audit(M)
+        per = {}
+        for s in seeds:
+            a = audit(M, seed=s)
+            for name in ("plain", "V7"):
+                rows.append(dict(M=M, closure=name, seed=s, **a[name]))
+                per.setdefault(name, []).append(a[name])
         for name in ("plain", "V7"):
-            d = a[name]
-            rows.append(dict(M=M, closure=name, **d))
-            flag = "  <-- violates" if (d["under"] > 1e-9 or d["over"] > 1e-9
-                                        or d["n_min"] < -1e-9) else ""
-            print(f"  {M:>3} {name:>7} {d['z_min']:>10.5f} {d['under']:>12.2e} "
-                  f"{d['z_max']:>9.5f} {d['n_min']:>9.2e} {100*d['frac_bad']:>13.2f}%{flag}")
+            ds = per[name]
+            nok = sum(1 for d in ds if d["under"] <= 1e-9 and d["over"] <= 1e-9
+                      and d["n_min"] >= -1e-9)
+            worst = max(ds, key=lambda d: d["under"] + d["over"])
+            flag = "  <-- violates" if nok < len(ds) else ""
+            print(f"  {M:>3} {name:>7} {nok:>5}/{len(ds):<3} {worst['z_min']:>15.4f} "
+                  f"{worst['under']:>15.3e} {worst['n_min']:>12.3e}{flag}")
 
     print()
     v7 = [r for r in rows if r["closure"] == "V7"]
     pl = [r for r in rows if r["closure"] == "plain"]
-    print(f"  worst V7 undershoot   : {max(r['under'] for r in v7):.4f} "
-          f"({100*max(r['under'] for r in v7):.2f}% below the physical floor)")
-    print(f"  worst plain undershoot: {max(r['under'] for r in pl):.4f}")
-    grows = [r["under"] for r in v7]
-    print(f"  V7 undershoot vs M    : {['%.4f' % u for u in grows]}")
+    print(f"  V7    : {sum(1 for r in v7 if r['under'] <= 1e-9 and r['n_min'] >= -1e-9)}"
+          f"/{len(v7)} (M, seed) cells physical")
+    print(f"  plain : {sum(1 for r in pl if r['under'] <= 1e-9 and r['n_min'] >= -1e-9)}"
+          f"/{len(pl)} cells physical")
+    bad = sorted({(r["M"], r["seed"]) for r in v7 if r["under"] > 1e-9 or r["n_min"] < -1e-9})
+    print(f"  V7 failures at (M, seed): {bad if bad else 'none'}")
 
     os.makedirs("results", exist_ok=True)
     np.savez_compressed("results/positivity_audit.npz", rows=np.array(rows, dtype=object))
