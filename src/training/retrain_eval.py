@@ -77,13 +77,26 @@ if __name__ == "__main__":
         rows.append((M, ep, eo, en, ro, rn, mcerr))
 
     print("\nstability of lc_new at very large M (no exact reference possible):")
+    print("   NOTE: these sizes are outside the validated operating range (see")
+    print("   src/closures/validated_range.py). z_end below is a MEAN over emitters and")
+    print("   cannot detect the failure mode measured for the frozen V7 at M>=12, where")
+    print("   per-emitter inversions diverge with opposite signs and leave the mean near -1.")
+    print("   Per-emitter bounds are therefore reported alongside it.")
+    from validated_range import check, status
     for M in [12, 16, 20]:
         t0 = time.time()
+        check(M, mode="warn")
         eng, w, g = build(M, TEST_SIGMA, TEST_SEED)
         _, tn = run(eng, ClosureApply(lc_new, eng, w - WC))
         n, z = observables(eng, tn)
-        print(f"   M={M}: stable={stable_ok(tn)}  n_peak={n.max():.3f}  z_end={z[-1]:.3f}  "
-              f"({time.time()-t0:.0f}s)")
+        # per-emitter inversion bound: the diagnostic the mean cannot provide
+        zcols = [eng.tpos[(0, 0, tuple(3 if s == i else 0 for s in range(M)))] for i in range(M)]
+        Z = np.array([[row[c].real for c in zcols] for row in tn])
+        zviol = float(max(0.0, np.max(np.abs(Z)) - 1.0))
+        physical = (zviol <= 1e-9) and (n.min() >= -1e-9)
+        print(f"   M={M} [{status(M)}]: stable={stable_ok(tn)}  physical={physical}  "
+              f"n_peak={n.max():.3f}  n_min={n.min():.3e}  z_end={z[-1]:.3f}  "
+              f"max|z_i|-1={zviol:.3e}  ({time.time()-t0:.0f}s)")
 
     np.savez_compressed("results/retrain_eval.npz", rows=np.array(rows, dtype=object))
     print("\nsaved results/retrain_eval.npz")
