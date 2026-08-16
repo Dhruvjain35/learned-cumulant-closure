@@ -8,11 +8,18 @@
 # It does NOT reproduce the learned closure (that is the model under test); the learned closure's advantage is
 # then measured against this independently-run baseline.
 #
-# STATUS (read this): this script was authored WITHOUT a Julia runtime available to its author. It is therefore
-# NOT execution-verified and its output is NOT an independent validation until a Julia user runs it and checks
-# the acceptance criterion. It is written to QuantumCumulants.jl >= 0.3 / QuantumOptics.jl APIs; expect some API
-# drift across versions -- the cumulant initial-value mapping (product_state_value) is the most fragile part and
-# is guarded by an explicit runtime check below. See REPLICATION_AUDIT.md for every assumption, and
+# STATUS (read this, the distinction matters):
+#   EXECUTION-VERIFIED: this script now runs end to end against the versions pinned in Manifest.toml
+#     (Julia 1.12.6, QuantumCumulants 0.7.0, QuantumOptics 1.2.7, OrdinaryDiffEq 7.6.0,
+#     ModelingToolkitBase 1.65.0, JSON 1.7.1) and produces the acceptance numbers. The earlier
+#     "authored without a Julia runtime" caveat no longer applies to the CODE.
+#   STILL NOT AN INDEPENDENT VALIDATION: it was run by the project's own author on the author's machine.
+#     Per docs/EXTERNAL_VALIDATION_STATUS.md, "cross-platform reproduction" requires a person who did not
+#     write this code to run it and record the result. That row remains NOT DONE. Do not cite this script's
+#     own output as external validation of anything.
+# Written against the pinned versions above; the cumulant initial-value mapping (product_state_value) remains the
+# most fragile part and now FAILS CLOSED (it throws on any operator rendering it does not recognise) rather than
+# silently returning a wrong initial condition. See REPLICATION_AUDIT.md for every assumption, and
 # REPLICATION_QUICKSTART.md for how to run. Language note: this file avoids the words first/novel/necessary/proves
 # on purpose -- it reports a reproduction check, nothing more.
 #
@@ -27,7 +34,10 @@
 using QuantumCumulants
 using QuantumOptics
 using OrdinaryDiffEq
-using ModelingToolkit
+# QuantumCumulants 0.7 builds its systems on ModelingToolkitBase (see its Project.toml [compat] and test suite);
+# importing the ModelingToolkit wrapper instead makes ODEProblem fail with "im is present in the system but im is
+# not an unknown". Import the names explicitly so nothing shadows QuantumOptics.
+using ModelingToolkitBase: @named, mtkcompile, ODEProblem, unknowns
 using JSON
 using SHA
 using Pkg
@@ -43,16 +53,20 @@ tlist() = collect(range(0.0, TMAX; length = NT))
 function report_versions()
     println("# ENVIRONMENT (record these in REPLICATION_SIGNOFF.md)")
     println("Julia version: ", VERSION)
-    for name in ("QuantumCumulants", "QuantumOptics", "OrdinaryDiffEq", "ModelingToolkit")
-        try
-            v = Pkg.dependencies()[Base.identify_package(name).uuid].version
-            println(rpad(name, 18), ": ", v)
-        catch
-            println(rpad(name, 18), ": <version query failed; record manually via `] status`>")
-        end
+    # Match by name over the whole dependency graph: SecondQuantizedAlgebra is a TRANSITIVE dependency (pulled
+    # in by QuantumCumulants 0.7), so identify_package cannot resolve it from this project's direct deps.
+    byname = Dict{String,Any}()
+    for (_, info) in Pkg.dependencies()
+        byname[info.name] = info.version
     end
-    println("NOTE: these package versions were NOT tested by the script's author. If the script errors on an")
-    println("API call, that is expected drift -- see REPLICATION_AUDIT.md, do not assume the physics is wrong.\n")
+    for name in ("QuantumCumulants", "QuantumOptics", "OrdinaryDiffEq", "ModelingToolkitBase",
+                 "SecondQuantizedAlgebra", "JSON")
+        v = get(byname, name, nothing)
+        println(rpad(name, 24), ": ", v === nothing ? "<not installed>" : v)
+    end
+    println("NOTE: this script HAS been executed against the versions pinned in Manifest.toml (see the STATUS")
+    println("block at the top of this file). If your resolved versions differ from the pinned ones and the")
+    println("script errors on an API call, that is version drift, not a physics problem -- see REPLICATION_AUDIT.md.\n")
 end
 
 # ---- parameter loading with hashes + validation (cannot silently run on wrong/missing params) ----------------
@@ -96,9 +110,11 @@ function exact_na(c, M, w, g)
     sz = [embed(b, k + 1, sigmaz(ba)) for k in 1:M]
     pe = [0.5 * (identityoperator(b) + sz[k]) for k in 1:M]
 
-    H = wc * (dagger(a) * a)
+    # `dagger` is exported by BOTH QuantumOptics and SecondQuantizedAlgebra (via QuantumCumulants), so a bare
+    # call is ambiguous and errors. Qualify it: this block is the QuantumOptics (numeric) side.
+    H = wc * (QuantumOptics.dagger(a) * a)
     for k in 1:M
-        H += w[k] * pe[k] + g[k] * (a * sp[k] + dagger(a) * sm[k])
+        H += w[k] * pe[k] + g[k] * (a * sp[k] + QuantumOptics.dagger(a) * sm[k])
     end
     J = Any[a]; rates = Float64[kappa]
     for k in 1:M
@@ -106,7 +122,7 @@ function exact_na(c, M, w, g)
         push!(J, sz[k]); push!(rates, gph / 2)       # (gphi/2) * D[sz]
     end
     psi0 = tensor(fockstate(bc, 0), fill(spinup(ba), M)...)   # vacuum + all excited
-    nop  = dagger(a) * a
+    nop  = QuantumOptics.dagger(a) * a
     ts   = tlist()
     _, n = timeevolution.master(ts, psi0, H, J; rates = rates, fout = (t, rho) -> real(expect(nop, rho)))
     n = Float64.(n)
@@ -140,48 +156,83 @@ function cumulant_na(c, M, w, g)
         push!(J, sm(k));         push!(rates, gdn)
         push!(J, 2 * pe(k) - 1); push!(rates, gph / 2)       # sz = 2*pe - 1
     end
-    eqs = complete(meanfield([a' * a], H, J; rates = rates, order = 2))
-    @named sys = ODESystem(eqs)
+    eqs = QuantumCumulants.complete(meanfield([a' * a], H, J; rates = rates, order = 2))
+    @named sys = System(eqs)
+    sysc = mtkcompile(sys)
+    uk = unknowns(sysc)
 
     # initial condition: cavity vacuum, ALL atoms excited (factorized product state).
-    # product_state_value maps each tracked average to its product-state value. THIS IS THE FRAGILE STEP
-    # (string-based; API-version dependent). It is guarded immediately below by physical checks on u0.
-    states = eqs.states
-    u0 = ComplexF64[product_state_value(s, M) for s in states]
+    # product_state_value parses each tracked average STRUCTURALLY (factor by factor) and throws on any factor
+    # it does not recognise, so a future rendering change halts instead of silently returning zeros.
+    vals = [product_state_value(u) for u in uk]
+    u0 = Dict(uk[i] => vals[i][1] for i in eachindex(uk))
 
-    ia = findfirst(s -> _is_adaga(s), states)
-    ia === nothing && error("could not locate <a'a> among cumulant states -- API/string mismatch, see AUDIT.")
-    # GUARD the fragile IC mapping: at t=0, <a'a>=0 and total excited population = M (all excited).
-    abs(u0[ia]) < 1e-9 || error("initial <a'a> = $(u0[ia]) != 0 -- product_state_value IC mapping is WRONG for "
-        * "your QuantumCumulants version; fix it (see REPLICATION_AUDIT.md) before trusting output.")
-    pe_idx = [i for (i, s) in enumerate(states) if _is_single_pe(s)]
-    if !isempty(pe_idx)
-        tot = sum(real(u0[pe_idx]))
-        isapprox(tot, float(M); atol = 1e-6) || error("initial total excited pop = $tot != M=$M -- IC mapping "
-            * "WRONG; fix product_state_value (see REPLICATION_AUDIT.md).")
-    end
+    # GUARD the IC mapping: at t=0, <a'a>=0 and the M single-emitter populations are each 1 (all excited).
+    # These now FAIL CLOSED -- an empty match is an error, not a skipped check.
+    ia = findfirst(i -> vals[i][2] == :adaga, eachindex(uk))
+    ia === nothing && error("could not locate <a'a> among cumulant unknowns -- API mismatch, see AUDIT.")
+    abs(vals[ia][1]) < 1e-9 || error("initial <a'a> = $(vals[ia][1]) != 0 -- IC mapping is WRONG.")
+    pe_idx = [i for i in eachindex(uk) if vals[i][2] == :single_pe]
+    length(pe_idx) == M || error("found $(length(pe_idx)) single-emitter population states, expected M=$M -- "
+        * "IC mapping is WRONG for your QuantumCumulants version (see REPLICATION_AUDIT.md).")
+    tot = sum(real(vals[i][1]) for i in pe_idx)
+    isapprox(tot, float(M); atol = 1e-6) || error("initial total excited pop = $tot != M=$M -- IC mapping WRONG.")
 
-    prob = ODEProblem(sys, u0, (0.0, TMAX))
+    prob = ODEProblem(sysc, u0, (0.0, TMAX))
     sol  = solve(prob, Tsit5(); saveat = tlist(), reltol = 1e-8, abstol = 1e-10)
-    sol.retcode == :Success || error("cumulant ODE solve failed: retcode=$(sol.retcode).")
-    n = Float64.(real.(getindex.(sol.u, ia)))
+    sol.retcode == ReturnCode.Success || error("cumulant ODE solve failed: retcode=$(sol.retcode).")
+
+    # Extract <a'a>(t) symbolically (QuantumCumulants' own accessor) rather than by positional index, then
+    # cross-check against the directly-indexed unknown -- if these disagree the extraction is untrustworthy.
+    nfun = get_solution(sol, a' * a, eqs)
+    n = Float64[real(nfun(t)) for t in sol.t]
+    n_direct = Float64.(real.(getindex.(sol.u, ia)))
+    maximum(abs.(n .- n_direct)) < 1e-8 || error("get_solution and direct indexing of <a'a> disagree by "
+        * "$(maximum(abs.(n .- n_direct))) -- observable extraction is unreliable, halting.")
     all(isfinite, n) || error("cumulant n(t) contains non-finite values (closure may have diverged).")
     return collect(sol.t), n
 end
 
-# product-state expectation of a tracked average (all atoms excited, cavity vacuum). Returns 1 only for a
-# product of excited-projectors; 0 for anything containing a cavity op or a raising/lowering transition.
-function product_state_value(avg, M)
-    ex = string(avg)
-    (occursin("a", ex) && !occursin("atom", ex)) && return 0.0 + 0im   # bare cavity a / a'
-    occursin("21", ex) && return 0.0 + 0im                              # raising  σ21
-    occursin("12", ex) && return 0.0 + 0im                              # lowering σ12
-    (occursin("22", ex) && !occursin("Destroy", ex)) && return 1.0 + 0im
-    return 0.0 + 0im
+# Product-state expectation of a tracked average for |vacuum> ⊗ |e,e,...,e>.
+#
+# This is parsed STRUCTURALLY, factor by factor, rather than by substring search on the whole average. That
+# matters: QuantumCumulants 0.7 renders transitions with UNICODE SUBSCRIPT level indices (σ1₂₂, not σ122), so
+# the previous `occursin("22", ...)` test matched nothing and returned 0.0 for EVERY state -- a silently wrong
+# (un-inverted) initial condition rather than a crash. Any factor this does not recognise is an ERROR, so a
+# future rendering change halts loudly instead of quietly producing a plausible wrong number.
+#
+# Returns (value, tag) where tag is :adaga for <a'a>, :single_pe for a single <σk₂₂>, else :other.
+const _SUBSCRIPTS = Dict('₀'=>'0','₁'=>'1','₂'=>'2','₃'=>'3','₄'=>'4','₅'=>'5','₆'=>'6','₇'=>'7','₈'=>'8','₉'=>'9')
+
+function _avg_factors(x)
+    s = replace(string(x), r"\(t\)$" => "")      # unknowns carry a (t); eqs.states do not
+    s = replace(s, "⟨" => "", "⟩" => "")
+    return strip.(split(s, "*"))
 end
-_is_adaga(avg) = occursin("a′*a", string(avg)) || occursin("a'*a", string(avg)) || string(avg) == "⟨a′*a⟩"
-_is_single_pe(avg) = (n22 = count(==("22"), split(string(avg), r"[^0-9]+")); n22 == 1 &&
-                      !occursin("a", replace(string(avg), "atom" => "")) )
+
+_is_cavity_factor(f) = (f == "a" || f == "a'" || f == "a′")
+
+function product_state_value(x)
+    fs = _avg_factors(x)
+    ncav = count(_is_cavity_factor, fs)
+    n22  = 0
+    for f in fs
+        _is_cavity_factor(f) && continue
+        m = match(r"^σ(\d+)([₀-₉])([₀-₉])$", f)
+        m === nothing && error("UNRECOGNIZED FACTOR '$f' in average '$(string(x))' -- the operator rendering of "
+            * "your QuantumCumulants version is not one this script knows how to map to a product state. "
+            * "Fix product_state_value before trusting any output (see REPLICATION_AUDIT.md).")
+        i = _SUBSCRIPTS[first(m.captures[2])]; j = _SUBSCRIPTS[first(m.captures[3])]
+        (i == '2' && j == '2') || return (0.0 + 0im, :other)   # any raising/lowering factor -> 0 in |e...e>
+        n22 += 1
+    end
+    # <a'a> is the tracked photon number: exactly the two cavity factors a' and a, nothing else.
+    if ncav == 2 && n22 == 0 && length(fs) == 2 && any(f -> f == "a'" || f == "a′", fs) && any(==("a"), fs)
+        return (0.0 + 0im, :adaga)                              # vacuum: <a'a> = 0
+    end
+    ncav > 0 && return (0.0 + 0im, :other)                      # any cavity factor -> 0 in the vacuum
+    return (1.0 + 0im, n22 == 1 ? :single_pe : :other)          # pure product of excited projectors
+end
 
 # ---------------------------------------------------------------------------------------------------
 function burst(ts, n, kappa)
