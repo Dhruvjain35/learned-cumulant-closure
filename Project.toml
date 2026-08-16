@@ -1,0 +1,21 @@
+name = "CumulantReplication"
+description = "Cross-platform reproduction environment for the learned-cumulant-closure burst-peak check."
+
+[deps]
+JSON = "682c06a0-de6a-54ab-a142-c8b1cf79cde6"
+ModelingToolkitBase = "7771a370-6774-4173-bd38-47e70ca0b839"
+OrdinaryDiffEq = "1dea7af3-3e70-54e6-95c3-0bf5283fa5ed"
+QuantumCumulants = "35bcea6d-e19f-57db-af74-8011de6c7255"
+QuantumOptics = "6e0679c1-51ea-5a7c-ac74-d61b76210b0c"
+SHA = "ea8e919c-243c-51af-8825-aaa63cd721ce"
+
+# Exact pins: these are the versions replicate_cumulant.jl was executed against. Manifest.toml records the
+# full transitive closure; these bounds are the fallback if the Manifest cannot be instantiated (e.g. on a
+# different Julia minor version). Do not loosen without re-running the acceptance check.
+[compat]
+JSON = "=1.7.1"
+ModelingToolkitBase = "=1.65.0"
+OrdinaryDiffEq = "=7.6.0"
+QuantumCumulants = "=0.7.0"
+QuantumOptics = "=1.2.7"
+julia = "1.10"
