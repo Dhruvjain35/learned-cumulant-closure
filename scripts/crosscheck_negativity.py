@@ -24,6 +24,12 @@ where the closure is badly broken is a STRONGER test of implementation equivalen
 cells, because a mismatch in the Hamiltonian, the dissipators, or the initial condition would show up loudly
 here. The two codebases encode the same equations.
 
+Related: src/analysis/positivity_audit.py quantifies the same class of violation (it audits -1 <= <sz_i> <= +1
+and <a'a> >= 0 for frozen V7 against the plain second-order control, at sizes where no exact reference exists).
+That audit and this check are complementary: it measures how large the violation is and whether it grows with M
+within one codebase; this one confirms that an excursion reproduces ACROSS two independent implementations, so
+the excursion is a property of the closure rather than of either implementation.
+
 Run:  julia --project=. scripts/crosscheck_negativity.jl   # writes the Julia CSV
       python run.py scripts/crosscheck_negativity.py        # compares
 """
