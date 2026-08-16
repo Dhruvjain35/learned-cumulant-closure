@@ -11,8 +11,11 @@ yours to record in `REPLICATION_SIGNOFF.md` after you run it and read `REPLICATI
 
 ## 1. What you need
 
-- **Julia ≥ 1.9** (for `pkgversion`/`Pkg.dependencies`). Install via [juliaup](https://github.com/JuliaLang/juliaup)
-  or the [official downloads](https://julialang.org/downloads/).
+- **Julia 1.12.6 recommended** — that is the version `Manifest.toml` was generated on, so it is the version the
+  pinned environment instantiates cleanly against. Install via
+  [juliaup](https://github.com/JuliaLang/juliaup) (`juliaup add 1.12.6`) or the
+  [official downloads](https://julialang.org/downloads/). Julia ≥ 1.10 should work via the `[compat]` fallback
+  described in §2, but a different minor version may fail to instantiate the Manifest.
 - Internet access on first run (to install packages from the Julia registry).
 - The repo, cloned, with `results/replication_params.json` present (it ships in the repo).
 
@@ -27,12 +30,28 @@ From the repository root:
 julia --project=. julia_setup.jl
 ```
 
-This activates a project environment in the repo folder and installs QuantumCumulants, QuantumOptics,
-OrdinaryDiffEq, ModelingToolkit, and JSON (SHA is a standard library). It resolves package versions from the
-registry — **record the versions it prints** in `REPLICATION_SIGNOFF.md`.
+This activates the project environment in the repo folder and **instantiates the exact pinned dependency set**
+recorded in `Manifest.toml` — the set the script has been executed against:
 
-> The author did not pin exact package versions (no Julia runtime was available to author the script). If a
-> newer package version changes an API the script calls, that is expected drift — see `REPLICATION_AUDIT.md`.
+| package | pinned version |
+|---|---|
+| Julia | 1.12.6 |
+| QuantumCumulants | 0.7.0 |
+| QuantumOptics | 1.2.7 |
+| OrdinaryDiffEq | 7.6.0 |
+| ModelingToolkitBase | 1.65.0 |
+| SecondQuantizedAlgebra (transitive) | 0.10.0 |
+| JSON | 1.7.1 |
+
+**Record the versions it prints** in `REPLICATION_SIGNOFF.md` anyway — if they differ from this table, that is
+itself worth knowing.
+
+> **If `Pkg.instantiate()` fails**, it is almost certainly a Julia-version mismatch. The setup script prints
+> your options: run on Julia 1.12.6, or delete `Manifest.toml` and re-run to resolve from the exact `[compat]`
+> pins in `Project.toml` instead. Either way, report the failure — a resolution failure is useful information.
+
+> **Earlier unpinned versions of this repo** resolved dependencies from the registry at run time, which caused
+> genuine API-drift failures in the first external attempt. That is fixed; see §7.
 
 ## 3. Run
 
@@ -79,15 +98,40 @@ ran cleanly. Record this outcome exactly as it is — a non-reproduction is a va
 
 ## 7. Known limitations and common errors
 
-- **Not execution-verified by the author.** No Julia runtime was available when the script was written.
-- **The cumulant initial-condition mapping is the fragile part.** `product_state_value` maps each tracked
-  average to its all-excited product-state value using string matching on operator names, which depends on
-  QuantumCumulants' printing. The script **guards** this: it halts with
-  `initial <a'a> != 0 ...` or `initial total excited pop != M ...` if the mapping is wrong for your version.
-  If you hit that, fix the mapping (guidance in `REPLICATION_AUDIT.md`) — do not trust the numbers until the
-  two initial-condition checks pass.
-- **API drift.** `meanfield`, `complete`, `ODESystem`, and `eqs.states` names/behaviour can change across
-  QuantumCumulants/ModelingToolkit versions. If the script errors there, adapt the call and note it in the audit.
+- **Execution status.** The script **is** now execution-verified against the pinned versions in §2: it runs end
+  to end and produces the acceptance numbers. It is **not** thereby externally validated — it was run by the
+  project's author. `docs/EXTERNAL_VALIDATION_STATUS.md` is the source of truth for that distinction, and the
+  cross-platform-reproduction row there stays **NOT DONE** until someone outside the project records a result.
+- **Fixed since the first external attempt (2026-08-16).** All four were unpinned-dependency API drift, not
+  physics; none changed the model, the parameters, or any reported number:
+  1. `dagger` is exported by both QuantumOptics and SecondQuantizedAlgebra (via QuantumCumulants 0.7), so the
+     bare call was ambiguous. Now qualified `QuantumOptics.dagger`.
+  2. QuantumCumulants 0.7 builds on **ModelingToolkitBase**, not the ModelingToolkit wrapper. Importing the
+     wrapper made `ODEProblem` fail with `im is present in the system but im is not an unknown`. The script now
+     imports `@named, mtkcompile, ODEProblem, unknowns` from `ModelingToolkitBase` and uses
+     `System` + `mtkcompile` + a `Dict` initial-condition map (MTK 11 rejects a positional `u0` vector).
+  3. **The one that mattered.** QuantumCumulants 0.7 renders transitions with *Unicode subscript* level indices
+     (`σ1₂₂`), so the old `occursin("22", …)` mapping matched nothing and returned `0.0` for **every** state — a
+     silently un-inverted initial condition rather than a crash. Worse, the guard meant to catch exactly this
+     failed *open*: the single-population index list came back empty, so the check was skipped. The mapping is
+     now parsed **structurally**, factor by factor, it **throws** on any factor it does not recognise, and the
+     guards **fail closed** (an empty match is an error, and the population count must equal M).
+  4. `sol.retcode == :Success` never matches modern SciML, which returns `ReturnCode.Success` — that guard would
+     have thrown a false failure on a perfectly good solve.
+- **Observable extraction.** `⟨a'a⟩(t)` is now read via QuantumCumulants' own `get_solution(sol, a'*a, eqs)`
+  rather than by positional index, and **cross-checked** against the directly-indexed unknown; the script halts
+  if the two disagree by more than 1e-8.
+- **Negative photon numbers outside the tested cells are expected, and are not a bug.** If you push the coupling
+  well above the evaluated cells (e.g. `g = 0.5`), the second-order closure returns a *negative* `⟨a'a⟩(t)`.
+  That is a positivity violation of the closure itself, not of this script. It is cross-checked in
+  `scripts/crosscheck_negativity.{jl,py}`: at an identical strong-coupling point, on a shared time grid at
+  matched tolerances, the Julia closure and the project's own Python engine agree to **8.11e-10** over all 201
+  grid points while the exact `mesolve` reference stays non-negative. The evaluated cells (`g_c = 0.70`,
+  i.e. `g = g_c/√M`) are far from this and show no such excursion.
+- **Remaining fragility.** `product_state_value` is still the most version-sensitive part. It now fails loudly
+  instead of silently, but if your QuantumCumulants version renders operators differently it *will* halt with
+  `UNRECOGNIZED FACTOR '…'`. That is the intended behaviour — fix the mapping (guidance in
+  `REPLICATION_AUDIT.md`) rather than working around it.
 - **Fock cutoff.** The exact solve uses `NCUT = 16`. The script halts if the burst reaches ≥ 45% of the cutoff
   (would be truncation-biased); raise `NCUT` and rerun if so. For these cells n_peak ≲ 3, well within 16.
 - **Cost grows with M.** The symbolic derivation and the exact Hilbert space both grow with M; M ≤ 4 is intended.
