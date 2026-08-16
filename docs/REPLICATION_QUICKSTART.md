@@ -11,11 +11,18 @@ yours to record in `REPLICATION_SIGNOFF.md` after you run it and read `REPLICATI
 
 ## 1. What you need
 
-- **Julia 1.12.6 recommended** — that is the version `Manifest.toml` was generated on, so it is the version the
-  pinned environment instantiates cleanly against. Install via
-  [juliaup](https://github.com/JuliaLang/juliaup) (`juliaup add 1.12.6`) or the
-  [official downloads](https://julialang.org/downloads/). Julia ≥ 1.10 should work via the `[compat]` fallback
-  described in §2, but a different minor version may fail to instantiate the Manifest.
+- **Julia 1.11.x or 1.12.6.** Both are covered by a committed, pinned manifest and both have been run end to end
+  on this repo, giving identical results (agreement to ~1e-15, i.e. last-digit floating point). Julia selects
+  the right manifest automatically:
+
+  | your Julia | manifest used | status |
+  |---|---|---|
+  | 1.11.x | `Manifest-v1.11.toml` | verified on 1.11.2 |
+  | 1.12.6 | `Manifest.toml` | verified |
+  | anything else | `Manifest.toml`, may fail | use the `[compat]` fallback in §2 |
+
+  Install via [juliaup](https://github.com/JuliaLang/juliaup) or the
+  [official downloads](https://julialang.org/downloads/).
 - Internet access on first run (to install packages from the Julia registry).
 - The repo, cloned, with `results/replication_params.json` present (it ships in the repo).
 
@@ -46,9 +53,17 @@ recorded in `Manifest.toml` — the set the script has been executed against:
 **Record the versions it prints** in `REPLICATION_SIGNOFF.md` anyway — if they differ from this table, that is
 itself worth knowing.
 
-> **If `Pkg.instantiate()` fails**, it is almost certainly a Julia-version mismatch. The setup script prints
-> your options: run on Julia 1.12.6, or delete `Manifest.toml` and re-run to resolve from the exact `[compat]`
-> pins in `Project.toml` instead. Either way, report the failure — a resolution failure is useful information.
+> **If setup fails**, it is almost certainly a Julia-version mismatch with the pinned manifest, and the script
+> prints the recovery steps. The `[compat]` fallback is:
+>
+> ```bash
+> mv Manifest.toml Manifest.toml.bak
+> julia --project=. -e 'using Pkg; Pkg.resolve(); Pkg.instantiate()'
+> ```
+>
+> That still pins every **direct** dependency to the exact tested version — only the transitive closure is
+> re-resolved — and it has been verified to give identical results on Julia 1.11.2. Either way, please report
+> the failure; a resolution failure is useful information and is our problem to fix, not yours.
 
 > **Earlier unpinned versions of this repo** resolved dependencies from the registry at run time, which caused
 > genuine API-drift failures in the first external attempt. That is fixed; see §7.

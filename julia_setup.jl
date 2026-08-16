@@ -1,37 +1,55 @@
 # One-time dependency install for the cross-platform reproduction (see REPLICATION_QUICKSTART.md).
 # Run from the repo root:  julia --project=. julia_setup.jl
 #
-# This now instantiates the EXACT dependency set recorded in Manifest.toml, which is the set the script was
-# executed against. It no longer resolves "whatever the registry has today" -- that unpinned resolve is what
-# produced the API-drift failures reported in the first external run (QuantumCumulants 0.7 renders operators
-# differently, and the ModelingToolkit wrapper is not the package QuantumCumulants 0.7 builds on).
+# This instantiates a PINNED dependency set rather than resolving "whatever the registry has today". The
+# unpinned resolve is what produced the API-drift failures in the first external run.
+#
+# Two manifests are committed, and Julia picks the right one automatically:
+#   Manifest-v1.11.toml  -> used by Julia 1.11.x
+#   Manifest.toml        -> used by everything else (generated on 1.12.6)
+# Both pin the same direct-dependency versions. A version-specific manifest is required because the 1.12
+# manifest cannot be instantiated on 1.11: it pins a PrecompileTools that needs Julia 1.12 internals
+# (`UndefVarError: StaticData not defined in Base`), which fails 7 direct dependencies.
 
 using Pkg
 
 Pkg.activate(@__DIR__)
 
-if isfile(joinpath(@__DIR__, "Manifest.toml"))
-    println("Manifest.toml found -- instantiating the pinned dependency set.")
-    try
-        Pkg.instantiate()
-    catch e
-        println("\n!! Pkg.instantiate() from the pinned Manifest.toml FAILED:")
-        println(sprint(showerror, e))
-        println("\nThis is most likely a Julia-version mismatch. The Manifest was generated on Julia 1.12.6.")
-        println("Options, in order of preference:")
-        println("  1. Run this on Julia 1.12.6 (juliaup: `juliaup add 1.12.6; julia +1.12.6 --project=. ...`).")
-        println("  2. Delete Manifest.toml and re-run this script; it will then resolve from the [compat]")
-        println("     bounds in Project.toml, which pin the same direct-dependency versions.")
-        println("  3. Report the error -- a resolution failure here is itself useful diagnostic information.")
-        rethrow()
-    end
+const VER_MANIFEST = joinpath(@__DIR__, "Manifest-v$(VERSION.major).$(VERSION.minor).toml")
+const STD_MANIFEST = joinpath(@__DIR__, "Manifest.toml")
+
+if isfile(VER_MANIFEST)
+    println("Julia $(VERSION): using the version-specific pinned manifest ",
+            basename(VER_MANIFEST), ".")
+elseif isfile(STD_MANIFEST)
+    println("Julia $(VERSION): using Manifest.toml (generated on Julia 1.12.6).")
+    println("If this errors below, your Julia minor version is incompatible with that pinned set -- see the")
+    println("recovery instructions this script prints on failure.")
 else
-    println("No Manifest.toml -- resolving from the [compat] pins in Project.toml.")
+    println("No manifest found -- resolving from the exact [compat] pins in Project.toml.")
     Pkg.resolve()
-    Pkg.instantiate()
 end
 
-Pkg.precompile()
+# Both instantiate AND precompile must be guarded: a Julia-version-incompatible manifest fails inside
+# Pkg.precompile(), not inside Pkg.instantiate(), so guarding only the former lets a raw stacktrace through.
+try
+    Pkg.instantiate()
+    Pkg.precompile()
+catch e
+    println("\n!! Dependency setup FAILED:")
+    println(sprint(showerror, e))
+    println("\nThis is almost certainly a Julia-version mismatch with the pinned manifest.")
+    println("Recovery, in order of preference:")
+    println("  1. Use a Julia version that has a committed manifest: 1.11.x or 1.12.6.")
+    println("  2. Resolve from the [compat] pins instead. From the repo root:")
+    println("       mv Manifest.toml Manifest.toml.bak")
+    println("       julia --project=. -e 'using Pkg; Pkg.resolve(); Pkg.instantiate()'")
+    println("     This still pins every DIRECT dependency to the exact tested version; only the transitive")
+    println("     closure is re-resolved. It has been verified to give identical results on Julia 1.11.2.")
+    println("  3. Report the error. A resolution failure here is useful diagnostic information, and is the")
+    println("     script author's problem to fix rather than yours.")
+    rethrow()
+end
 
 println("\n# installed versions (copy into REPLICATION_SIGNOFF.md):")
 try
