@@ -28,6 +28,21 @@ Notes:
   Both trigger the guard; the runaway is consistent across these settings, not tied to one integrator.
 - `130cf44` = the packaging-pass commit that adds `results/t4_gate.log` and the burst-trace artifacts
   (filled in after commit; see `git log --oneline -- results/t4_gate.log`).
+
+## External reproduction of row 1
+
+Row 1 (the second-order burst-peak overshoot) is the one claim that has been reproduced outside this
+repository. An outside collaborator ran `replicate_cumulant.jl` — an independent implementation in Julia
+(QuantumCumulants.jl + QuantumOptics.jl) rather than the Python engines used above — at the Notre Dame CRC on
+2026-08-30, under RHEL 9.8 / Julia 1.11.2 / QuantumCumulants 0.7.0.
+
+| Claim | Artifacts | Verified on receipt |
+|---|---|---|
+| 2nd-order overshoots the burst peak by ≈ +0.28 to +0.30, M-flat, both regimes | `external_validation/{REPLICATION_SIGNOFF.md, replication_cumulant.csv, replication_run.log, replicate_cumulant_as_run.jl}` | parameter-file SHA256 byte-identical to `results/replication_params.json`; as-run script equals `replicate_cumulant.jl` at `b309fe8` plus three print-only lines; fail-closed IC guards logged as passed in all six cells; returned exact peaks match the Python reference to < 4e-4 |
+
+This is a cross-platform reproduction, not an independent replication. See
+`external_validation/PROVENANCE.md` for the full receipt-side audit and
+`docs/EXTERNAL_VALIDATION_STATUS.md` for what wording it licenses.
 - No memory measurements exist in the repository; no runtime is claimed for V7 *in this baselines/necessity
   section* (see the section and the poster do-not-use list). V7 runtime is characterized separately in the
   frozen benchmark `results/runtime_baseline_comparison.md`, which reports a build-dominated total-time

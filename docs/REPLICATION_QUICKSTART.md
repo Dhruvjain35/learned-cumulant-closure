@@ -113,10 +113,12 @@ ran cleanly. Record this outcome exactly as it is — a non-reproduction is a va
 
 ## 7. Known limitations and common errors
 
-- **Execution status.** The script **is** now execution-verified against the pinned versions in §2: it runs end
-  to end and produces the acceptance numbers. It is **not** thereby externally validated — it was run by the
-  project's author. `docs/EXTERNAL_VALIDATION_STATUS.md` is the source of truth for that distinction, and the
-  cross-platform-reproduction row there stays **NOT DONE** until someone outside the project records a result.
+- **Execution status.** The script is execution-verified against the pinned versions in §2, and it has been
+  **reproduced externally**: An outside collaborator ran it at the Notre Dame CRC on 2026-08-30 (RHEL 9.8, Julia 1.11.2)
+  and all six cells met the acceptance criterion. The returned sign-off, CSV, log, and as-run script are under
+  `external_validation/`. That closes the cross-platform-reproduction row only;
+  `docs/EXTERNAL_VALIDATION_STATUS.md` remains the source of truth, and independent replication (independent
+  EOM/sign check, independently derived M=2, independently drawn disorder) is still **NOT DONE**.
 - **Fixed since the first external attempt (2026-08-16).** All four were unpinned-dependency API drift, not
   physics; none changed the model, the parameters, or any reported number:
   1. `dagger` is exported by both QuantumOptics and SecondQuantizedAlgebra (via QuantumCumulants 0.7), so the

@@ -28,7 +28,8 @@ open, *disordered* cavity–emitter regime where the standard truncation hierarc
 > closure **runs away** — its integration triggers a divergence guard. A frozen, physics-routed **learned closure
 > (V7)** stays within ≈ **±0.7%** of the
 > exact reference in the tested cells. This repo has the engines, the learned closure, the mechanism analysis,
-> the rejected hypotheses, and a cross-platform reproduction package.
+> the rejected hypotheses, and a cross-platform reproduction package — independently run and reproduced at
+> the Notre Dame CRC (2026-08-30, `external_validation/`).
 
 ## The result in one table
 
@@ -106,6 +107,7 @@ scripts/           runtime benchmark, frozen-trajectory export, and plotting uti
 docs/              FINDINGS (every result incl. rejected hypotheses), PROTOCOL, REPLICATION package
 results/           figures, small result artifacts, frozen V7 model pickles, replication params
 replicate_cumulant.jl · julia_setup.jl   cross-platform reproduction (Julia)
+external_validation/                     returned sign-off, output, and log from the outside run
 run.py · Makefile                        run any src/ module from the repo root
 ```
 

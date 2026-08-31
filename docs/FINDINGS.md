@@ -898,7 +898,14 @@ field-changing scaling discovery. WORDING DISCIPLINE (two tiers, do not conflate
 REPRODUCTION = an independent person runs the QuantumCumulants.jl artifact and reproduces the ~29% overshoot;
 (b) INDEPENDENT REPLICATION = (a) PLUS an independent EOM/sign-convention check, an M=2 hand-derivation, and
 recorded Julia/package versions + commit + numerical difference. Only tier (b) earns the phrase "independently
-reproduced." Until an outside collaborator completes (b), say only "cross-platform reproduction pending." Artifact built:
+reproduced." STATUS 2026-08-30: tier (a) is COMPLETE -- an outside collaborator ran the artifact at the Notre Dame CRC (RHEL 9.8,
+Julia 1.11.2, QuantumCumulants 0.7.0) and all six cells returned a positive overshoot inside the pre-registered
++0.25..+0.35 band (POCKET +0.2774/+0.2844/+0.2897, CONTROL +0.2897/+0.2892/+0.2959), params hash byte-identical,
+IC guards logged as passed, exact peaks matching the Python reference to <4e-4. Tier (b) is NOT complete and his
+own sign-off says so: no independent EOM/sign derivation, no independently assembled M=2 (his m2_realcell.jl is a
+construction smoke test on our hardcoded params, no solve and no numeric comparison), no independently drawn
+disorder. So say "reproduced cross-platform in QuantumCumulants.jl," never "independently reproduced." Returned
+artifacts + receipt-side audit: external_validation/. Artifact built:
 replicate_cumulant.jl, results/replication_params.json, REPLICATION.md (exact reproduction targets + the
 replicator request embedded).
 
@@ -943,7 +950,7 @@ SCOPE/HONESTY: this is a mechanistic attribution of the burst-peak correction to
 THIS open disordered Tavis-Cummings system; it is exact-referenced at M=4 and consistent with the M-flat
 finding of Result 24. It is NOT a universal claim about all open systems. The E_f structural caveat is disclosed
 above. This is the FINAL internal science computation; all modeling is now FROZEN. Next: external replication
-(cross-platform, then independent), manuscript, ISEF poster, whiteboard defense.
+(cross-platform DONE 2026-08-30, independent still open), manuscript, ISEF poster, whiteboard defense.
 
 ## Result 26 — Disorder-sweep kill test (candidate extension): NULL. Standard-method failure is disorder-robust
 ## at fixed G; disorder only monotonically redistributes the connected correlations. Third killed extension.
