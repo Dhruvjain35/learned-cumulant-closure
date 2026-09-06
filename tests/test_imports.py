@@ -18,6 +18,8 @@ MODULES = [
     "pilot_eval", "burst_pred", "burst_t3", "eval_v7",
     # analysis
     "mechanism", "mechanism_report", "disorder_sweep", "step1_gc_sweep",
+    # validation
+    "validate_model", "check_conventions", "check_eom_identity",
 ]
 
 if __name__ == "__main__":

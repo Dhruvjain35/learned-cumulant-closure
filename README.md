@@ -107,6 +107,7 @@ scripts/           runtime benchmark, frozen-trajectory export, and plotting uti
 docs/              FINDINGS (every result incl. rejected hypotheses), PROTOCOL, REPLICATION package
 results/           figures, small result artifacts, frozen V7 model pickles, replication params
 replicate_cumulant.jl · julia_setup.jl   cross-platform reproduction (Julia)
+docs/APPENDIX_MODEL_AND_EOM.md           the model, its conventions, and the EOM derivation gates
 external_validation/                     returned sign-off, output, and log from the outside run
 run.py · Makefile                        run any src/ module from the repo root
 ```

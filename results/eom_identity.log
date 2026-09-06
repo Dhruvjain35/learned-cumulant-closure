@@ -1,0 +1,101 @@
+EOM IDENTITY GATE  --  d<O>/dt = <Ldag[O]> for every tracked moment,
+with EXACT third cumulants fed to the closure assembly (so no approximation remains).
+Fock cutoff Nc=12, Fsafe=6, tolerance 1e-08. Cells from results/replication_params.json.
+
+POCKET   M=2  seed=50  kappa=0.03  gphi=0.02  tracked=33  order-3=40
+      t= 0.0   max|d_assembled - d_exact| = 2.109e-14   PASS
+      t= 1.0   max|d_assembled - d_exact| = 1.121e-14   PASS
+      t= 2.0   max|d_assembled - d_exact| = 5.052e-15   PASS
+      t= 3.0   max|d_assembled - d_exact| = 7.439e-15   PASS
+      t= 4.0   max|d_assembled - d_exact| = 5.691e-15   PASS
+      t= 6.0   max|d_assembled - d_exact| = 8.329e-15   PASS
+
+POCKET   M=2  seed=51  kappa=0.03  gphi=0.02  tracked=33  order-3=40
+      t= 0.0   max|d_assembled - d_exact| = 2.148e-14   PASS
+      t= 1.0   max|d_assembled - d_exact| = 1.127e-14   PASS
+      t= 2.0   max|d_assembled - d_exact| = 5.496e-15   PASS
+      t= 3.0   max|d_assembled - d_exact| = 7.994e-15   PASS
+      t= 4.0   max|d_assembled - d_exact| = 5.221e-15   PASS
+      t= 6.0   max|d_assembled - d_exact| = 8.558e-15   PASS
+
+POCKET   M=2  seed=52  kappa=0.03  gphi=0.02  tracked=33  order-3=40
+      t= 0.0   max|d_assembled - d_exact| = 2.176e-14   PASS
+      t= 1.0   max|d_assembled - d_exact| = 1.144e-14   PASS
+      t= 2.0   max|d_assembled - d_exact| = 5.226e-15   PASS
+      t= 3.0   max|d_assembled - d_exact| = 7.221e-15   PASS
+      t= 4.0   max|d_assembled - d_exact| = 6.497e-15   PASS
+      t= 6.0   max|d_assembled - d_exact| = 8.163e-15   PASS
+
+POCKET   M=3  seed=50  kappa=0.03  gphi=0.02  tracked=60  order-3=112
+      t= 0.0   max|d_assembled - d_exact| = 4.112e-14   PASS
+      t= 1.0   max|d_assembled - d_exact| = 2.639e-14   PASS
+      t= 2.0   max|d_assembled - d_exact| = 2.160e-15   PASS
+      t= 3.0   max|d_assembled - d_exact| = 8.104e-15   PASS
+      t= 4.0   max|d_assembled - d_exact| = 1.247e-15   PASS
+      t= 6.0   max|d_assembled - d_exact| = 2.126e-14   PASS
+
+POCKET   M=3  seed=51  kappa=0.03  gphi=0.02  tracked=60  order-3=112
+      t= 0.0   max|d_assembled - d_exact| = 4.014e-14   PASS
+      t= 1.0   max|d_assembled - d_exact| = 2.579e-14   PASS
+      t= 2.0   max|d_assembled - d_exact| = 2.145e-15   PASS
+      t= 3.0   max|d_assembled - d_exact| = 7.745e-15   PASS
+      t= 4.0   max|d_assembled - d_exact| = 1.316e-15   PASS
+      t= 6.0   max|d_assembled - d_exact| = 2.102e-14   PASS
+
+POCKET   M=3  seed=52  kappa=0.03  gphi=0.02  tracked=60  order-3=112
+      t= 0.0   max|d_assembled - d_exact| = 4.585e-14   PASS
+      t= 1.0   max|d_assembled - d_exact| = 2.949e-14   PASS
+      t= 2.0   max|d_assembled - d_exact| = 2.589e-15   PASS
+      t= 3.0   max|d_assembled - d_exact| = 8.315e-15   PASS
+      t= 4.0   max|d_assembled - d_exact| = 2.031e-15   PASS
+      t= 6.0   max|d_assembled - d_exact| = 2.401e-14   PASS
+
+CONTROL  M=2  seed=50  kappa=0.15  gphi=0.02  tracked=33  order-3=40
+      t= 0.0   max|d_assembled - d_exact| = 2.109e-14   PASS
+      t= 1.0   max|d_assembled - d_exact| = 1.132e-14   PASS
+      t= 2.0   max|d_assembled - d_exact| = 5.055e-15   PASS
+      t= 3.0   max|d_assembled - d_exact| = 9.326e-15   PASS
+      t= 4.0   max|d_assembled - d_exact| = 4.939e-16   PASS
+      t= 6.0   max|d_assembled - d_exact| = 8.060e-16   PASS
+
+CONTROL  M=2  seed=51  kappa=0.15  gphi=0.02  tracked=33  order-3=40
+      t= 0.0   max|d_assembled - d_exact| = 2.148e-14   PASS
+      t= 1.0   max|d_assembled - d_exact| = 1.161e-14   PASS
+      t= 2.0   max|d_assembled - d_exact| = 5.497e-15   PASS
+      t= 3.0   max|d_assembled - d_exact| = 1.010e-14   PASS
+      t= 4.0   max|d_assembled - d_exact| = 4.065e-16   PASS
+      t= 6.0   max|d_assembled - d_exact| = 7.948e-16   PASS
+
+CONTROL  M=2  seed=52  kappa=0.15  gphi=0.02  tracked=33  order-3=40
+      t= 0.0   max|d_assembled - d_exact| = 2.176e-14   PASS
+      t= 1.0   max|d_assembled - d_exact| = 1.166e-14   PASS
+      t= 2.0   max|d_assembled - d_exact| = 5.277e-15   PASS
+      t= 3.0   max|d_assembled - d_exact| = 9.437e-15   PASS
+      t= 4.0   max|d_assembled - d_exact| = 9.269e-16   PASS
+      t= 6.0   max|d_assembled - d_exact| = 9.460e-16   PASS
+
+CONTROL  M=3  seed=50  kappa=0.15  gphi=0.02  tracked=60  order-3=112
+      t= 0.0   max|d_assembled - d_exact| = 4.112e-14   PASS
+      t= 1.0   max|d_assembled - d_exact| = 2.661e-14   PASS
+      t= 2.0   max|d_assembled - d_exact| = 2.036e-15   PASS
+      t= 3.0   max|d_assembled - d_exact| = 1.128e-14   PASS
+      t= 4.0   max|d_assembled - d_exact| = 6.136e-15   PASS
+      t= 6.0   max|d_assembled - d_exact| = 5.107e-15   PASS
+
+CONTROL  M=3  seed=51  kappa=0.15  gphi=0.02  tracked=60  order-3=112
+      t= 0.0   max|d_assembled - d_exact| = 4.014e-14   PASS
+      t= 1.0   max|d_assembled - d_exact| = 2.600e-14   PASS
+      t= 2.0   max|d_assembled - d_exact| = 1.923e-15   PASS
+      t= 3.0   max|d_assembled - d_exact| = 1.085e-14   PASS
+      t= 4.0   max|d_assembled - d_exact| = 5.680e-15   PASS
+      t= 6.0   max|d_assembled - d_exact| = 5.352e-15   PASS
+
+CONTROL  M=3  seed=52  kappa=0.15  gphi=0.02  tracked=60  order-3=112
+      t= 0.0   max|d_assembled - d_exact| = 4.585e-14   PASS
+      t= 1.0   max|d_assembled - d_exact| = 2.973e-14   PASS
+      t= 2.0   max|d_assembled - d_exact| = 2.284e-15   PASS
+      t= 3.0   max|d_assembled - d_exact| = 1.184e-14   PASS
+      t= 4.0   max|d_assembled - d_exact| = 5.668e-15   PASS
+      t= 6.0   max|d_assembled - d_exact| = 6.642e-15   PASS
+
+EOM IDENTITY GATE: ALL PASS
