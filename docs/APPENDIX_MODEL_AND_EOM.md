@@ -25,9 +25,25 @@ D[O] ρ  =  O ρ O†  −  ½ { O† O , ρ }
 ```
 
 **Disorder.** `w_i` is drawn once per cell from a Gaussian of width σ about ω_c, from a fixed seed, so
-every reported number is reproducible on rerun. `g_i = g_c / √M`, holding the collective coupling
-`G = g_c` fixed as `M` varies. This convention is why the burst-peak error is flat in `M` and not
-growing; see Result 24, where the growing-with-M hypothesis was tested and rejected.
+every reported number is reproducible on rerun.
+
+**Coupling convention.** `g_i = g_c / √M`, which holds the collective coupling `G = g_c` fixed as `M`
+varies. This is a **chosen benchmarking convention** adopted so that different `M` can be compared at
+matched collective coupling. It is not a physical scaling law, and nothing here derives it from one. It is
+also the reason the burst-peak error comes out flat in `M` rather than growing; see Result 24, where the
+growing-with-M hypothesis was tested and rejected.
+
+**Coupling regime, and what the RWA costs here.** The evaluated cells use `g_c = 0.7` at `ω_c = 1`, so
+`g_c/ω_c = 0.7` and the per-emitter `g_i/ω_c ≈ 0.495` at `M = 2`. That is ultrastrong coupling by the
+conventional threshold of `g/ω_c ≳ 0.1`, and in that regime neither the rotating-wave approximation nor
+bare-mode local Lindblad dissipation is the physically correct description: counter-rotating terms and
+dressed-state dissipation are both omitted.
+
+This is deliberate and it does not weaken any claim made here, because every claim is **internal to one
+defined generator**. The exact reference, the cumulant closures, and the learned closure all solve the
+same RWA-Lindblad model, so the comparison between them is exact at every coupling. What is being measured
+is how closure schemes behave across that model's dynamical regimes, not how a physical cavity behaves at
+`g/ω_c = 0.7`. No experimental accuracy is claimed at these couplings, and none should be read in.
 
 **Initial state.** Cavity vacuum ⊗ all emitters excited, a fully inverted product state. This is the
 superradiant burst preparation, and it is the reason second-order cumulant closure is stressed: the
@@ -133,9 +149,13 @@ Machine-checked and rerunnable:
 
 Not established by any of the above:
 
-- That the model in §A.1 is what a reader means by "open disordered Tavis–Cummings." Both this
-  document and the code were written by the same person, so a shared conceptual error would survive
-  every gate here. This is a human read, and it is the outstanding item in
+- The gates cannot establish that the model in §A.1 is what a reader means by "open disordered
+  Tavis–Cummings," since the same person wrote this document and the code and a shared conceptual error
+  would survive all of them. That question was therefore put to an outside reviewer, who read
+  §A.1 and §A.2 on 2026-09-14 and found them "consistent with the standard phenomenological open
+  disordered Tavis–Cummings model," having checked the dephasing convention for a sign or factor-of-two
+  error specifically. That review covers the **formulation only**, explicitly not the closure results and
+  explicitly not quantitative applicability at every coupling; its full scope is recorded in
   [`EXTERNAL_VALIDATION_STATUS.md`](EXTERNAL_VALIDATION_STATUS.md).
 - The Result 23 linearization, which uses `γ⊥` and the inverted-state bright-mode eigenvalues, still
   awaits an independent theory review. The gates above verify the `γ⊥` input to it, not the
