@@ -140,7 +140,9 @@ python run.py src/baselines/t4_eval.py
 
 ## Scope and discipline
 
-- **Exact-referenced only where exact references exist.** Rollouts beyond that range are numerical reach, not
+- **Validated to M ≤ 10; unstable at M ≥ 12.** M = 11 is untested. At M ≥ 12 the closure is measured to leave
+  the physical set (both branches; three attempted repairs all failed), and `validated_range.py` refuses those
+  sizes by default. Every headline number lives at M ≤ 10. Rollouts beyond the reference range are numerical reach, not
   demonstrated accuracy, and are labelled as such throughout.
 - **Frozen after evaluation.** V7 and its two branches were frozen before final testing; pre-registrations and
   held-out disorder draws are in [`docs/PROTOCOL.md`](docs/PROTOCOL.md).

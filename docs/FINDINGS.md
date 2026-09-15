@@ -949,8 +949,10 @@ family kappa3(t) exact/V7/T3/plain; ablation frac-lost).
 SCOPE/HONESTY: this is a mechanistic attribution of the burst-peak correction to two named cumulant channels in
 THIS open disordered Tavis-Cummings system; it is exact-referenced at M=4 and consistent with the M-flat
 finding of Result 24. It is NOT a universal claim about all open systems. The E_f structural caveat is disclosed
-above. This is the FINAL internal science computation; all modeling is now FROZEN. Next: external replication
-(cross-platform DONE 2026-08-30, independent still open), manuscript, ISEF poster, whiteboard defense.
+above. This is the final internal MODELING computation; all modeling is FROZEN from here. (Results 28-33 are
+post-freeze AUDITS of the frozen model, not new modeling -- see the section at the end of this document; three of
+them constrain the claims.) Next: external replication (cross-platform DONE 2026-08-30, independent still open),
+manuscript, ISEF poster, whiteboard defense.
 
 ## Result 26 — Disorder-sweep kill test (candidate extension): NULL. Standard-method failure is disorder-robust
 ## at fixed G; disorder only monotonically redistributes the connected correlations. Third killed extension.
@@ -1057,3 +1059,154 @@ mc_ref.py (quantum-trajectory reference, cached) | check_closure_vec.py (vectori
 gen_data_v2.py (dense-engine-free exact data at M=4,5) | check_eops_path.py (e_ops == dense-path proof) |
 retrain_eval.py (Result 9 head-to-head) | plot_retrain.py (figure + pickled closures) |
 local_run.py (large-M flagship run, Result 8) | results/*.png, results/*.log, results/*.npz
+
+---
+
+# Post-freeze audits (Results 28-32, August 2026)
+
+These five were run AFTER the modeling freeze and do not break it: no closure was retrained, re-tuned, or
+rerouted, and the frozen V7 artifacts are untouched. They are audits of the frozen model, and three of them
+return results that constrain the claims rather than support them. They were computed and committed on
+2026-08-09/10 but never written into this document; that gap is closed here.
+
+## Result 28 -- Extended horizon (t = 40 / 80 / 160): V7 holds, plain second order does not,
+## with one small V7 leak at the longest horizon
+
+Every earlier result was measured over t <= 40 (about 1.2 cavity lifetimes at the slowest cell), with longer
+horizons noted as uncharacterised. Tested at M = 3, 5, 8 against the reference-free physicality bounds
+(|<sz_i>| <= 1 per emitter, <a'a> >= 0).
+
+t <= 40 was CONSERVATIVE, not cherry-picked:
+
+  M=3  plain  z below -1 by 0.122 / 0.123 / 0.123  at t = 40 / 80 / 160
+  M=3  V7     no z violation at any horizon; nrmse 0.154 / 0.149 / 0.151
+  M=5  plain  z below -1 by 0.038 / 0.039 / 0.040
+  M=5  V7     no z violation at any horizon; nrmse 0.070 / 0.069 / 0.071
+
+V7 stays bounded and its accuracy does not drift across a fourfold horizon extension. Plain second order
+violates the inversion bound at every horizon and size where the comparison is possible, by 3-12%.
+
+REPORTED AS A LIMITATION, NOT ROUNDED AWAY: at t = 160 the V7 photon number dips slightly negative,
+min n = -6.6e-3 (M=3) and -2.9e-3 (M=5). Well under a percent of typical photon number, but unphysical, and it
+appears only at the longest horizon. Artifacts: results/horizon_tests.npz.
+
+METHOD BUG FIXED IN THE SAME COMMIT (5ecc8b2), worth knowing before extending any horizon in this repo: the
+first version patched pilot_eval.TMAX and local_run.NT, but run_v6 takes its own tmax/nt arguments defaulting to
+40.0/200, so the V6 branch silently re-ran over the standard window while only the plain baseline extended. The
+extended-horizon V7 rows were meaningless and surfaced as a nan error column rather than a wrong number.
+
+## Result 29 -- Out-of-distribution axes (initial condition, disorder family): disorder family
+## largely transfers; TWO axes destabilise V7 where plain second order stays stable
+
+The two axes the manuscript listed as untested, run with frozen V7, no retraining, M = 3, seeds 7/8/9.
+Burst-peak error, median over seeds:
+
+  condition                  plain    V7      stable
+  baseline (as trained)      28.5%    0.4%    yes
+  partial inversion f=0.75   28.1%    3.1%    yes
+  partial inversion f=0.50   20.8%    9.7%    NO
+  uniform disorder           28.6%    0.6%    yes
+  lorentz disorder           29.1%    2.2%    NO
+  bimodal disorder           28.7%    0.5%    yes
+
+DISORDER FAMILY -- largely transfers. Uniform (0.6%) and bimodal (0.5%) match the Gaussian baseline (0.4%)
+despite never appearing in training, so the closure is NOT keyed to the Gaussian shape. Lorentz destabilises
+(NRMSE 33.9), consistent with its heavy tails putting individual sites far outside the trained detuning range.
+
+INITIAL CONDITION -- partial. f = 0.75 holds (3.1%); f = 0.50 destabilises (NRMSE 1377).
+
+THE HONEST TRADE, and it must be stated in the paper: V7 is markedly more accurate inside its training
+distribution and degrades LESS GRACEFULLY outside it than the standard method it improves on. On both failing
+axes the plain second-order closure remains stable and merely inaccurate. Artifacts: results/ood_tests.npz,
+src/evaluation/ood_tests.py.
+
+## Result 30 -- Positivity audit: V7 is cleaner than plain at SMALL M and WORSE at LARGE M;
+## the failure is bimodal, not a mild bias
+
+Measured against reference-free bounds over seeds 7/8/9 at g_c=0.7, kappa=0.03, gphi=0.02:
+
+  M    plain OK   V7 OK    worst V7 min <sz>    worst V7 min n
+   5      0/3      3/3            -0.606            0
+   8      3/3      3/3            -0.601            0
+  10      3/3      2/3            -0.618           -5.3e-02
+  12      3/3      2/3        -66257.74            -7.2e+04
+  16      3/3      2/3          -953.93            -1.8e+04
+  20      3/3      0/3          -222.24            -2.3e+03
+
+  V7 12/18 cells physical; plain 15/18. V7 failures at (M, seed): (10,7) (12,7) (16,7) (20,7) (20,8) (20,9).
+
+Three corrections to earlier wording, all now applied to the manuscript:
+
+1. There is NO "0.4-1.3% undershoot regime" for V7. Below M=10 it is exactly physical on every seed; from M=10
+   it leaks and from M=12 it diverges by four to five orders of magnitude. The failure is BIMODAL.
+2. At M=5 the ordering REVERSES: plain violates the inversion bound on all three seeds (worst -1.042) while V7
+   violates on none. "The baseline's violations are far larger" is true at small M and FALSE from M=12 up.
+3. Seed-dependent at M=12-16 (1 of 3) but SYSTEMATIC at M=20 (3 of 3), so not an unlucky disorder draw.
+
+WHY IT SURVIVED EARLIER CHECKS: retrain_eval's large-M stability check ran lc_new through ClosureApply rather
+than V7 through its routed branches, and reported z_end, a MEAN over emitters. Per-site inversions diverge with
+OPPOSITE SIGNS, so the mean still reads near -1 while individual sites sit at +/-10^4. Mean-based checks cannot
+see this failure mode; the per-site bound can. Any future stability check in this repo must be per-site.
+
+## Result 31 -- Three attempted repairs of the M>=12 divergence, all FAILED; the operating range
+## is now enforced in code
+
+1. PHYSICALITY GATING (physicality_gate.py). Fades the learned correction toward kappa3=0 as the state leaves
+   the physical set. Reduces the blow-up by up to eight orders of magnitude but NEVER restores positivity: the
+   ODE solver commits a step past the boundary before any violation is observable. Passes the
+   non-disturbance test (5/5 cells bit-identical to frozen V7 where the trajectory stays physical, max|diff|=0.0),
+   so it is a safe wrapper -- but a partial mitigation, not a fix. Diagnosis along the way: output clipping is
+   NOT the cause (saturation FOLLOWS the blow-up; clipping sits at 77-82% during healthy M=3..10 runs, so it
+   carries almost no signal). The usable early signal is exact and four time units ahead: n goes negative at
+   t ~ 32 before the runaway at t ~ 36.
+2. MARGINED GATING (engaging on approach rather than after the fact). Monotonically WORSE: M=16 seed 7,
+   max|moment| 4.8e4 -> 3.7e5 as the margin grows from 0 to 0.3.
+3. BRANCH ROUTING to the memoryless V4 branch, on the theory that V6's memory traces accumulate error far from
+   distribution. REFUTED -- V4 fails too, and at (M=20, seed 9) is seven orders of magnitude WORSE than the
+   branch it would have replaced (4.5e8 vs 52.7). Zero physical cells for either branch. There is no stable
+   branch to route to.
+
+CONCLUSION: the divergence is a property of the learned closure evaluated far outside its training window, not
+of any mechanism that can be gated or dispatched around. The two remaining routes are retraining with large-M
+targets (blocked by the data wall) and a structurally positivity-preserving redesign (new architecture, not a
+repair). Neither is in scope under the freeze.
+
+VALIDATED RANGE, now enforced in src/validation/validated_range.py rather than stated in prose:
+VALIDATED_MAX_M = 10, KNOWN_UNSTABLE_MIN_M = 12. M=11 is untested (a gap, not a claim). check(M) RAISES by
+default, because this failure is silent by construction.
+
+## Result 32 -- MPS (tensor-network) baseline: gated at M=2,3 only, and ~1000x SLOWER there
+
+Answers the referee question "why not just run a tensor-network method instead" with numbers. Vectorised
+Lindblad evolved as an MPS via the W_II MPO (TEBD and TDVP both ruled out: the cavity sits at one end of the
+chain so the coupling terms are long-range, and TDVP's Krylov step assumes a Hermitian generator, which a
+Liouvillian is not).
+
+  M   Nc  chi   peak_exact  peak_mps   rel_peak   t_exact   t_mps
+  2    6   48     1.63133    1.63135    1e-05     0.023 s   23.7 s
+  3    8   96     2.32117    2.32124    3e-05     0.119 s   51.4 s
+
+SCOPE, and it is a real limitation: the MPS baseline is a CORRECTNESS GATE at M=2,3, not a large-M reference.
+It agrees with exact to 1e-5, and at those sizes it is about 1000x slower than the dense solve. It does NOT
+extend the exact-validated range, so it does not answer the tensor-network question at the sizes where that
+question actually bites. Artifacts: results/mps_gate.npz, src/baselines/mps_lindblad.py.
+
+## Result 33 -- Early-warning risk detector: pre-registered verdict FAIL
+
+A risk score intended to flag impending instability ahead of onset. Coverage was perfect (lead >= 2.0 in 20/20
+unstable pocket rollouts, required >= 80%) but the false-alarm control failed: stable in-support rollouts spent
+7.2-12.7% of their time above the trigger. PRE-REGISTERED VERDICT: FAIL. Recorded as a fourth killed extension.
+Artifacts: results/risk_validation.log, results/risk_validation.npz.
+
+---
+
+## Standing consequence of Results 28-33 for how this work is described
+
+The headline result is unchanged and the freeze holds. What changed is the honest boundary around it:
+
+- Every headline number lives at M <= 10, and that is now the enforced operating range.
+- "Transfers to larger M" must not be written without the ceiling. M >= 12 is not unvalidated, it is measured
+  unstable, on both branches, with three failed repairs on the record.
+- Out-of-distribution behaviour is mixed, and on two axes V7 is WORSE than the baseline it improves on, because
+  it destabilises where the baseline merely degrades.
+- The tensor-network comparison is gated at M=2,3 only.
