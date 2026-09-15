@@ -1,0 +1,13 @@
+# Exact pinned versions of the environment that produced the frozen results in this repository.
+# Use this for byte-reproducing the record; use requirements.txt (lower bounds) for ordinary use.
+#
+#   python3.12 -m venv .venv && . .venv/bin/activate && pip install -r requirements-lock.txt
+#
+# Recorded 2026-09-14 from the working environment. Python 3.12.
+numpy==2.4.6
+scipy==1.17.1
+qutip==5.3.0
+scikit-learn==1.9.0
+matplotlib==3.11.0
+sympy==1.14.0
+joblib==1.5.3

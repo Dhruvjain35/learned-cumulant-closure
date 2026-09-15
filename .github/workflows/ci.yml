@@ -1,9 +1,12 @@
 name: CI
 
-# Import smoke test: proves a fresh clone installs and the reorganized flat-import
-# layout still loads every load-bearing module. It does NOT run simulations (those
-# need exact QuTiP solves that are too slow for CI); scientific results are frozen
-# and validated in the repository, not re-derived here.
+# Two checks. The import smoke test proves a fresh clone installs and the reorganized
+# flat-import layout still loads every load-bearing module. The derivation gates then
+# re-verify the model conventions against closed-form results and the second-order
+# equations of motion against an exactness identity, on every commit, in under a minute.
+#
+# CI does NOT re-derive the scientific results: those need exact QuTiP solves far too
+# slow for a runner. They are frozen, logged, and provenance-tracked in the repository.
 
 on:
   push:
@@ -16,10 +19,10 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Set up Python 3.12
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: '3.12'
           cache: pip
@@ -31,3 +34,6 @@ jobs:
 
       - name: Import smoke test
         run: make test
+
+      - name: Derivation gates (conventions + EOM identity)
+        run: make gates

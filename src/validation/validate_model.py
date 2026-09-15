@@ -55,6 +55,17 @@ def gate2_collective_sqrtM():
 
 
 def gate3_meanfield_improves():
+    """Premise probe: at FIXED collective coupling, connected emitter correlations must shrink as M
+    grows (mean-field becomes exact as M -> infinity). If they did not, the "mean-field fails, a
+    learned closure fixes it" premise could not be right in the first place.
+
+    Fock convergence matters more here than anywhere else in this file. The cavity is incoherently
+    pumped, so its photon distribution has a long tail and a cutoff picked from the MEAN occupation
+    is far too small: at Nc=3 the trend comes out non-monotone purely from truncation. The claim
+    being made is qualitative (the correlations shrink), so the gate asserts the CONCLUSION is stable
+    under cutoff refinement rather than chasing a converged value of C_ee/pe itself. It runs at two
+    cutoffs and requires the monotone decrease at both.
+    """
     print("\n[Gate 3] incoherent-pump steady state: connected emitter correlations vs M (sigma=0)")
     print("   holding COLLECTIVE coupling gcoll = g0*sqrt(M) fixed; mean-field should improve (C shrink) with M")
     wc = 1.0
@@ -62,29 +73,31 @@ def gate3_meanfield_improves():
     kappa = 0.10           # cavity loss
     gpump = 0.05           # incoherent pump per emitter
     gphi = 0.02            # dephasing
-    print(f"   params: gcoll={gcoll}, kappa={kappa}, gpump={gpump}, gphi={gphi}")
-    prev = None
-    monotone = True
-    for M in [2, 3, 4, 5]:
-        g0 = gcoll / np.sqrt(M)
-        Nc = 3
-        ops = build_ops(M, Nc)
-        H = build_H(ops, wc, np.full(M, wc), np.full(M, g0))
-        c = collapse_ops(ops, kappa=kappa, gpump=gpump, gphi=gphi)
-        rho = qt.steadystate(H, c)
-        m = measure(rho, ops)
-        idx = bmf_indices(m)
-        nc = idx["nc"]
-        # convergence guard: photon occupation must be small vs Fock cutoff
-        warn = "  <-- WARN: nc near Nc, raise Nc" if nc > 0.5 * Nc else ""
-        cee = idx["C_ee_over_pe"]
-        trend = "" if prev is None else ("  (down)" if cee < prev - 1e-4 else "  (UP - not shrinking!)")
-        if prev is not None and cee > prev + 1e-4:
-            monotone = False
-        print(f"   M={M}: C_ee/pe = {cee:.4f}   mean_pe={idx['mean_pe']:.3f}   nc={nc:.3f}{trend}{warn}")
-        prev = cee
-    print(f"   mean-field-improves-with-M (C_ee shrinks): {'PASS' if monotone else 'DID NOT SHRINK MONOTONICALLY'}")
-    return monotone
+    CUTOFFS = (6, 8)       # the conclusion must hold at both
+    print(f"   params: gcoll={gcoll}, kappa={kappa}, gpump={gpump}, gphi={gphi}; cutoffs Nc={CUTOFFS}")
+    all_monotone = True
+    for Nc in CUTOFFS:
+        prev = None
+        monotone = True
+        cells = []
+        for M in [2, 3, 4, 5]:
+            g0 = gcoll / np.sqrt(M)
+            ops = build_ops(M, Nc)
+            H = build_H(ops, wc, np.full(M, wc), np.full(M, g0))
+            c = collapse_ops(ops, kappa=kappa, gpump=gpump, gphi=gphi)
+            rho = qt.steadystate(H, c)
+            idx = bmf_indices(measure(rho, ops))
+            cee = idx["C_ee_over_pe"]
+            top = qt.tensor(qt.basis(Nc, Nc - 1).proj(), *[qt.qeye(2)] * M)
+            p_top = float(qt.expect(top, rho).real)
+            if prev is not None and cee > prev + 1e-4:
+                monotone = False
+            cells.append(f"M={M}: {cee:.4f} (p_top={p_top:.0e})")
+            prev = cee
+        all_monotone = all_monotone and monotone
+        print(f"   Nc={Nc}: " + "   ".join(cells) + f"   {'shrinks' if monotone else 'NOT MONOTONE'}")
+    print(f"   mean-field-improves-with-M, stable across cutoffs: {'PASS' if all_monotone else 'FAIL'}")
+    return all_monotone
 
 
 def gate3b_disorder_effect():
@@ -118,3 +131,4 @@ if __name__ == "__main__":
     print("\n" + "=" * 72)
     print(f"GATES: vacuum-Rabi={g1}  collective-sqrtM={g2}  meanfield-improves-with-M={g3}")
     print("=" * 72)
+    raise SystemExit(0 if (g1 and g2 and g3) else 1)
