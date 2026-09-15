@@ -534,3 +534,59 @@ kappa5=0 4th shows runaway growth triggering the guard in all evaluated cells (h
 exist; only the tested truncations failed in the evaluated cells.) Likely cause of divergence (differs from spin-only
 Dicke benchmark where 4th order helps): the unbounded cavity Fock mode, whose moment hierarchy is prone to
 finite-time truncation divergence. Fairness question settled in V7's favor; NOT field-defining.
+
+---
+
+## Pre-registration — V8 line, Step 0: is the M>=12 instability a SIZE pathology or a DISORDER pathology?
+
+Registered 2026-09-15, BEFORE running. The freeze on V7 is unchanged: V7's artifacts are not retrained,
+re-tuned, or rerouted, and nothing below modifies any existing result. All work is additive under the V8
+label. If the V8 line is abandoned, every current claim stands exactly as it is.
+
+### Why this is the first question
+
+Result 30 measured that frozen V7 leaves the physical set at M >= 12, and Result 31 recorded three failed
+repairs. Both were measured at sigma = 0.15 only, because no reference exists above M = 10 in the disordered
+model. Two explanations are therefore confounded and neither has been tested:
+
+  (a) SIZE pathology -- the closure fails on scale alone, and would fail at sigma = 0 as well.
+  (b) DISORDER pathology -- the failure needs broken permutation symmetry and is absent at sigma = 0.
+
+Permutation invariance (qutip.piqs) solves the sigma = 0 model exactly at sizes the rest of this repository
+cannot reach, so (a) and (b) can be separated. The reference is gated against the project's exact solver in
+src/validation/check_piqs_vs_exact.py: agreement is 1e-8 or better on the full photon trajectory across
+POCKET and CONTROL at M = 2..5. Rate conventions were MEASURED, not assumed -- PIQS uses spin-1/2 operators,
+so its `dephasing` coefficient needs a factor of 2 against this project's (gphi/2) D[sz]. Assuming 1:1 would
+have silently corrupted every reference produced this way.
+
+### The test
+
+Frozen V7, no retraining, sigma = 0, POCKET and CONTROL, M from 5 up to the largest size the
+permutation-invariant reference reaches with the cavity attached. Metrics as in Result 30: per-emitter
+inversion bound |<sz_i>| <= 1, photon number <a'a> >= 0, and burst-peak error against the exact reference.
+
+### Pre-committed outcomes
+
+- **O1 (size pathology).** V7 leaves the physical set at sigma = 0 too, at a comparable M. The instability is
+  about scale, not disorder. This is the most useful outcome: it makes the defect reproducible against an
+  exact reference at large M, which is the precondition for diagnosing or repairing it at all.
+- **O2 (disorder pathology).** V7 stays physical at sigma = 0 to well past M = 12. The failure needs broken
+  permutation symmetry, which points the repair at the disorder-dependent channels rather than at scale.
+- **O3 (mixed).** Physical but with accuracy degrading beyond the validated range. Report the degradation
+  curve; claim no repair.
+- **O4 (the reference does not reach).** The cavity Fock space, which grows with M because the burst photon
+  number grows with M, makes the permutation-invariant solve infeasible before M = 12. Then this route is
+  dead for the cavity model and the honest move is to say so and stop, not to substitute a weaker reference.
+
+### Kill rule
+
+If the outcome is O4, the V8 line stops here and the project ships as it stands. If O1 or O2, one repair
+direction may be attempted, pre-registered separately, with a hard stop at the end of December 2026 so that
+January and February remain for writing and defence preparation. No result from this line enters the
+manuscript unless it clears the same bar as Results 1-33: pre-registered, held-out seeds where a seed budget
+applies, and reported whether or not it is favourable.
+
+### Seed discipline
+
+sigma = 0 has no disorder draw, so no seed is consumed by this step. Any later step that needs disorder must
+draw from the unconsumed reserve and must record the allocation here before running.
