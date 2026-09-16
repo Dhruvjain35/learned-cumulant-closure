@@ -1,0 +1,17 @@
+DECISIVE TEST: separate BRANCH from REGIME. POCKET regime (kappa=0.03) forced to BOTH branches,
+at sigma=0 and sigma=0.15. If V4 is clean at sigma=0 but fails at sigma=0.15 in the SAME regime,
+the two branches fail for different reasons.
+
+regime    branch  sigma   M |   phys        z_max        n_min       max|m|
+POCKET        v4    0.0  10 |  False        935.9        -4674    8.764e+05
+POCKET        v4    0.0  12 |  False        285.9        -1710    8.173e+04
+POCKET        v4    0.0  16 |  False    1.595e+04   -1.276e+05    2.544e+08
+POCKET        v6    0.0  10 |  False            1      -0.3771        7.243
+POCKET        v6    0.0  12 |  False         1055        -6325    1.114e+06
+POCKET        v6    0.0  16 |  False     2.28e+04   -1.823e+05    5.197e+08
+POCKET        v4   0.15  10 |  False         1851        -4759    3.693e+06
+POCKET        v4   0.15  12 |  False        371.3        -1379    1.467e+05
+POCKET        v4   0.15  16 |  False         3464   -1.297e+04    8.749e+06
+POCKET        v6   0.15  10 |  False            1     -0.05265        7.163
+POCKET        v6   0.15  12 |  False    4.366e+04   -7.238e+04    2.893e+09
+POCKET        v6   0.15  16 |  False         3327   -1.828e+04     1.09e+07

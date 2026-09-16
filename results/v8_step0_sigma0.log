@@ -1,0 +1,31 @@
+============================================================================================================
+V8 STEP 0 -- frozen V7 at ZERO disorder: is the M>=12 instability about SIZE or about DISORDER?
+============================================================================================================
+  g_c=0.7, gamma_down=0.02, sigma=0 (identical emitters), fully inverted initial state
+  bounds: -1 <= <sz_i> <= +1 per emitter, <a'a> >= 0   (reference-free, same as Result 30)
+
+--- POCKET  (kappa=0.03, gphi=0.02)  V7 routes to V6 ---
+   M | plain phys  plain z_min |  V7 phys     V7 z_min     V7 z_max    V7 n_min   V7 max|m|
+   5 |      False      -1.0380 |     True      -0.6033       1.0000   0.000e+00   3.646e+00
+   8 |       True      -0.9842 |     True      -0.6014       1.0000   0.000e+00   5.763e+00
+  10 |       True      -0.9665 |    False      -0.6173       1.0000  -3.771e-01   7.243e+00
+  12 |       True      -0.9523 |    False      -0.6366    1055.3752  -6.325e+03   1.114e+06
+  16 |       True      -0.9317 |    False      -0.6619   22796.1318  -1.823e+05   5.197e+08
+  20 |       True      -0.9169 |    False      -0.6837    1056.1541  -1.055e+04   1.115e+06
+
+--- CONTROL  (kappa=0.15, gphi=0.02)  V7 routes to V4 ---
+   M | plain phys  plain z_min |  V7 phys     V7 z_min     V7 z_max    V7 n_min   V7 max|m|
+   5 |      False      -1.0343 |     True      -0.8270       1.0000   0.000e+00   3.130e+00
+   8 |      False      -0.9818 |     True      -0.7802       1.0000   0.000e+00   4.836e+00
+  10 |      False      -0.9607 |     True      -0.7486       1.0000   0.000e+00   6.046e+00
+  12 |      False      -0.9414 |     True      -0.7220       1.0000   0.000e+00   7.273e+00
+  16 |      False      -0.9241 |     True      -0.6950       1.0000   0.000e+00   9.794e+00
+  20 |      False      -0.9087 |     True      -0.6896       1.0000   0.000e+00   1.236e+01
+
+============================================================================================================
+CONFOUNDED: V7 already leaves the physical set at sigma = 0 for M <= 10, where it is
+physical at sigma = 0.15. sigma = 0 is itself out of distribution, so this run cannot
+separate size from disorder. Report as inconclusive; do not claim either outcome.
+  non-physical V7 cells: [('POCKET', 10), ('POCKET', 12), ('POCKET', 16), ('POCKET', 20)]
+============================================================================================================
+saved results/v8_step0_sigma0.npz
