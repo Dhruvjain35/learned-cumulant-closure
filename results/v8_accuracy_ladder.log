@@ -1,0 +1,12 @@
+V8 ACCURACY LADDER at sigma=0: closures vs the EXACT permutation-invariant reference.
+This is the first time any closure in this project has been checked above M=10.
+
+regime      M  branch |  n_peak exact   V7 relerr  plain relerr  ref secs
+CONTROL     5      v4 |       3.13848     -0.0028       +0.2962      10.9
+CONTROL     8      v4 |       4.78244     +0.0111       +0.3064      45.5
+CONTROL    10      v4 |       5.85601     +0.0325       +0.3104     150.9
+CONTROL    12      v4 |       6.93285     +0.0491       +0.3089     376.0
+POCKET      5      v6 |       3.67694     -0.0083       +0.2844       5.1
+POCKET      8      v6 |       5.65832     +0.0185       +0.2931      46.4
+POCKET     10      v6 |       6.95764     +0.0410       +0.2959     149.7
+POCKET     12      v6 |       8.24154     +0.0625       +0.2962     348.2

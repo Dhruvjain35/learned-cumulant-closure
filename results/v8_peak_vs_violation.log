@@ -1,0 +1,6 @@
+Is the burst peak reached BEFORE the physicality violation? (POCKET, sigma=0)
+
+   M branch |   t_peak  t_first_violation  t_maxabs>100  peak value
+  10     v6 |     3.82               7.24           nan      7.2431
+  12     v6 |     4.02               7.24         11.86      8.7566
+  16     v6 |     4.22               7.44         10.65     11.8190

@@ -26,7 +26,7 @@ open, *disordered* cavity–emitter regime where the standard truncation hierarc
 > collective-emission observable — the standard second-order cumulant closure is off by ≈ **+29%**, the tested
 > κ4 = 0 third-order closure by ≈ **−25% to −28%** (and it runs away in the low-loss pocket), and the κ5 = 0 fourth-order
 > closure **runs away** — its integration triggers a divergence guard. A frozen, physics-routed **learned closure
-> (V7)** stays within ≈ **±0.7%** of the
+> (V7)** stays within ≈ **±0.7%** at M ≤ 5 (growing to ≈ 5–6% at M = 12) of the
 > exact reference in the tested cells. This repo has the engines, the learned closure, the mechanism analysis,
 > the rejected hypotheses, and a cross-platform reproduction package — independently run and reproduced at
 > the Notre Dame CRC (2026-08-30, `external_validation/`).
@@ -41,7 +41,7 @@ Signed burst-peak error vs. an exact master-equation solve, in the evaluated dis
 | **2nd-order cumulant** | overshoots ≈ **+29%** | stable | no high-order engine to construct |
 | κ4 = 0 (3rd-order) | undershoots ≈ **−25% to −28%** | runaway growth (guard triggered) in the low-loss pocket | heavier than 2nd; M = 4 pocket case failed |
 | κ5 = 0 (4th-order) | overshoots, then **runaway growth** | guard triggered in all M = 3 cells (both regimes) | substantial, highly variable at M = 3 |
-| **V7 (learned)** | ≈ **±0.7%** | stable | no high-order engine to construct; per-rollout time not near second order |
+| **V7 (learned)** | ≈ **±0.7%** at M ≤ 5 (≈ 5–6% at M = 12) | stable | no high-order engine to construct; per-rollout time not near second order |
 
 Among the tested zero-next-cumulant truncations through fourth order, none produced a stable, accurate burst
 closure in these cells. *(Scope: exact-referenced at the tested molecule counts; behaviour beyond the exact

@@ -1210,3 +1210,114 @@ The headline result is unchanged and the freeze holds. What changed is the hones
 - Out-of-distribution behaviour is mixed, and on two axes V7 is WORSE than the baseline it improves on, because
   it destabilises where the baseline merely degrades.
 - The tensor-network comparison is gated at M=2,3 only.
+
+---
+
+## Result 34 — V8 Step 0: an exact reference ABOVE M=10; the large-M instability is LOW-LOSS + SIZE
+## (disorder-irrelevant, both branches); and the BURST PEAK is reached BEFORE the violation
+
+Pre-registered in PROTOCOL.md on 2026-09-15 before running. V7 frozen and untouched; nothing retrained,
+re-tuned or rerouted. Scripts: src/baselines/piqs_reference.py, src/validation/check_piqs_vs_exact.py,
+src/evaluation/v8_step0_sigma0.py, v8_forced_branch.py, v8_accuracy_ladder.py, v8_peak_vs_violation.py.
+Logs: results/v8_{piqs_scaling,step0_sigma0,forced_branch,accuracy_ladder,peak_vs_violation}.log.
+
+### A. The reference: permutation invariance breaks the 2^M wall (at sigma = 0 only)
+
+With identical emitters the Liouvillian is permutation invariant and the dynamics closes on the Dicke
+basis, which grows polynomially: 49 states at M=12 and 121 at M=20, against 4,100 and 1.05e6. Implemented
+via qutip.piqs. GATED FIRST against this project's exact solver -- the two routes share no code, one using
+a full 2^M space with per-emitter operators and the other a Dicke basis with collective ones -- and they
+agree to 1e-8 or better on the FULL photon trajectory across POCKET and CONTROL at M=2..5.
+
+RATE CONVENTIONS WERE MEASURED, NOT ASSUMED, and it mattered: PIQS works in spin-1/2 operators, so its
+`dephasing` coefficient produces coherence decay at HALF the rate this project's (gphi/2) D[sz] does and
+needs a factor of 2. Taking the mapping at face value would have silently corrupted every reference.
+
+Reached with the cavity attached: M=12 in 764 s, M=16 in 1738 s. This is the first exact reference in the
+project above M=10. LIMIT: sigma = 0 only. Disorder breaks permutation invariance, so this cannot validate
+the disordered cells -- which is precisely why the region sigma>0 AND M>=12 remains the one with no method.
+
+### B. Physicality: it is the REGIME, not the disorder, and not the branch
+
+Frozen V7 at sigma = 0, reference-free bounds as in Result 30 (per-emitter |<sz_i>| <= 1, <a'a> >= 0):
+
+  CONTROL (kappa=0.15, routes V4):  EXACTLY physical at M = 5, 8, 10, 12, 16, 20.
+                                    z_max = 1.000 and n_min = 0 at every size. Not marginal.
+  POCKET  (kappa=0.03, routes V6):  physical at 5, 8; LEAKS at 10 (n_min -0.377, bounded, max|m| 7.2);
+                                    DIVERGES at 12 (max|m| 1.1e6) and 16 (5.2e8).
+
+Forcing BOTH branches into the POCKET regime at BOTH disorder settings (v8_forced_branch.py) separates
+regime from branch from disorder. The table is near-symmetric in sigma:
+
+  branch  sigma   M=10        M=12        M=16
+  v4      0.00    FAIL        FAIL        FAIL
+  v4      0.15    FAIL        FAIL        FAIL
+  v6      0.00    leak        FAIL        FAIL
+  v6      0.15    leak        FAIL        FAIL
+
+DISORDER CHANGES ALMOST NOTHING. Both branches fail. This EXTENDS Result 31 (branch routing refuted) rather
+than contradicting it: that refutation also holds with no disorder at all. The honest statement is neither
+pre-registered option: the instability is a property of the LONG-COHERENCE (LOW-LOSS) REGIME COMBINED WITH
+SIZE. Note the irony -- the pocket is the regime V6 was built to repair at small M, and it is the regime
+that fails at scale.
+
+REPORTED AS IT PRINTED: v8_step0_sigma0.py's pre-registered verdict says CONFOUNDED, because the rule set
+the control at M<=10 while POCKET M=10 leaks. That boundary was badly chosen (Result 30 already had M=10 at
+2/3 seeds physical at sigma=0.15, so it was never clean). The paired sigma=0 vs sigma=0.15 comparison at
+FIXED regime, branch and M is the stronger test and is what the conclusion rests on. The rule is not
+rewritten after the fact; both it and the better comparison are on the record.
+
+### C. Accuracy above M=10, for the first time (signed burst-peak error vs the exact reference)
+
+  regime   M    exact n_peak   V7        plain 2nd order
+  CONTROL  5      3.13848      -0.0028   +0.2962
+  CONTROL  8      4.78244      +0.0111   +0.3064
+  CONTROL  10     5.85601      +0.0325   +0.3104
+  CONTROL  12     6.93285      +0.0491   +0.3089
+  POCKET   5      3.67694      -0.0083   +0.2844
+  POCKET   8      5.65832      +0.0185   +0.2931
+  POCKET   10     6.95764      +0.0410   +0.2959
+  POCKET   12     8.24154      +0.0625   +0.2962
+
+TWO FINDINGS, one favourable and one not:
+
+1. FAVOURABLE, and it strengthens the headline: the plain second-order overshoot is FLAT at ~+29 to +31%
+   across every size and BOTH regimes, out to M=12. The central result was measured at M<=5 and it holds
+   at more than twice that size.
+2. UNFAVOURABLE, and it corrects an existing claim: V7's error GROWS with M, by roughly 0.8-0.9% per
+   emitter (-0.3 -> +1.1 -> +3.3 -> +4.9 in CONTROL; -0.8 -> +1.9 -> +4.1 -> +6.3 in POCKET). The "+/-0.7%"
+   headline is an M<=5 exact-validated number and DOES NOT HOLD AT SCALE. At M=12 it is about 5-6%. V7 is
+   still ~5-6x better than plain there, but the margin is eroding, not constant.
+
+CONFOUND, DISCLOSED: sigma = 0 is itself outside V7's training distribution (trained at sigma = 0.15). The
+M=5 rows (-0.28%, -0.83%) show that costs little on its own, so the growth with M looks real -- but it is
+not cleanly separated from the sigma=0 effect. A matched sigma=0.15 ladder at M<=10 would separate them.
+
+### D. The burst peak is reached BEFORE the violation, and the onset is M-INDEPENDENT
+
+POCKET, sigma = 0 (v8_peak_vs_violation.py):
+
+  M     t_peak    t_first_violation    t(max|m| > 100)
+  10     3.82           7.24                never
+  12     4.02           7.24                11.86
+  16     4.22           7.44                10.65
+
+The burst peak lands at t ~ 3.8-4.2 while the first physicality violation is at t ~ 7.3 REGARDLESS OF M.
+The peak always precedes the violation by about 3.2-3.4 time units. Integration is causal, so values before
+t ~ 7 cannot be affected by a later blow-up.
+
+CONSEQUENCE, and it refines the limitation currently in the manuscript: the M>=12 instability is a LATE-TIME
+phenomenon. It invalidates long-horizon trajectory claims at those sizes. It does NOT invalidate the
+burst-peak observable, which is computed at t ~ 4, well inside the physical window. So at M=12 the burst peak
+is meaningful (+4.9% CONTROL, +6.3% POCKET) even in cells whose trajectories later leave the physical set.
+The two claims must be stated separately rather than collapsed into a single "validated range".
+
+### E. Standing consequences
+
+- The operating range is not one number. Burst peak: usable past M=12 with a measured, growing accuracy cost.
+  Long-time trajectory: still capped, and in the low-loss regime it fails from M=10-12 regardless of disorder.
+- Do NOT write "validated to M=20". CONTROL is PHYSICAL to M=20; that is not the same as accuracy-validated,
+  and accuracy was only checked to M=12.
+- Do NOT write "+/-0.7%" without "at M<=5". At M=12 it is 5-6%.
+- The sigma>0 AND M>=12 region still has no working method. Permutation invariance does not reach it and
+  exact methods do not either. That remains the niche, and it is now precisely bounded rather than asserted.
