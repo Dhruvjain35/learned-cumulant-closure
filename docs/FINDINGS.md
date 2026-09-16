@@ -1321,3 +1321,43 @@ The two claims must be stated separately rather than collapsed into a single "va
 - Do NOT write "+/-0.7%" without "at M<=5". At M=12 it is 5-6%.
 - The sigma>0 AND M>=12 region still has no working method. Permutation invariance does not reach it and
   exact methods do not either. That remains the niche, and it is now precisely bounded rather than asserted.
+
+## Result 35 — the sigma = 0 confound in Result 34 is CLOSED: the error growth is SIZE, by a factor of 20-100
+
+Result 34's accuracy ladder necessarily ran at sigma = 0, the only place the permutation-invariant
+reference applies, leaving one caveat open: sigma = 0 is itself outside V7's training distribution
+(trained at sigma = 0.15), so the measured error growth could have been about the disorder width rather
+than about M. This measures the sigma-slope directly at FIXED M = 5, where an exact mesolve reference
+exists at any disorder. Script src/evaluation/v8_sigma_sensitivity.py, log results/v8_sigma_sensitivity.log.
+Draws reuse the headline burst-peak seeds 50/51/52; no new seed is consumed.
+
+  regime    sigma    V7 relerr      plain relerr
+  POCKET     0.00     -0.0083         +0.2844
+  POCKET     0.05     -0.0077         +0.2846
+  POCKET     0.10     -0.0073         +0.2857
+  POCKET     0.15     -0.0057         +0.2876
+  POCKET     0.20     -0.0040         +0.2901
+  CONTROL    0.00     -0.0028         +0.2962
+  CONTROL    0.05     -0.0022         +0.2965
+  CONTROL    0.10     -0.0022         +0.2976
+  CONTROL    0.15     -0.0024         +0.2996
+
+VERDICT. The sigma = 0 penalty, measured against the training width sigma = 0.15, is +0.0026 in POCKET
+and +0.0003 in CONTROL. The size effect measured in Result 34 over M = 5 -> 12 is +0.054 and +0.046
+respectively. Size dominates by roughly 20x in the pocket and over 100x in the control. THE CONFOUND IS
+CLOSED: the accuracy degradation reported in Result 34 is attributable to M, not to running at zero
+disorder.
+
+TWO SUPPORTING OBSERVATIONS:
+
+1. CROSS-CHECK AGAINST THE HEADLINE TABLE. The sigma = 0.15 rows here reproduce the independently
+   computed burst_pred_exact.log values at M = 5: POCKET V7 0.0057 here vs 0.006 there, CONTROL 0.0024
+   vs 0.002. Same seeds, different script and code path.
+
+2. V7 IS MILDLY BETTER AT LARGER sigma, monotonically in the pocket (0.0083 -> 0.0040 as sigma goes
+   0 -> 0.20), and essentially flat in the control. It was trained at sigma = 0.15, so the direction is
+   the expected one. This also means the zero-disorder ladder of Result 34 is a MILDLY PESSIMISTIC
+   estimate of V7's accuracy, not an optimistic one -- which is the safe direction for a reported bound.
+
+Note also that the plain second-order error is nearly independent of disorder (0.2844 -> 0.2901 in the
+pocket across the full sigma range), consistent with Result 26's disorder-sweep null.
