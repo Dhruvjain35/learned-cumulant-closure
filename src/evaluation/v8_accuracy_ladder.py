@@ -23,17 +23,24 @@ def closure_peak(M, ka, gp, which):
     n = np.array([r[eng.tpos[(1,1,tuple([0]*M))]].real for r in tr])
     return float(n.max())
 
-print("V8 ACCURACY LADDER at sigma=0: closures vs the EXACT permutation-invariant reference.")
-print("This is the first time any closure in this project has been checked above M=10.\n")
-print(f"{'regime':<9}{'M':>4}{'branch':>8} | {'n_peak exact':>13}{'V7 relerr':>12}{'plain relerr':>14}{'ref secs':>10}")
-for rg, ka, gp in [("CONTROL",0.15,0.02), ("POCKET",0.03,0.02)]:
-    for M in (5,8,10,12):
-        t0=time.time()
-        _,_,fpk,_ = burst_piqs(M, NCMAP[M], 1.0, GC, ka, GDOWN, gp, tmax=40.0, nt=200, rate_factors=FAC)
-        npk_exact = fpk/ka
-        el=time.time()-t0
-        br = route(ka,gp)
-        pv7 = closure_peak(M,ka,gp,br)
-        ppl = closure_peak(M,ka,gp,"plain")
-        f=lambda v: f"{(v-npk_exact)/npk_exact:+.4f}" if v is not None else "DIVERGED"
-        print(f"{rg:<9}{M:>4}{br:>8} | {npk_exact:>13.5f}{f(pv7):>12}{f(ppl):>14}{el:>10.1f}", flush=True)
+
+def main():
+    print("V8 ACCURACY LADDER at sigma=0: closures vs the EXACT permutation-invariant reference.")
+    print("This is the first time any closure in this project has been checked above M=10.\n")
+    print(f"{'regime':<9}{'M':>4}{'branch':>8} | {'n_peak exact':>13}{'V7 relerr':>12}{'plain relerr':>14}{'ref secs':>10}")
+    for rg, ka, gp in [("CONTROL",0.15,0.02), ("POCKET",0.03,0.02)]:
+        for M in (5,8,10,12):
+            t0=time.time()
+            _,_,fpk,_ = burst_piqs(M, NCMAP[M], 1.0, GC, ka, GDOWN, gp, tmax=40.0, nt=200, rate_factors=FAC)
+            npk_exact = fpk/ka
+            el=time.time()-t0
+            br = route(ka,gp)
+            pv7 = closure_peak(M,ka,gp,br)
+            ppl = closure_peak(M,ka,gp,"plain")
+            f=lambda v: f"{(v-npk_exact)/npk_exact:+.4f}" if v is not None else "DIVERGED"
+            print(f"{rg:<9}{M:>4}{br:>8} | {npk_exact:>13.5f}{f(pv7):>12}{f(ppl):>14}{el:>10.1f}", flush=True)
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

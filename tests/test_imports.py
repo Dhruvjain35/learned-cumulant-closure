@@ -19,7 +19,9 @@ MODULES = [
     # analysis
     "mechanism", "mechanism_report", "disorder_sweep", "step1_gc_sweep",
     # validation
-    "validate_model", "check_conventions", "check_eom_identity",
+    "validate_model", "check_conventions", "check_eom_identity", "check_piqs_vs_exact",
+    # V8 line (permutation-invariant reference + zero-disorder study)
+    "piqs_reference", "v8_step0_sigma0", "v8_accuracy_ladder", "v8_peak_vs_violation",
 ]
 
 if __name__ == "__main__":
