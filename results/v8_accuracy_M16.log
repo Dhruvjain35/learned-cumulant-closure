@@ -1,0 +1,6 @@
+Extending the accuracy ladder to M=16 (sigma=0): is the error growth LINEAR or SATURATING?
+This decides whether V7's advantage has a crossover at reachable M.
+
+regime      M |  exact n_peak  V7 relerr plain relerr  ref secs
+CONTROL    16 |       9.03306    +0.0843      +0.3137    7818.9
+POCKET     16 |      10.80291    +0.0941      +0.2979    1519.9

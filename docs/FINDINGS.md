@@ -1361,3 +1361,44 @@ TWO SUPPORTING OBSERVATIONS:
 
 Note also that the plain second-order error is nearly independent of disorder (0.2844 -> 0.2901 in the
 pocket across the full sigma range), consistent with Result 26's disorder-sweep null.
+
+## Result 36 — the accuracy degradation is LINEAR in M, not saturating: ~0.8-0.9% per emitter,
+## with an EXTRAPOLATED (untested) crossover near M ~ 37-44
+
+Result 34 showed V7's burst-peak error growing with M and Result 35 attributed that growth to size
+rather than to the zero-disorder setting. The remaining question is the shape: if the growth saturates,
+V7 stays useful at any size; if it is linear, the advantage has a finite horizon. Extending the ladder to
+M = 16 answers it. Script src/evaluation/v8_accuracy_m16.py, log results/v8_accuracy_M16.log.
+
+  regime    M=5      M=8      M=10     M=12     M=16   | plain (mean over the row)
+  CONTROL  -0.0028  +0.0111  +0.0325  +0.0491  +0.0843 |  +0.3071  (range .2962-.3137)
+  POCKET   -0.0083  +0.0185  +0.0410  +0.0625  +0.0941 |  +0.2935  (range .2844-.2979)
+
+LINEAR, NOT SATURATING. Least-squares over M = 5..16:
+
+  CONTROL   slope 0.815 % per emitter   r = 0.9933
+  POCKET    slope 0.948 % per emitter   r = 0.9978
+
+The per-interval rates are steady (CONTROL 0.46, 1.07, 0.83, 0.88 %/emitter; POCKET 0.89, 1.13, 1.08,
+0.79), with no flattening anywhere in the measured range. There is NO EVIDENCE that the degradation
+levels off, and that possibility is now ruled out over M = 5..16.
+
+WHAT IS STILL TRUE IN V7's FAVOUR. At M = 16 the learned closure is 3.7x (CONTROL) and 3.2x (POCKET)
+more accurate than the plain second-order closure, and the plain error remains flat at ~29-31% across the
+whole range -- the headline result, originally measured at M <= 5, now holds to M = 16.
+
+EXTRAPOLATION, EXPLICITLY NOT A MEASUREMENT. Continuing the fitted line to where it meets the flat
+baseline gives M ~ 44 (CONTROL) and M ~ 37 (POCKET), and M = 20 would read ~11.5% and ~13.5%. THE DATA
+END AT M = 16. These numbers are a linear extrapolation beyond the measured range and must never be
+reported as a result. They are recorded because the question "where does your method stop helping?" has
+an honest answer -- "I have not tested past M = 16; a linear fit over the measured range would put it near
+M ~ 40" -- and that answer is better than a guess at a podium.
+
+CAVEAT ON THE POCKET M = 16 CELL: V7's trajectory there leaves the physical set late (Result 34: first
+violation at t ~ 7.4). The burst peak occurs at t ~ 4.2, before any violation, and integration is causal,
+so the peak value is valid. The trajectory beyond t ~ 7 is not.
+
+CONSEQUENCE FOR WORDING. The claim is a rate, not a step. "+/-0.7% at M <= 5, degrading about 0.9% per
+emitter to ~8-9% at M = 16" is the supported statement. Writing "5-6% above M = 5" would be wrong in both
+directions: it overstates the error at M = 8 (1.1-1.9%) by roughly threefold, and it implies a plateau
+that the data specifically rule out.
