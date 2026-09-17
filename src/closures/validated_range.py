@@ -28,6 +28,14 @@ WHAT IS ACTUALLY VALIDATED
 
 The gap at M=11 is not a claim, it is simply untested.
 
+REFINED BY RESULTS 34 AND 37, WITHOUT CHANGING THIS GUARD'S BEHAVIOUR. The failure is late-time: the
+burst peak lands at t ~ 4 while the first physicality violation occurs at t ~ 7.3 independently of M,
+and integration is causal, so a burst-peak value extracted at M = 12 is meaningful even though the
+trajectory it came from is not. Against quantum-trajectory references WITH disorder at M = 12 the
+learned closure reads +5.7% (low loss) and +4.0% (normal loss). None of that makes the ROLLOUT valid,
+which is what this module guards, so check() still refuses M >= 12 by default. Burst-peak evaluation at
+those sizes is a deliberate, separately referenced exception -- not a reason to relax the guard.
+
 Calling `check(M)` before a rollout turns a silent unphysical trajectory into an explicit,
 citable refusal. `mode="warn"` is available for deliberate exploration, but the default is to
 raise, because the failure this guards against does not announce itself -- per-site inversions

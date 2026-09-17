@@ -40,6 +40,19 @@ repository. An outside collaborator ran `replicate_cumulant.jl` — an independe
 |---|---|---|
 | 2nd-order overshoots the burst peak by ≈ +0.28 to +0.30, M-flat, both regimes | `external_validation/{REPLICATION_SIGNOFF.md, replication_cumulant.csv, replication_run.log, replicate_cumulant_as_run.jl}` | parameter-file SHA256 byte-identical to `results/replication_params.json`; as-run script equals `replicate_cumulant.jl` at `b309fe8` plus three print-only lines; fail-closed IC guards logged as passed in all six cells; returned exact peaks match the Python reference to < 4e-4 |
 
+## References above the 2^M wall (Results 34-37)
+
+Added when the V8 line built references at sizes the rows above could not reach.
+
+| Claim | Script | Reference method | Output |
+|---|---|---|---|
+| Burst-peak error of both closures at M = 5..16, zero disorder | `src/evaluation/v8_accuracy_ladder.py`, `v8_accuracy_m16.py` | permutation-invariant exact (`qutip.piqs`), gated to 1e-8 vs `mesolve` at M = 2..5 | `results/v8_accuracy_ladder.log`, `v8_accuracy_M16.log` |
+| Burst-peak error at M = 12 **with disorder** | `src/evaluation/v8_disordered_m12.py` | quantum trajectories, 400 trajectories, ~1% MC error | `results/v8_disordered_m12.log` |
+| Monte-Carlo noise floor justifying that trajectory count | `src/evaluation/v8_mc_noise_floor.py` | — | `results/v8_mc_noise_floor.log` |
+| Physicality of the frozen closure at M = 5..20, zero disorder | `src/evaluation/v8_step0_sigma0.py`, `v8_forced_branch.py` | reference-free bounds | `results/v8_step0_sigma0.log`, `v8_forced_branch.log` |
+| sigma-sensitivity at fixed M = 5 | `src/evaluation/v8_sigma_sensitivity.py` | exact `mesolve` | `results/v8_sigma_sensitivity.log` |
+| Tensor networks do not reach these sizes | `src/baselines/v8_mps_feasibility.py` | TeNPy (isolated venv; not in the pinned lock file) | `results/v8_mps_feasibility.log`, `v8_mps_gate_reproduction.log` |
+
 This is a cross-platform reproduction, not an independent replication. See
 `external_validation/PROVENANCE.md` for the full receipt-side audit and
 `docs/EXTERNAL_VALIDATION_STATUS.md` for what wording it licenses.
