@@ -1,0 +1,6 @@
+MPS vs exact mesolve   g_c=0.7 kappa=0.03 gphi=0.02 sigma=0.15 gdown=0.02  t<=10.0
+ M  Nc   chi    max|dn|  peak_exact   peak_mps  rel_peak   TrDrift  t_exact   t_mps
+ 2   6    48   1.39e-03    1.631326   1.631350  1.44e-05   2.0e-13      0.0     9.9  PASS
+ 3   8    96   1.08e-03    2.321173   2.321244  3.06e-05   2.3e-13      0.1    35.0  PASS
+
+GATE 2 PASSED   (thresholds: max|dn|<5e-3, rel_peak<5e-3, Tr drift<1e-6)

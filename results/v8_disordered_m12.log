@@ -1,0 +1,6 @@
+DISORDERED reference at M=12 by quantum trajectories (ntraj=400, t<=10).
+Tests V7 in the regime it was BUILT for (sigma>0) at the size where it diverges.
+
+regime     M |  n_peak (mc)   +/-% |   V7 relerr plain relerr    secs
+POCKET    12 |       8.1063  0.72% |     +0.0573      +0.2931  4287.7
+CONTROL   12 |       6.8082  0.99% |     +0.0400      +0.3050  6992.2

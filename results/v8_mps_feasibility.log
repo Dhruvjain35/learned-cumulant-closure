@@ -1,0 +1,6 @@
+MPS FEASIBILITY at sigma=0.15 (POCKET): can the tensor-network reference reach M>=12?
+The question is whether the bond dimension saturates or explodes through the burst.
+
+  M  Nc chi_max |  chi reached   n_peak  Tr drift     secs   verdict
+  4  10     256 |           54   2.9885   1.4e-10    142.1        ok
+  6  14     256 |          254   4.3098   6.1e-10   4968.0        ok

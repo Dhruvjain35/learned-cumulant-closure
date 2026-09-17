@@ -1235,7 +1235,8 @@ needs a factor of 2. Taking the mapping at face value would have silently corrup
 
 Reached with the cavity attached: M=12 in 764 s, M=16 in 1738 s. This is the first exact reference in the
 project above M=10. LIMIT: sigma = 0 only. Disorder breaks permutation invariance, so this cannot validate
-the disordered cells -- which is precisely why the region sigma>0 AND M>=12 remains the one with no method.
+the disordered cells. [SUPERSEDED BY RESULT 37: trajectories DO reach sigma>0 at M ~ 12-13, so the
+no-method region is M >= 14, not M >= 12.]
 
 ### B. Physicality: it is the REGIME, not the disorder, and not the branch
 
@@ -1319,8 +1320,10 @@ The two claims must be stated separately rather than collapsed into a single "va
 - Do NOT write "validated to M=20". CONTROL is PHYSICAL to M=20; that is not the same as accuracy-validated,
   and accuracy was only checked to M=12.
 - Do NOT write "+/-0.7%" without "at M<=5". At M=12 it is 5-6%.
-- The sigma>0 AND M>=12 region still has no working method. Permutation invariance does not reach it and
-  exact methods do not either. That remains the niche, and it is now precisely bounded rather than asserted.
+- The no-method region is sigma>0 AND M >= 14 (CORRECTED by Result 37, which measured that quantum
+  trajectories reach M ~ 12-13 with disorder at ~1% noise; the earlier M >= 12 boundary was wrong).
+  Permutation invariance cannot enter it (identical emitters only) and tensor networks cannot reach it
+  (bond dimension saturates by M = 6, measured). That is the niche, bounded by measurement on both sides.
 
 ## Result 35 — the sigma = 0 confound in Result 34 is CLOSED: the error growth is SIZE, by a factor of 20-100
 
@@ -1402,3 +1405,83 @@ CONSEQUENCE FOR WORDING. The claim is a rate, not a step. "+/-0.7% at M <= 5, de
 emitter to ~8-9% at M = 16" is the supported statement. Writing "5-6% above M = 5" would be wrong in both
 directions: it overstates the error at M = 8 (1.1-1.9%) by roughly threefold, and it implies a plateau
 that the data specifically rule out.
+
+## Result 37 — Can ANYTHING reference sigma > 0 at M >= 12? Tensor networks NO (measured),
+## quantum trajectories YES; and the whole zero-disorder V8 line TRANSFERS to the real regime
+
+Results 34-36 were all measured at sigma = 0, because the permutation-invariant reference cannot do
+otherwise. The obvious objection is that none of it need apply to the DISORDERED model the closure was
+actually built for. This result closes that objection by measurement, and in doing so corrects the map of
+what is reachable. Scripts: src/baselines/v8_mps_feasibility.py, src/evaluation/v8_mc_noise_floor.py,
+src/evaluation/v8_disordered_m12.py. Logs: results/v8_{mps_feasibility,mps_gate_reproduction,
+mc_noise_floor,disordered_m12}.log.
+
+### A. Tensor networks: RULED OUT, by measurement rather than by argument
+
+TeNPy was installed in an ISOLATED venv (golden/.venv deliberately untouched, since pip could have bumped
+numpy or scipy underneath every frozen result). That environment first REPRODUCED the committed gate:
+M=2 peak 1.631350 vs the committed 1.63135, M=3 peak 2.321244 vs 2.32124 -- six significant figures, on a
+different Python (3.14 vs 3.12), numpy (2.5.3 vs 2.4.6) and qutip (5.3.1 vs 5.3.0). That also CLOSES the
+provenance gap noted earlier: results/mps_gate.npz IS regenerable, it simply needed physics-tenpy.
+
+Scaling at sigma = 0.15, POCKET, chi_max = 256, t <= 10:
+
+  M   Nc   chi reached   n_peak    Tr drift    secs
+  2    6        9        1.6313    2e-13        9.9
+  3    8       16        2.3212    2e-13       35.0
+  4   10       54        2.9885    1.4e-10    142.1
+  6   14      254        4.3098    6.1e-10   4968.0     <- AT THE CAP
+
+The bond dimension SATURATES the cap by M = 6 and wall-clock grew 35x for two added emitters. M = 12 would
+need chi in the thousands and run for weeks. Stopped at M = 6; M = 8 would cost ~2 days and change nothing.
+
+WHY, structurally (this is the citable answer to "why not just use tensor networks?"): the cavity couples to
+EVERY emitter, so in a chain ordering every coupling term is long-range -- a star geometry, the known bad
+case for matrix-product states. In the vectorised Liouville space the cavity site carries dimension Nc^2
+(484 at M = 12). And the superradiant burst is the maximally-correlated moment of the dynamics, so peak
+entanglement lands exactly where accuracy is needed. This is a geometry mismatch, not a tuning problem.
+
+### B. Quantum trajectories: RULED IN, and the binding constraint is NOISE, not dimension
+
+mcsolve evolves PURE STATES of dimension Nc*2^M rather than a density matrix of its square, which is why
+mc_ref.py's own docstring already claimed M ~ 12-13 with disorder. The real limit is Monte-Carlo error:
+
+  M    ntraj    n_peak    mcerr    mcerr/peak    secs    ntraj needed for 1%
+  10     60     7.0510    0.1238      1.76%      179.7          186
+  12     60     8.2103    0.1745      2.12%      950.7          271
+
+271 trajectories buys 1% at M = 12, which comfortably resolves V7's ~5% error. Measured first, rather than
+launching a multi-hour run and hoping.
+
+### C. THE DISORDERED VALIDATION at M = 12 (ntraj = 400, sigma = 0.15, seed 50, t <= 10)
+
+  regime    n_peak (traj)   +/-%     V7        plain    | sigma=0 (PIQS):  n_peak   V7       plain
+  POCKET       8.1063       0.72%   +0.0573   +0.2931   |                 8.2415  +0.0625  +0.2962
+  CONTROL      6.8082       0.99%   +0.0400   +0.3050   |                 6.9329  +0.0491  +0.3089
+
+THE ZERO-DISORDER LINE TRANSFERS. Two entirely different reference methods -- permutation-invariant exact
+without disorder, stochastic trajectories with it -- agree on both closures to a few tenths of a percent.
+Results 34, 35 and 36 are not zero-disorder curiosities; they describe the model this work claims.
+
+V7 is slightly BETTER with disorder in both regimes (5.73 vs 6.25; 4.00 vs 4.91), the direction Result 35
+predicted from the training width sigma = 0.15. The Result 36 ladder is therefore a CONSERVATIVE bound,
+now confirmed at M = 12 and not only at M = 5.
+
+AND THE BURST PEAK SURVIVES THE DIVERGENCE IN THE REAL REGIME. POCKET M = 12 is a cell where V7's
+trajectory leaves the physical set at t ~ 7.2 (Result 34). Its burst peak at t ~ 4 still comes back at
++5.73% against an honest disordered reference. Result 34's late-time-failure finding holds where it counts.
+
+### D. CORRECTION to the reachability map
+
+An earlier statement in this project's own analysis -- that sigma > 0 with M >= 12 is unreachable by any
+method -- is WRONG. Trajectories reach M ~ 12-13 with disorder at ~1% noise for a few hundred trajectories.
+The M <= 10 cap was a PROTOCOL artifact: burst_pred.py's pre-registered rule said "extend to mcsolve
+M = 6..12 only if K1 and K2 both survive", K1 fired as a null, and the extension was never run. It was never
+a feasibility wall.
+
+Two consequences, one narrowing and one widening:
+
+- The genuinely unreachable region is M >= 14 with disorder, NOT M >= 12. The niche claim must say 14.
+- A positivity-repaired closure COULD be validated against trajectories at M = 12-13 in the DISORDERED
+  regime. The earlier reasoning that such a repair could only ever be checked at sigma = 0, and would
+  therefore be near-pointless, does not hold.
