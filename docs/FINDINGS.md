@@ -874,7 +874,8 @@ scope under the V7-frozen constraint). The M-scaling headline is therefore struc
 WHAT SURVIVED (real, signed, exact-validated): the standard 2nd-order cumulant closure OVERSHOOTS the
 superradiant burst peak flux by a robust +28% to +30% (signed positive; pocket seed-50 +0.278/+0.284/+0.290/
 +0.291 at M=2/3/4/5; control +0.290/+0.289/+0.296/+0.303), across M and across BOTH regimes. Frozen V7
-reproduces the exact peak to within +/-0.7% on the SAME cells and the SAME engine/Fock cutoff -- so the ~29% gap
+reproduces the exact peak to within +/-0.7% on the SAME cells (M=2..5; see Result 36 -- this figure is
+small-M only and grows ~0.9%/emitter) and the SAME engine/Fock cutoff -- so the ~29% gap
 is the CLOSURE ORDER, not numerics (a clean internal control: same NC=12/Fsafe=6 for plain and V7). V7's residual
 STRADDLES zero (+0.003, -0.007, +0.003, ...), i.e. an accurate model with unbiased residual, not a bug copying
 the reference. The error is concentrated in burst HEIGHT: plain cumulant reproduces the burst DELAY t_peak to
@@ -1006,7 +1007,9 @@ disordered open-cavity cells:
   - kappa4=0 3rd: UNDERSHOOTS peak -28% (stable in control; runaway growth triggering the guard in the low-loss pocket)
   - kappa5=0 4th: reproducible RUNAWAY GROWTH triggering the divergence guard in all evaluated M=3 cells, and
                   overshoots the peak before the runaway
-  - V7:          +/-0.7%, stable; avoids high-order engine construction
+  - V7:          +/-0.7% AT THESE M<=3 CELLS, stable; avoids high-order engine construction
+                 (scope added retroactively: Result 36 measures this error growing ~0.9%/emitter,
+                  reaching 8-9% at M=16. The +/-0.7% figure is small-M only.)
 HYPOTHESIS (not tested; discussion only): why this differs from the spin-only free-space Dicke benchmark, where
 4th order becomes exact at N=4 -- our model has an unbounded cavity Fock mode, and high-order cumulant truncations
 of a bosonic mode MAY be prone to this runaway behavior, since a finite spin Hilbert space closes at a bounded

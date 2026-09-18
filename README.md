@@ -140,10 +140,13 @@ python run.py src/baselines/t4_eval.py
 
 ## Scope and discipline
 
-- **Validated to M ≤ 10; unstable at M ≥ 12.** M = 11 is untested. At M ≥ 12 the closure is measured to leave
-  the physical set (both branches; three attempted repairs all failed), and `validated_range.py` refuses those
-  sizes by default. Every headline number lives at M ≤ 10. Rollouts beyond the reference range are numerical reach, not
-  demonstrated accuracy, and are labelled as such throughout.
+- **Two different ranges, and only one of them is capped.** *Trajectory* validity stops at M ≤ 10: M = 11 is
+  untested, and at M ≥ 12 the closure is measured to leave the physical set (both branches; three attempted
+  repairs all failed), so `validated_range.py` refuses those sizes by default. *Burst-peak* accuracy reaches
+  further, because the failure is late-time — the peak lands at t ≈ 4 while the first violation occurs at
+  t ≈ 7.3 regardless of M. The peak is referenced to M = 16 against exact permutation-invariant solves at zero
+  disorder, and to M = 12 against quantum trajectories **with** disorder. Anything beyond those is numerical
+  reach, not demonstrated accuracy, and is labelled as such throughout.
 - **Frozen after evaluation.** V7 and its two branches were frozen before final testing; pre-registrations and
   held-out disorder draws are in [`docs/PROTOCOL.md`](docs/PROTOCOL.md).
 - **Rejected hypotheses are kept.** A once-calibrated parameter-only routing criterion, an M-scaling story, and a
