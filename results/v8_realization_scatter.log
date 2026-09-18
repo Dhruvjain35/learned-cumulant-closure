@@ -1,0 +1,7 @@
+Is CONTROL's scatter Monte-Carlo noise or DISORDER-REALIZATION scatter?
+Same cell, three seeds. MC error is ~1%; if plain moves several points, it is the realization.
+
+ seed   M |  n_peak(mc)   +/-%        V7     plain    secs
+   50  10 |      5.6380  1.10%   +0.0479   +0.3376   936.5
+   51  10 |      5.6288  1.15%   +0.0396   +0.3306   677.9
+   52  10 |      5.8134  1.05%   +0.0287   +0.3090   657.4

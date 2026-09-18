@@ -1485,3 +1485,61 @@ Two consequences, one narrowing and one widening:
 - A positivity-repaired closure COULD be validated against trajectories at M = 12-13 in the DISORDERED
   regime. The earlier reasoning that such a repair could only ever be checked at sigma = 0, and would
   therefore be near-pointless, does not hold.
+
+## Result 38 — the DISORDERED ladder corroborates the rate but cannot measure it: realization scatter
+## at fixed M exceeds the growth between adjacent M. The sigma = 0 ladder is the PRIMARY measurement.
+
+Result 37 validated the burst peak at M = 12 with disorder. The natural next step was a full disordered
+ladder, to state Result 36's degradation rate in the real regime rather than transfer it from sigma = 0.
+That was run, and it produced one clean result, one messy one, and a reason the messy one is the honest
+answer. Scripts src/evaluation/v8_disordered_ladder.py, v8_realization_scatter.py; logs
+results/v8_disordered_ladder.log, v8_realization_scatter.log. Trajectories, ntraj = 400, seed 50, t <= 10;
+the M = 5 entries come from the exact-mesolve sigma sweep of Result 35.
+
+### The ladder as measured (one disorder realization per M)
+
+  regime     M=5      M=8      M=10     M=12   | fitted slope   r      | sigma=0 slope (Result 36)
+  POCKET   -0.0057  +0.0174  +0.0373  +0.0573  |   0.902 %/emit 0.9976 |   0.948
+  CONTROL  -0.0024  +0.0205  +0.0513  +0.0400  |   0.702 %/emit 0.8895 |   0.815
+
+  plain, POCKET :  0.2876  0.2948  0.2942  0.2931   (spread 0.72 pp)
+  plain, CONTROL:  0.2996  0.3250  0.3419  0.3050   (spread 4.23 pp)
+
+CONTROL is non-monotonic in V7 (5.13% at M=10, 4.00% at M=12) and its plain error swings 4.23 pp, when
+Monte-Carlo error is ~1% and the SAME row at sigma = 0 was flat to 0.5 pp. That is more scatter than the
+noise budget allows, so the cause was measured rather than guessed.
+
+### The diagnosis: DISORDER-REALIZATION scatter, 2-3x the Monte-Carlo error
+
+CONTROL, M = 10 held FIXED, three disorder draws (ntraj = 400 each):
+
+  seed    n_peak     mcerr      V7        plain
+   50     5.6380     1.10%    +0.0479   +0.3376
+   51     5.6288     1.15%    +0.0396   +0.3306
+   52     5.8134     1.05%    +0.0287   +0.3090
+
+At fixed M the closure error spans 2.87-4.79% and the plain error spans 30.90-33.76%: spreads of 1.9 and
+2.9 pp against a 1.1% Monte-Carlo error. The scatter is REALIZATION, not sampling.
+
+### Why that settles the methodology, and against the more flattering reading
+
+The growth rate is ~0.8-0.9 %/emitter, so adjacent ladder points (M = 10 -> 12) are separated by about
+1.7 pp. THE REALIZATION SCATTER IS LARGER THAN THE SIGNAL BETWEEN ADJACENT POINTS. A one-seed-per-M
+disordered ladder therefore cannot resolve the rate. CONTROL's non-monotonicity was never physics and its
+fitted 0.702 %/emitter measures nothing; it is reported here so the record shows what was run, not as a
+result.
+
+THE SAME CAVEAT APPLIES TO THE FAVOURABLE ROW. POCKET's ladder came out at 0.902 %/emitter with r = 0.9976
+and agrees with the sigma = 0 rate of 0.948 -- but it is also ONE realization per point, and the identical
+scatter applies in principle. It CORROBORATES the rate; it does not independently measure it. Reading
+r = 0.9976 as a precise disordered measurement would be selecting the favourable draw.
+
+CONSEQUENCE, and it is the useful one: THE SIGMA = 0 LADDER OF RESULT 36 IS THE PRIMARY MEASUREMENT OF THE
+RATE, precisely because permutation invariance has NO disorder realization and therefore no realization
+noise. The constraint that made Result 34-36 look like a compromise -- that the only reference reaching
+those sizes requires identical emitters -- is the reason that ladder is clean. The disordered work confirms
+the magnitude and the regime transfer (Result 37) and bounds the realization scatter; it does not supersede.
+
+WHAT WOULD BE NEEDED to measure the rate in the disordered regime directly: three or more seeds per M at
+every rung, i.e. roughly triple the trajectory budget, with per-rung means and standard errors reported
+rather than single draws. Not run. Noted so the gap is explicit rather than implied.
