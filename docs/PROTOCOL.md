@@ -590,3 +590,71 @@ applies, and reported whether or not it is favourable.
 
 sigma = 0 has no disorder draw, so no seed is consumed by this step. Any later step that needs disorder must
 draw from the unconsumed reserve and must record the allocation here before running.
+
+---
+
+## Pre-registration — V8 Step 1: a structurally positivity-preserving closure. NOT STARTED.
+
+Written 2026-09-18 so the decision is concrete and costed rather than vague. **This is an option, not a
+commitment**, and nothing below has been run. Recording it now means that if it ever is run, the design
+and the kill rules predate the data, which is the only thing that makes a result from it trustworthy.
+
+### What it would attempt
+
+Results 30, 31 and 34 establish that the frozen closure leaves the physical set at M >= 12 in the
+long-coherence regime, at any disorder, on both branches, and that three repairs failed: physicality
+gating (partial, never restores positivity), margined gating (monotonically worse), branch routing
+(refuted, no stable target). Result 31 concluded the remaining routes are retraining with large-M targets
+or a structurally positivity-preserving redesign -- new architecture rather than a repair.
+
+The idea: stop learning a correction that MAY violate |<sz_i>| <= 1 and <a'a> >= 0, and instead learn in a
+parameterisation where those bounds cannot be represented as violated. Divergence then is not gated, it is
+unrepresentable. Candidate parameterisations to be chosen and fixed BEFORE any training:
+
+  (a) bounded coordinates -- learn the correction in variables mapped through a saturating function so the
+      reachable set is the physical set by construction;
+  (b) a dissipativity constraint on the learned term, so the closed-loop generator cannot inject the
+      unbounded growth observed at M >= 12;
+  (c) a projection built into the closure's output rather than applied post hoc, unlike physicality_gate.
+
+### Why this is now more viable than it looked on 2026-09-15
+
+Earlier reasoning held that any repair could only be validated at sigma = 0, since permutation invariance
+is the only reference above M = 10 and requires identical emitters, making the exercise near-pointless.
+Result 37 refuted that: quantum trajectories reach M ~ 12-13 WITH disorder at ~1% Monte-Carlo error for a
+few hundred trajectories. A repaired closure could therefore be validated at M = 12-13 in the disordered
+regime -- the regime the work actually claims.
+
+### Hard constraints, inherited and non-negotiable
+
+- V7 and both its branches stay FROZEN and untouched. Any new model is a separate artifact under a new
+  name. Every existing result must remain reproducible exactly as committed.
+- Seed discipline: the seed ledger in this document governs. A new model needs its own untouched seeds for
+  its own final verdict, allocated and recorded HERE before training, not chosen afterwards.
+- Realization scatter (Result 38) is 2-3 percentage points at fixed M, larger than the ~1.7 point growth
+  between adjacent sizes. Any disordered accuracy claim needs >= 3 seeds per rung with means and standard
+  errors, not single draws. Budget accordingly or do not make the claim.
+
+### Pre-committed outcomes
+
+- **P1 (success).** The new closure is physical at M >= 12 in the low-loss regime AND its burst-peak error
+  is no worse than V7's at matched M. Only this earns "the size ceiling is repaired."
+- **P2 (physical but less accurate).** Physical at M >= 12 but measurably worse than V7 at small M. Report
+  the trade honestly; do not present it as strictly better. This is the most likely favourable outcome.
+- **P3 (no improvement).** Still leaves the physical set. Record as the fourth failed repair and stop.
+- **P4 (accuracy collapse).** Structurally physical but accuracy so degraded it no longer beats plain
+  second order. Record and stop; a physical closure that is not accurate is not a contribution here.
+
+### Kill rules
+
+- If the first trained variant does not reach at least P2, STOP. Do not iterate architectures; that is how
+  a frozen project becomes an unfrozen one.
+- Hard stop 2026-12-31 regardless of state, so January and February remain for writing and defence.
+- No result from this line enters the manuscript unless it clears the same bar as Results 1-38:
+  pre-registered, held-out seeds, reported whether or not favourable.
+
+### Cost, stated honestly before anyone commits
+
+New architecture, training, and a disordered validation at three seeds per rung. This is months, not days.
+The author's manuscript, poster and defence are all unwritten as of this date, and the ISEF interview is
+25 of 100 points. The recommendation attached to this pre-registration is DO NOT START until those exist.
