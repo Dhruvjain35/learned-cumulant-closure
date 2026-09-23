@@ -92,5 +92,6 @@ ax.set_title("Closure-structure ladder, untouched seeds 32/33/34 -- cell: stabil
              "(bit-identical)", fontsize=9)
 fig.colorbar(im, ax=ax, label="median conditional NRMSE")
 fig.tight_layout()
-fig.savefig("results/ladder.png", dpi=150)
+for _ext in ("png", "pdf"):          # vector output for publication; raster kept for the README
+    fig.savefig("results/ladder." + _ext, dpi=150)
 print("saved results/ladder.png")

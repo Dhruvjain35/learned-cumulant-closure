@@ -50,7 +50,8 @@ ax.annotate(f"T4 build {build_lo['kappa5=0 (T4)']:.0f}–{build_hi['kappa5=0 (T4
 ax.grid(axis="y", alpha=0.25, which="both")
 ax.legend(fontsize=9, loc="upper left")
 fig.tight_layout()
-fig.savefig("results/runtime_benchmark_fig.png", dpi=150)
+for _ext in ("png", "pdf"):          # vector output for publication; raster kept for the README
+    fig.savefig("results/runtime_benchmark_fig." + _ext, dpi=150)
 print("wrote results/runtime_benchmark_fig.png")
 print("medians (s):")
 for m in ORDER:

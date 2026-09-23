@@ -74,7 +74,8 @@ def fig_timing(tr, out):
                         plt.Line2D([], [], color=ORANGE, lw=2,
                                    label=r"$|\kappa_3|$ — the correlation second order throws away")],
                loc="lower center", bbox_to_anchor=(0.5, -0.17), ncol=2, frameon=False)
-    fig.savefig(out)
+    for _ext in ("png", "pdf"):    # vector output for publication
+        fig.savefig(str(out).rsplit(".", 1)[0] + "." + _ext)
     plt.close(fig)
 
 
@@ -92,7 +93,8 @@ def fig_ratio(tr, out):
     ax.set_ylim(0, max(r) * 1.45)
     ax.grid(axis="y", alpha=0.5)
     ax.set_title("The dropped term does not shrink with size", loc="left")
-    fig.savefig(out)
+    for _ext in ("png", "pdf"):    # vector output for publication
+        fig.savefig(str(out).rsplit(".", 1)[0] + "." + _ext)
     plt.close(fig)
 
 
@@ -144,7 +146,8 @@ def fig_collapse(tc, out):
     axes[0].legend(frameon=False, fontsize=8, loc="lower left")
     fig.subplots_adjust(top=0.74)
     fig.suptitle("Transfer works in the coordinates the model actually uses", y=1.06)
-    fig.savefig(out)
+    for _ext in ("png", "pdf"):    # vector output for publication
+        fig.savefig(str(out).rsplit(".", 1)[0] + "." + _ext)
     plt.close(fig)
 
 
@@ -167,7 +170,8 @@ def fig_coverage(fc, out):
     ax.set_ylim(0, max(pk) * 1.25)
     ax.grid(axis="y", alpha=0.5)
     ax.set_title("Bigger systems leave the window the model was fitted on", loc="left")
-    fig.savefig(out)
+    for _ext in ("png", "pdf"):    # vector output for publication
+        fig.savefig(str(out).rsplit(".", 1)[0] + "." + _ext)
     plt.close(fig)
 
 
