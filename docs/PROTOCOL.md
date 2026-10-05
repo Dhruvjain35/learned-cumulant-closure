@@ -658,3 +658,134 @@ regime -- the regime the work actually claims.
 New architecture, training, and a disordered validation at three seeds per rung. This is months, not days.
 The author's manuscript, poster and defence are all unwritten as of this date, and the ISEF interview is
 25 of 100 points. The recommendation attached to this pre-registration is DO NOT START until those exist.
+
+---
+
+## Pre-registration — Publication finalization P2: common-carrier (rotating-frame) invariance audit
+
+Registered 2026-10-05, BEFORE any shifted-carrier run exists. Additive audit only: V4, V6 and the V7 router
+stay frozen and untouched, no model is retrained, re-tuned or rerouted, and no existing result changes. Its
+only purpose is to decide whether `omega_c = 1` (and therefore the quoted `g_c / omega_c = 0.7`) carries
+physical meaning for the reported benchmark, or is an artifact of using the carrier as the numerical unit.
+The manuscript is NOT edited on the strength of this audit alone; the reasoning also goes to an external
+quantum-optics reviewer (the outside reviewer who raised the ultrastrong caveat) before any wording changes.
+
+### Question
+
+Does adding the same constant C to the cavity frequency and to every emitter frequency,
+`omega_c -> omega_c + C`, `w_i -> w_i + C`, with every detuning `Delta_i = w_i - omega_c`, the couplings
+`g_i = g_c/sqrt(M)`, `kappa`, `gamma_down`, `gamma_phi`, the disorder realization and the initial state held
+fixed, change (a) the exact gauge-invariant observables, (b) the plain second-order closure, or (c) the frozen
+V7 burst prediction?
+
+### Implementation facts established by inspection before registering (not results)
+
+1. All solvers run in the LAB frame. Exact: `exact_tc.build_H` puts `omega_c a'a + sum_i w_i |e><e|_i` into a
+   full `mesolve`. Closure engine used by V7 (`ScalableEngine`): the carrier enters ONLY through the analytic
+   diagonal term `d<k>/dt += i (omega_c (p - q) + sum_i w_i s_i(k)) <k>`; the structural part is computed once
+   at `omega_c = w = 0`. The dense `CumulantEngine` projects the full `L^dagger` including `omega_c`.
+2. The learned closure never receives raw `omega_c` or `w_i`. Frequency enters its features only as site
+   detunings `det = w - WC` (`ClosureApplyV3`, columns 12:15, then divided by kappa); the regime columns are
+   `(g_c, kappa, gamma_phi)`. The memory traces (V6) read only `nc/M`, mean `sz`, mean `|<s+_i s-_j>|`.
+3. Features are RAW real/imaginary parts of the single and pair moments among each monomial's factors.
+   These include phase-carrying ("charged") moments, e.g. `<a>`, `<a'>`, `<a sz>` enter the features of the
+   neutral key `<a' a sz>`. The feature map is therefore NOT carrier-covariant in general; it can only be
+   invariant where those charged inputs are zero.
+4. In both frozen models (`lc_v3dens.pkl`, `lc_v6.pkl`) all 15 charged kappa3 types were trained on targets
+   that are exactly zero, so their stored output range is exactly [0, 0] and the hard clip returns exactly 0
+   for ANY input. The 4 neutral types are (ad,a,sz), (a,sp,sz), (sp,sm,sz), (sz,sz,sz).
+
+### Theoretical prediction (derived before any run)
+
+Let `N = a'a + sum_i s+_i s-_i` (total excitations). The shift adds `C N` to H. The interaction commutes
+with N: `[N, a s+_i] = (-1 + 1) a s+_i = 0`, likewise for `a' s-_i`. Every jump operator has definite charge:
+`[N, a] = -a`, `[N, s-_i] = -s-_i`, `[N, sz_i] = 0`. In the frame `U = exp(i C N t)` the jump operators become
+`exp(-i C t) a`, `exp(-i C t) s-_i`, `sz_i`, and a dissipator `D[O]rho = O rho O' - (1/2){O'O, rho}` is
+invariant under `O -> exp(i phi) O`, so every Lindblad term is unchanged; `C N` is removed exactly. Hence
+`rho_C(t) = exp(-i C N t) rho_0(t) exp(i C N t)`.
+
+For a normal-ordered monomial `k = a'^p a^q prod_i e_i` define the charge `Q(k) = (p - q) + #s+ - #s-`, so
+`[N, k] = Q k`. Then `<k>_C(t) = exp(i C Q t) <k>_0(t)`: NEUTRAL moments (Q = 0: `a'a`, `sz_i`, `a s+_i`,
+`a' s-_i`, `s+_i s-_j`, and every observable reported in this work) are carrier-invariant; CHARGED moments
+transform covariantly by a pure phase. The initial state (cavity vacuum x all emitters excited) is an
+eigenstate of N and the Liouvillian is U(1)-covariant, so `[rho(t), N] = 0` for all t and every charged
+moment is identically zero in the EXACT dynamics.
+
+For the closure engines: `L^dagger` is covariant, so row k of the EOM couples only to monomials of the same
+charge, and the shift changes only the diagonal, by `i C Q(k)`. Neutral rows need only neutral kappa3 keys.
+Charged tracked moments start at zero; their derivative is a charged-block linear term (zero), plus
+factorized order-3 products (each product of a charged monomial contains at least one charged factor, so
+zero), plus charged kappa3 (exactly zero by fact 4). So charged moments stay EXACTLY zero, the neutral
+subsystem is numerically the same ODE (up to rounding of `(1+C) - (w_i + C)`, ~1e-16 * C), and plain and V7
+should be invariant to floating-point and integrator precision. If this prediction fails anywhere, the
+derivation above is wrong or the code contains a carrier-dependent term, and that is the finding.
+
+### Cells (cheap: this tests a symmetry, it is not a campaign)
+
+- POCKET (g_c, kappa, gamma_phi) = (0.70, 0.03, 0.02) -> routes V6; CONTROL (0.70, 0.15, 0.02) -> routes V4.
+- M = 2 and M = 3. gamma_down = 0.02, sigma = 0.15, Gaussian disorder, draw 50 (the exported replication
+  draw, `results/replication_params.json`). Reuse is deliberate and consumes no seed: nothing is selected,
+  fitted or tuned here, and reusing draw 50 makes the C = 0 rows a regression check against
+  `results/burst_pred_exact.npz`.
+- Shifted frequencies are built as `w = w_base + C`, `omega_c = 1 + C`, and V7 receives `det = w - omega_c`
+  computed in the shifted frame (as any frame-agnostic caller would); the residual |det_C - det_0| is logged.
+- Methods: exact `mesolve` at Nc = 16 (as `burst_pred`); plain second order and frozen V7 through the
+  unmodified `ScalableEngine` (Nc = 12, Fsafe = 6), `run_from` and `run_v7`. t in [0, 40], 200 points.
+
+### Carrier shifts (fixed now, not revisited)
+
+C in {0, 9, 99, 999}, i.e. omega_c = 1, 10, 100, 1000 and g_c/omega_c = 0.7, 0.07, 0.007, 0.0007.
+
+Solver settings identical to existing practice: mesolve default (adams, rtol 1e-6, atol 1e-8); closure
+loops RK45 rtol 1e-4 / atol 1e-6 (the frozen evaluation settings). The ONE pre-declared change: mesolve
+`nsteps` is raised to 1e6 for EVERY C including C = 0, because a large carrier may exhaust the default step
+cap. It caps the number of internal steps; it does not change accuracy targets.
+
+### Metrics (each shifted C compared against C = 0, same time grid)
+
+Exact: max_t |n_C - n_0| / max n_0; max_t |z_C - z_0| (mean inversion); burst-peak relative change;
+t_peak grid index; neutral internal coherence `<a' s-_1>(t)` (complex, raw) max |diff| / max |<a' s-_1>|;
+charged moments `<a>`, `<s-_1>`, `<a s-_1>`: max |.| for every C, and the phase-corrected difference
+|<k>_C - exp(i C Q t) <k>_0| (expected trivial, since both are predicted to be zero).
+Plain and V7: same n/z/peak/t_peak metrics; V7 branch must be identical; max |charged tracked moment| over
+the trajectory; neutral tracked moments (all Q = 0 entries, complex) max |diff|; kappa3 applied along the
+trajectory: neutral-key max |diff| and charged-key max |.|.
+Benchmark quantity: the signed burst-peak error of plain and of V7 against the SAME-C exact reference.
+Lowest layer: the assembled coefficient matrix `ScalableEngine.build_C()` (M = 2, 3) and the dense
+`CumulantEngine.C` (M = 2): `C_shift - C_base` must equal `i C Q(k)` on each tracked row's own diagonal
+entry and zero elsewhere.
+
+### Pass criterion (fixed now)
+
+Thresholds are tied to the solver tolerances already in use, and set at least 10x below the smallest
+effect this work reports (V7's burst-peak error at small M, ~1e-3):
+- Exact: relative n, peak, coherence differences <= 1e-5 (10 x mesolve rtol); |dz| <= 1e-5; same t_peak index;
+  charged moments |.| <= 1e-7.
+- Plain and V7: relative n, peak and neutral-moment differences <= 1e-4 (= the closure loops' rtol);
+  |dz| <= 1e-4; same t_peak index; same V7 branch; charged tracked moments and charged kappa3 |.| <= 1e-12.
+- Benchmark: |change in signed burst-peak error| <= 1e-4 (0.01 percentage points) for plain and for V7.
+- Lowest layer: |(C_shift - C_base) - i C Q| <= 1e-10 * max(1, C) entrywise.
+- Regression: the C = 0 exact, plain and V7 peaks reproduce `burst_pred_exact.npz` (draw 50) to <= 1e-8
+  relative. A failure here is an environment/regression finding, reported, and does not alter the verdict
+  rule for C > 0.
+OVERALL PASS iff every row passes for every (regime, M, C).
+
+### Failure handling (fixed now)
+
+- Any exceedance triggers ONE diagnostic: rerun that method at C = 0 and the failing C with tightened
+  tolerances (closures rtol 1e-8 / atol 1e-10; mesolve rtol 1e-9 / atol 1e-11). If the discrepancy falls
+  >= 10x, it is classified as integrator-tolerance noise and reported as "PASS after tolerance diagnostic",
+  never as a clean pass. If it does not fall, it is genuine carrier dependence: FAIL.
+- Exact invariant but V7 not: the learned representation is not carrier-covariant in this benchmark.
+  Reported as a defect of the representation; V7 is not modified; the manuscript keeps its current framing.
+- Exact observables change materially: the rotating-frame argument above is wrong for this implementation,
+  or a carrier-dependent term exists; it is diagnosed and reported, and the ultrastrong caveat stands.
+- Everything invariant: supports describing the benchmark as an effective rotating-frame model whose carrier
+  can be any value >> g_c. It does NOT by itself establish that RWA or bare-mode local Lindblad dissipation
+  is physically valid for any particular system; those remain separate physical requirements on the
+  embedding, and the wording change waits for external review.
+
+### Outputs
+
+Script `src/validation/check_carrier_invariance.py`; log `results/carrier_invariance.log`; data
+`results/carrier_invariance.npz`. Result written up as the next numbered result in FINDINGS.md.
