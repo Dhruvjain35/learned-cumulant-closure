@@ -1546,3 +1546,105 @@ the magnitude and the regime transfer (Result 37) and bounds the realization sca
 WHAT WOULD BE NEEDED to measure the rate in the disordered regime directly: three or more seeds per M at
 every rung, i.e. roughly triple the trajectory budget, with per-rung means and standard errors reported
 rather than single draws. Not run. Noted so the gap is explicit rather than implied.
+
+## Result 39 — Common-carrier (rotating-frame) audit: the exact benchmark is carrier-invariant to 1e-13;
+## the closures are too, but only after a tolerance diagnostic, and the derivation's "exactly zero" was wrong
+
+Pre-registered in PROTOCOL.md ("Publication finalization P2", commit 78e9a38) before any shifted run. V4, V6
+and the V7 router untouched; nothing retrained, re-tuned or rerouted. Script
+src/validation/check_carrier_invariance.py; log results/carrier_invariance.log; data
+results/carrier_invariance.npz. Post-hoc companion (NOT pre-registered, decides nothing in the verdict):
+src/validation/check_rotating_frame_identity.py, results/rotating_frame_identity.log.
+
+THE QUESTION. Every result in this repository uses omega_c = 1, which is why the evaluated cells read
+g_c / omega_c = 0.7 and were labelled ultrastrong. Is that ratio a property of the benchmark, or an artifact
+of using the carrier as the numerical unit?
+
+THE THEORY (derived before the run; full statement in the pre-registration). A common shift adds C N to H,
+with N = a'a + sum_i s+_i s-_i. The interaction conserves N, and each jump operator (a, s-_i, sz_i) has
+definite excitation-number charge, so in the frame exp(i C N t) the jump operators only pick up phases, and a
+dissipator D[O] is invariant under O -> exp(i phi) O. The shift is removed exactly. Monomials of charge
+Q = (p - q) + #s+ - #s- transform as <k>_C(t) = exp(i C Q t) <k>_0(t): neutral moments (a'a, sz_i,
+a s+_i, s+_i s-_j, and every observable this work reports) are invariant; charged ones pick up a pure phase.
+The initial state (vacuum x all excited) is an N eigenstate, so every charged moment is zero in the exact
+dynamics.
+
+CELLS. POCKET and CONTROL, M = 2 and 3, draw 50, sigma = 0.15; C in {0, 9, 99, 999}, i.e. omega_c = 1, 10,
+100, 1000 and g_c/omega_c down to 7e-4. Exact mesolve (Nc = 16), plain second order and frozen V7 at the
+frozen settings. The C = 0 rows reproduce results/burst_pred_exact.npz exactly (0.0 relative) in all four
+cells, so the audit runs the same computation as the headline table.
+
+RESULT, maxima over all 12 shifted comparisons:
+
+  layer / method      quantity                                   max change   threshold   status
+  coefficient layer   |(C_shift - C_base) - i C Q|, scalable      2.3e-13      1e-7 (C=999)   pass
+                      same, dense engine (M=2)                   7.0e-11      1e-7         pass
+  exact               n(t) rel / z(t) / peak rel / <a's-_1> rel  7.9e-14 / 1.2e-13 / 1.1e-14 / 3.0e-13   pass
+                      charged <a>, <s-_1>, <a s-_1>               0.0 (identically zero, every C)   pass
+                      t_peak grid index                          unchanged everywhere                pass
+  plain 2nd order     n(t) rel / z(t) / peak rel                 7.6e-4 / 1.5e-3 / 7.6e-5      1e-4     EXCEEDS
+                      charged tracked moments                    1.6e-2                        1e-12    EXCEEDS
+                      signed burst-peak error, change            9.8e-5                        1e-4     pass
+  V7                  n(t) rel / z(t) / peak rel                 2.1e-3 / 3.8e-3 / 1.1e-3      1e-4     EXCEEDS
+                      charged tracked moments                    5.5e-2                        1e-12    EXCEEDS
+                      kappa3 applied: neutral keys rel / charged 1.1e-2 / 0.0 exactly          1e-4/1e-12  EXCEEDS / pass
+                      signed burst-peak error, change            1.1e-3 (CONTROL M=3: -0.26% -> -0.15%)  1e-4  EXCEEDS
+                      branch                                     identical everywhere          --       pass
+  Both closures stable in every cell; t_peak unchanged everywhere.
+
+Every one of the 12 shifted comparisons exceeded the closure thresholds, so every one triggered the
+pre-registered diagnostic: rerun C = 0 and the failing C at tight tolerance (RK45 rtol 1e-8 / atol 1e-10).
+All 12 collapsed: plain n(t) differences fell to <= 5.1e-8 (>= 1e4x), V7 to <= 2.5e-6 (>= 485x). Per the
+pre-registered rule that is integrator-tolerance noise, and the verdict is PASS AFTER TOLERANCE DIAGNOSTIC,
+which is explicitly NOT a clean pass.
+
+WHAT WAS WRONG IN THE PRE-REGISTERED DERIVATION (stated plainly). It predicted that charged moments stay
+EXACTLY zero in the closure engines. In the true equations they do. In the implemented engine they do not:
+the least-squares projection that builds the EOM coefficients leaves charge-violating residue of up to
+1.4e-14 (T2) and 3.8e-15 (T3), where the true coefficients are exactly zero. At omega_c = 1 the charged
+moments therefore sit at ~1e-14, harmlessly. With a large carrier the same seed rotates at C*Q, and
+explicit RK45 at the frozen tolerance does not keep those mathematically-zero, fast-rotating components
+at zero: they grow to 1e-3 - 5e-2 (post-hoc Part B: 1.9e-3 at omega_c = 10, 7.0e-3 at 100; at tight
+tolerance 5.2e-14 and 6.1e-7). Once nonzero they leak into the neutral moments through the factorized
+products. The exact solver has no such seed and stays clean to 1e-13.
+
+WHY V7 IS ~10x MORE SENSITIVE THAN PLAIN. Its features are the RAW real/imaginary parts of the single and
+pair moments among each monomial's factors, and for the neutral keys those include charged moments (<a>,
+<a'>, <a sz>, <s+ sz> ...). When charged noise appears, it goes straight into the learned correction: the
+neutral kappa3 V7 applies moved by up to 1.1e-2 (relative), and V7's burst-peak error moved by up to 0.11
+percentage points, against <= 0.01 points for plain. The charged kappa3 outputs stayed exactly 0.0 in every
+cell, because all 15 charged types in both frozen models were trained only on exact zeros and their clip
+range is [0, 0].
+
+LEARNED-MODEL COVARIANCE, precisely. V7 is carrier-invariant in this benchmark because of THREE things at
+once, and is NOT carrier-covariant in general:
+  1. Feature construction: frequency enters only as detunings (w_i - omega_c), never as raw w_i or omega_c.
+     Without this the router inputs and features would shift with C.
+  2. The symmetry sector of this initial state: charged moments are zero, so the raw Re/Im of charged
+     inputs are zero. The feature map is not covariant (raw Re/Im of a charged moment rotates with the
+     frame); it is invariant only because those inputs vanish. A coherently seeded or driven state would
+     break this, and V7 is not validated there anyway (SCOPE #5).
+  3. Training data: charged kappa3 types are clipped to exactly zero.
+The audit shows that (2) is only as exact as the numerics keeping the charged sector at zero.
+
+POST-HOC (not pre-registered): THE FROZEN RESULTS ARE ROTATING-FRAME RESULTS. Re-running the four cells with
+omega_c = 0 and w_i = Delta_i (the frame rotating at the old carrier) at the frozen tolerances reproduces the
+frozen omega_c = 1 runs BIT-FOR-BIT for plain and for V7 (max difference 0.0) and to <= 2.3e-14 for exact.
+omega_c = 1 is small enough that the frozen runs are numerically identical to a rotating-frame computation.
+
+WHAT THIS LICENSES, AND WHAT IT DOES NOT.
+- It licenses: the benchmark's reported observables do not depend on omega_c. The computation is
+  equivalent to the rotating-frame model in which only Delta_i, g_c, kappa, gamma_down and gamma_phi appear,
+  so g_c / omega_c = 0.7 is a numerical-unit choice, not a property of the dynamics that were solved. The same
+  generator describes a system whose physical carrier is any value >> g_c.
+- It does NOT establish that RWA or bare-mode local Lindblad dissipation is physically valid for any
+  specific system. Those are separate requirements on the physical embedding (omega_c >> g_c, kappa,
+  gamma's, and dissipation rates small against the level spacing), and the rate ratios (g_c/kappa ~ 23 in
+  POCKET) remain what they are.
+- Numerical lesson for this codebase: run the closure engines in the rotating frame (or tighten tolerances)
+  if a large carrier is ever introduced. At the frozen omega_c = 1 nothing is affected (Part A).
+- Scope: one draw, M <= 3, two regimes. The derivation is general, and Part A shows the frozen large-M
+  computations, which use the same omega_c = 1 and engine, are rotating-frame computations as well. The
+  shifted-carrier check itself was not repeated above M = 3.
+- No manuscript wording changes on this result alone; the argument goes to the outside reviewer (who raised the
+  ultrastrong caveat) first.

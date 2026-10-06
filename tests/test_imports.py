@@ -22,6 +22,7 @@ MODULES = [
     "validate_model", "check_conventions", "check_eom_identity", "check_piqs_vs_exact",
     # V8 line (permutation-invariant reference + zero-disorder study)
     "piqs_reference", "v8_step0_sigma0", "v8_accuracy_ladder", "v8_peak_vs_violation", "v8_sigma_sensitivity", "v8_accuracy_m16", "v8_mc_noise_floor", "v8_disordered_m12", "v8_disordered_ladder", "v8_realization_scatter",
+    "check_carrier_invariance", "check_rotating_frame_identity",
 ]
 
 if __name__ == "__main__":

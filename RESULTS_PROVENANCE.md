@@ -60,3 +60,20 @@ This is a cross-platform reproduction, not an independent replication. See
   section* (see the section and the poster do-not-use list). V7 runtime is characterized separately in the
   frozen benchmark `results/runtime_baseline_comparison.md`, which reports a build-dominated total-time
   comparison (V7 total ≈4.6 s), not a speed claim.
+
+## Common-carrier (rotating-frame) audit (Result 39)
+
+Pre-registration: `docs/PROTOCOL.md` "Publication finalization P2", committed alone as `78e9a38` before any
+shifted run. Results commit: the commit that adds `results/carrier_invariance.log`
+(`git log --oneline -- results/carrier_invariance.log`).
+
+| Claim | Script | Parameters | Draw | Output | Pass criterion (pre-registered) |
+|---|---|---|---|---|---|
+| Exact observables invariant under omega_c, w_i -> +C (n, z, peak, t_peak, `<a's-_1>` to <= 3e-13; charged moments identically 0) | `src/validation/check_carrier_invariance.py` | POCKET (0.70, 0.03, 0.02), CONTROL (0.70, 0.15, 0.02); M = 2, 3; C in {0, 9, 99, 999}; gdown 0.02, sigma 0.15; exact Nc = 16, mesolve adams rtol 1e-6 / atol 1e-8, nsteps 1e6 | 50 | `results/carrier_invariance.log`, `.npz` | rel <= 1e-5; charged <= 1e-7 |
+| EOM coefficients shift by exactly i C Q (scalable <= 2.3e-13; dense M=2 <= 7.0e-11) | same | same | 50 | same | <= 1e-10 max(1, C) |
+| Plain and V7 invariant only after the tolerance diagnostic (frozen tol: plain n <= 7.6e-4, V7 n <= 2.1e-3, V7 burst-peak error change <= 1.1e-3; RK45 rtol 1e-8: plain <= 5.1e-8, V7 <= 2.5e-6); verdict PASS AFTER TOLERANCE DIAGNOSTIC | same | closures Nc = 12, Fsafe = 6, RK45 rtol 1e-4 / atol 1e-6 (diagnostic 1e-8 / 1e-10) | 50 | same | rel <= 1e-4 (benchmark change <= 1e-4); exceedance must fall >= 10x at tight tolerance to count as noise |
+| Frozen omega_c = 1 runs are bit-identical to omega_c = 0 rotating-frame runs (plain, V7: 0.0; exact <= 2.3e-14); charge-violating EOM residue <= 1.4e-14 (POST-HOC, not pre-registered) | `src/validation/check_rotating_frame_identity.py` | same four cells, frozen tolerances | 50 | `results/rotating_frame_identity.log` | none (post-hoc) |
+
+The audit takes ~6.6 h on the benchmark machine, almost all of it in the omega_c = 1000 closure runs, where
+explicit RK45 is limited by the fast-rotating charged components. C = 0 rows reproduce
+`results/burst_pred_exact.npz` (draw 50) to 0.0 relative.

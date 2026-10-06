@@ -1,0 +1,160 @@
+COMMON-CARRIER INVARIANCE AUDIT (PROTOCOL.md P2, registered 2026-10-05, commit 78e9a38)
+draw 50, sigma 0.15, gdown 0.02; shifts C = [0.0, 9.0, 99.0, 999.0]; exact Nc=16, closures Nc=12 Fsafe=6; mesolve {'progress_bar': False, 'nsteps': 1000000}
+
+=== POCKET M=2  (g_c, kappa, gphi) = (0.7, 0.03, 0.02)  route = v6 ===
+  C=0 regression vs burst_pred_exact.npz (rel. peak): exact 0.0e+00  plain 0.0e+00  v7 0.0e+00   PASS
+  C=0 signed burst-peak error: plain +0.27752   V7 +0.00263   (branch v6)
+  C=    9  wc=    10  g_c/wc=7.0e-02  |det_C - det_0|=6.7e-16
+     exact : n 1.2e-14  z 1.6e-14  peak 4.1e-16  tpk-shift 0  <a's-_1> 2.0e-14  charged raw 0.0e+00 / phase-corr 0.0e+00
+     plain : n 4.7e-04  z 1.0e-03  peak 4.7e-05  tpk-shift 0  neutral moments 5.7e-04  charged max 1.9e-03  stable 1
+     V7    : n 1.1e-03  z 1.8e-03  peak 9.1e-05  tpk-shift 0  neutral moments 2.2e-03  charged max 1.5e-03  stable 1
+     V7 kappa3: neutral keys 3.4e-03  charged keys max 0.0e+00  branch v6 (same 1)
+     benchmark |d signed err|: plain 5.9e-05  V7 9.2e-05   (signed now plain +0.27746, V7 +0.00272)
+     layer |dC - iCQ|: scalable 3.6e-15  dense 6.3e-13
+     -> EXCEEDS: k3_neutral, pl_n, pl_z, pl_neutral, pl_charged, v7_n, v7_z, v7_neutral, v7_charged
+     DIAGNOSTIC (tight tol): plain_n 4.7e-04->1.5e-15  v7_n 1.1e-03->2.3e-06  -> integrator-tolerance noise (PASS after tolerance diagnostic)
+  C=   99  wc=   100  g_c/wc=7.0e-03  |det_C - det_0|=6.4e-15
+     exact : n 1.4e-14  z 2.2e-14  peak 1.2e-15  tpk-shift 0  <a's-_1> 2.3e-14  charged raw 0.0e+00 / phase-corr 0.0e+00
+     plain : n 5.0e-04  z 1.1e-03  peak 7.2e-05  tpk-shift 0  neutral moments 6.3e-04  charged max 7.0e-03  stable 1
+     V7    : n 1.2e-03  z 1.9e-03  peak 1.8e-05  tpk-shift 0  neutral moments 2.0e-03  charged max 5.8e-03  stable 1
+     V7 kappa3: neutral keys 3.3e-03  charged keys max 0.0e+00  branch v6 (same 1)
+     benchmark |d signed err|: plain 9.2e-05  V7 1.8e-05   (signed now plain +0.27743, V7 +0.00261)
+     layer |dC - iCQ|: scalable 1.1e-14  dense 6.9e-12
+     -> EXCEEDS: k3_neutral, pl_n, pl_z, pl_neutral, pl_charged, v7_n, v7_z, v7_neutral, v7_charged
+     DIAGNOSTIC (tight tol): plain_n 5.0e-04->4.7e-08  v7_n 1.2e-03->1.1e-06  -> integrator-tolerance noise (PASS after tolerance diagnostic)
+  C=  999  wc=  1000  g_c/wc=7.0e-04  |det_C - det_0|=4.8e-14
+     exact : n 1.9e-14  z 3.5e-14  peak 2.2e-15  tpk-shift 0  <a's-_1> 1.6e-13  charged raw 0.0e+00 / phase-corr 0.0e+00
+     plain : n 5.0e-04  z 1.1e-03  peak 7.2e-05  tpk-shift 0  neutral moments 6.3e-04  charged max 1.4e-02  stable 1
+     V7    : n 1.2e-03  z 1.9e-03  peak 1.5e-05  tpk-shift 0  neutral moments 2.0e-03  charged max 1.9e-02  stable 1
+     V7 kappa3: neutral keys 3.4e-03  charged keys max 0.0e+00  branch v6 (same 1)
+     benchmark |d signed err|: plain 9.2e-05  V7 1.5e-05   (signed now plain +0.27743, V7 +0.00261)
+     layer |dC - iCQ|: scalable 4.8e-14  dense 7.0e-11
+     -> EXCEEDS: k3_neutral, pl_n, pl_z, pl_neutral, pl_charged, v7_n, v7_z, v7_neutral, v7_charged
+     DIAGNOSTIC (tight tol): plain_n 5.0e-04->4.7e-08  v7_n 1.2e-03->9.1e-07  -> integrator-tolerance noise (PASS after tolerance diagnostic)
+
+=== POCKET M=3  (g_c, kappa, gphi) = (0.7, 0.03, 0.02)  route = v6 ===
+  C=0 regression vs burst_pred_exact.npz (rel. peak): exact 0.0e+00  plain 0.0e+00  v7 0.0e+00   PASS
+  C=0 signed burst-peak error: plain +0.28447   V7 -0.00744   (branch v6)
+  C=    9  wc=    10  g_c/wc=7.0e-02  |det_C - det_0|=6.7e-16
+     exact : n 1.1e-14  z 1.8e-14  peak 1.9e-16  tpk-shift 0  <a's-_1> 2.3e-14  charged raw 0.0e+00 / phase-corr 0.0e+00
+     plain : n 7.3e-04  z 1.5e-03  peak 5.8e-05  tpk-shift 0  neutral moments 7.3e-04  charged max 2.5e-03  stable 1
+     V7    : n 1.5e-03  z 2.4e-03  peak 2.1e-04  tpk-shift 0  neutral moments 2.0e-03  charged max 3.1e-03  stable 1
+     V7 kappa3: neutral keys 9.1e-03  charged keys max 0.0e+00  branch v6 (same 1)
+     benchmark |d signed err|: plain 7.5e-05  V7 2.0e-04   (signed now plain +0.28439, V7 -0.00764)
+     layer |dC - iCQ|: scalable 3.6e-15
+     -> EXCEEDS: k3_neutral, bench_v7, pl_n, pl_z, pl_neutral, pl_charged, v7_n, v7_z, v7_peak, v7_neutral, v7_charged
+     DIAGNOSTIC (tight tol): plain_n 7.3e-04->2.2e-15  v7_n 1.5e-03->2.3e-06  -> integrator-tolerance noise (PASS after tolerance diagnostic)
+  C=   99  wc=   100  g_c/wc=7.0e-03  |det_C - det_0|=6.4e-15
+     exact : n 2.1e-14  z 3.2e-14  peak 0.0e+00  tpk-shift 0  <a's-_1> 5.3e-14  charged raw 0.0e+00 / phase-corr 0.0e+00
+     plain : n 7.6e-04  z 1.5e-03  peak 7.6e-05  tpk-shift 0  neutral moments 7.6e-04  charged max 6.9e-03  stable 1
+     V7    : n 1.5e-03  z 2.3e-03  peak 1.7e-04  tpk-shift 0  neutral moments 1.8e-03  charged max 1.6e-02  stable 1
+     V7 kappa3: neutral keys 7.7e-03  charged keys max 0.0e+00  branch v6 (same 1)
+     benchmark |d signed err|: plain 9.7e-05  V7 1.6e-04   (signed now plain +0.28437, V7 -0.00728)
+     layer |dC - iCQ|: scalable 2.8e-14
+     -> EXCEEDS: k3_neutral, bench_v7, pl_n, pl_z, pl_neutral, pl_charged, v7_n, v7_z, v7_peak, v7_neutral, v7_charged
+     DIAGNOSTIC (tight tol): plain_n 7.6e-04->5.1e-08  v7_n 1.5e-03->1.1e-06  -> integrator-tolerance noise (PASS after tolerance diagnostic)
+  C=  999  wc=  1000  g_c/wc=7.0e-04  |det_C - det_0|=4.8e-14
+     exact : n 7.9e-14  z 1.2e-13  peak 1.1e-14  tpk-shift 0  <a's-_1> 3.0e-13  charged raw 0.0e+00 / phase-corr 0.0e+00
+     plain : n 7.6e-04  z 1.5e-03  peak 7.6e-05  tpk-shift 0  neutral moments 7.6e-04  charged max 1.6e-02  stable 1
+     V7    : n 1.6e-03  z 2.4e-03  peak 1.6e-04  tpk-shift 0  neutral moments 1.8e-03  charged max 5.5e-02  stable 1
+     V7 kappa3: neutral keys 8.1e-03  charged keys max 0.0e+00  branch v6 (same 1)
+     benchmark |d signed err|: plain 9.7e-05  V7 1.6e-04   (signed now plain +0.28437, V7 -0.00728)
+     layer |dC - iCQ|: scalable 2.3e-13
+     -> EXCEEDS: k3_neutral, bench_v7, pl_n, pl_z, pl_neutral, pl_charged, v7_n, v7_z, v7_peak, v7_neutral, v7_charged
+     DIAGNOSTIC (tight tol): plain_n 7.6e-04->5.1e-08  v7_n 1.6e-03->1.3e-06  -> integrator-tolerance noise (PASS after tolerance diagnostic)
+
+=== CONTROL M=2  (g_c, kappa, gphi) = (0.7, 0.15, 0.02)  route = v4 ===
+  C=0 regression vs burst_pred_exact.npz (rel. peak): exact 0.0e+00  plain 0.0e+00  v7 0.0e+00   PASS
+  C=0 signed burst-peak error: plain +0.28984   V7 +0.00082   (branch v4)
+  C=    9  wc=    10  g_c/wc=7.0e-02  |det_C - det_0|=6.7e-16
+     exact : n 9.3e-15  z 1.2e-14  peak 3.1e-16  tpk-shift 0  <a's-_1> 2.5e-14  charged raw 0.0e+00 / phase-corr 0.0e+00
+     plain : n 1.5e-04  z 3.2e-04  peak 5.3e-05  tpk-shift 0  neutral moments 3.4e-04  charged max 4.3e-04  stable 1
+     V7    : n 1.3e-03  z 2.4e-03  peak 7.2e-05  tpk-shift 0  neutral moments 5.7e-03  charged max 4.0e-04  stable 1
+     V7 kappa3: neutral keys 3.6e-03  charged keys max 0.0e+00  branch v4 (same 1)
+     benchmark |d signed err|: plain 6.9e-05  V7 7.2e-05   (signed now plain +0.28977, V7 +0.00075)
+     layer |dC - iCQ|: scalable 3.6e-15  dense 6.3e-13
+     -> EXCEEDS: k3_neutral, pl_n, pl_z, pl_neutral, pl_charged, v7_n, v7_z, v7_neutral, v7_charged
+     DIAGNOSTIC (tight tol): plain_n 1.5e-04->1.1e-15  v7_n 1.3e-03->2.2e-06  -> integrator-tolerance noise (PASS after tolerance diagnostic)
+  C=   99  wc=   100  g_c/wc=7.0e-03  |det_C - det_0|=6.4e-15
+     exact : n 9.8e-15  z 1.4e-14  peak 1.1e-15  tpk-shift 0  <a's-_1> 3.1e-14  charged raw 0.0e+00 / phase-corr 0.0e+00
+     plain : n 1.9e-04  z 4.1e-04  peak 7.6e-05  tpk-shift 0  neutral moments 3.3e-04  charged max 1.8e-03  stable 1
+     V7    : n 2.1e-03  z 3.8e-03  peak 2.0e-04  tpk-shift 0  neutral moments 8.0e-03  charged max 1.9e-03  stable 1
+     V7 kappa3: neutral keys 5.0e-03  charged keys max 0.0e+00  branch v4 (same 1)
+     benchmark |d signed err|: plain 9.8e-05  V7 2.0e-04   (signed now plain +0.28974, V7 +0.00102)
+     layer |dC - iCQ|: scalable 1.1e-14  dense 6.9e-12
+     -> EXCEEDS: k3_neutral, bench_v7, pl_n, pl_z, pl_neutral, pl_charged, v7_n, v7_z, v7_peak, v7_neutral, v7_charged
+     DIAGNOSTIC (tight tol): plain_n 1.9e-04->1.2e-08  v7_n 2.1e-03->2.0e-06  -> integrator-tolerance noise (PASS after tolerance diagnostic)
+  C=  999  wc=  1000  g_c/wc=7.0e-04  |det_C - det_0|=4.8e-14
+     exact : n 6.1e-15  z 9.8e-15  peak 2.5e-15  tpk-shift 0  <a's-_1> 1.4e-13  charged raw 0.0e+00 / phase-corr 0.0e+00
+     plain : n 1.9e-04  z 4.1e-04  peak 7.6e-05  tpk-shift 0  neutral moments 3.3e-04  charged max 5.5e-03  stable 1
+     V7    : n 2.0e-03  z 3.7e-03  peak 2.1e-04  tpk-shift 0  neutral moments 7.8e-03  charged max 6.5e-03  stable 1
+     V7 kappa3: neutral keys 4.9e-03  charged keys max 0.0e+00  branch v4 (same 1)
+     benchmark |d signed err|: plain 9.8e-05  V7 2.1e-04   (signed now plain +0.28974, V7 +0.00103)
+     layer |dC - iCQ|: scalable 4.8e-14  dense 7.0e-11
+     -> EXCEEDS: k3_neutral, bench_v7, pl_n, pl_z, pl_neutral, pl_charged, v7_n, v7_z, v7_peak, v7_neutral, v7_charged
+     DIAGNOSTIC (tight tol): plain_n 1.9e-04->1.2e-08  v7_n 2.0e-03->2.5e-06  -> integrator-tolerance noise (PASS after tolerance diagnostic)
+
+=== CONTROL M=3  (g_c, kappa, gphi) = (0.7, 0.15, 0.02)  route = v4 ===
+  C=0 regression vs burst_pred_exact.npz (rel. peak): exact 0.0e+00  plain 0.0e+00  v7 0.0e+00   PASS
+  C=0 signed burst-peak error: plain +0.28925   V7 -0.00261   (branch v4)
+  C=    9  wc=    10  g_c/wc=7.0e-02  |det_C - det_0|=6.7e-16
+     exact : n 3.8e-15  z 4.3e-15  peak 2.2e-16  tpk-shift 0  <a's-_1> 4.8e-15  charged raw 0.0e+00 / phase-corr 0.0e+00
+     plain : n 1.5e-04  z 3.1e-04  peak 5.3e-05  tpk-shift 0  neutral moments 1.8e-04  charged max 9.9e-04  stable 1
+     V7    : n 6.6e-04  z 9.4e-04  peak 6.6e-04  tpk-shift 0  neutral moments 1.5e-03  charged max 6.8e-04  stable 1
+     V7 kappa3: neutral keys 8.0e-03  charged keys max 0.0e+00  branch v4 (same 1)
+     benchmark |d signed err|: plain 6.8e-05  V7 6.6e-04   (signed now plain +0.28919, V7 -0.00195)
+     layer |dC - iCQ|: scalable 3.6e-15
+     -> EXCEEDS: k3_neutral, bench_v7, pl_n, pl_z, pl_neutral, pl_charged, v7_n, v7_z, v7_peak, v7_neutral, v7_charged
+     DIAGNOSTIC (tight tol): plain_n 1.5e-04->6.9e-16  v7_n 6.6e-04->1.0e-06  -> integrator-tolerance noise (PASS after tolerance diagnostic)
+  C=   99  wc=   100  g_c/wc=7.0e-03  |det_C - det_0|=6.4e-15
+     exact : n 6.0e-15  z 8.7e-15  peak 2.2e-16  tpk-shift 0  <a's-_1> 1.7e-14  charged raw 0.0e+00 / phase-corr 0.0e+00
+     plain : n 1.9e-04  z 3.7e-04  peak 6.5e-05  tpk-shift 0  neutral moments 1.9e-04  charged max 3.0e-03  stable 1
+     V7    : n 1.1e-03  z 1.6e-03  peak 1.1e-03  tpk-shift 0  neutral moments 1.7e-03  charged max 3.2e-03  stable 1
+     V7 kappa3: neutral keys 1.1e-02  charged keys max 0.0e+00  branch v4 (same 1)
+     benchmark |d signed err|: plain 8.3e-05  V7 1.1e-03   (signed now plain +0.28917, V7 -0.00152)
+     layer |dC - iCQ|: scalable 2.8e-14
+     -> EXCEEDS: k3_neutral, bench_v7, pl_n, pl_z, pl_neutral, pl_charged, v7_n, v7_z, v7_peak, v7_neutral, v7_charged
+     DIAGNOSTIC (tight tol): plain_n 1.9e-04->1.1e-08  v7_n 1.1e-03->8.8e-07  -> integrator-tolerance noise (PASS after tolerance diagnostic)
+  C=  999  wc=  1000  g_c/wc=7.0e-04  |det_C - det_0|=4.8e-14
+     exact : n 3.7e-14  z 5.6e-14  peak 8.2e-15  tpk-shift 0  <a's-_1> 2.4e-13  charged raw 0.0e+00 / phase-corr 0.0e+00
+     plain : n 1.9e-04  z 3.7e-04  peak 6.5e-05  tpk-shift 0  neutral moments 1.9e-04  charged max 1.3e-02  stable 1
+     V7    : n 1.1e-03  z 1.6e-03  peak 1.1e-03  tpk-shift 0  neutral moments 1.8e-03  charged max 1.6e-02  stable 1
+     V7 kappa3: neutral keys 1.1e-02  charged keys max 0.0e+00  branch v4 (same 1)
+     benchmark |d signed err|: plain 8.3e-05  V7 1.1e-03   (signed now plain +0.28917, V7 -0.00151)
+     layer |dC - iCQ|: scalable 2.3e-13
+     -> EXCEEDS: k3_neutral, bench_v7, pl_n, pl_z, pl_neutral, pl_charged, v7_n, v7_z, v7_peak, v7_neutral, v7_charged
+     DIAGNOSTIC (tight tol): plain_n 1.9e-04->1.1e-08  v7_n 1.1e-03->8.6e-07  -> integrator-tolerance noise (PASS after tolerance diagnostic)
+
+=== MAXIMUM OVER ALL (regime, M, C>0) ===
+  bench_plain        9.82e-05
+  bench_v7           1.10e-03
+  det_resid          4.76e-14
+  ex_charged_phase   0.00e+00
+  ex_charged_raw     0.00e+00
+  ex_coh             3.01e-13
+  ex_n               7.88e-14
+  ex_peak            1.13e-14
+  ex_tpk             0.00e+00
+  ex_z               1.22e-13
+  k3_charged         0.00e+00
+  k3_neutral         1.09e-02
+  layer_dense        6.95e-11
+  layer_scalable     2.27e-13
+  pl_charged         1.57e-02
+  pl_n               7.64e-04
+  pl_neutral         7.64e-04
+  pl_peak            7.61e-05
+  pl_stable          1.00e+00
+  pl_tpk             0.00e+00
+  pl_z               1.54e-03
+  v7_branch_same     1.00e+00
+  v7_charged         5.52e-02
+  v7_n               2.06e-03
+  v7_neutral         7.96e-03
+  v7_peak            1.10e-03
+  v7_stable          1.00e+00
+  v7_tpk             0.00e+00
+  v7_z               3.76e-03
+
+OVERALL VERDICT: PASS after tolerance diagnostic
+(23726s)

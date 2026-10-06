@@ -1,0 +1,18 @@
+ROTATING-FRAME IDENTITY (POST-HOC, not pre-registered; companion to the P2 carrier audit)
+
+Part A: omega_c = 0 (rotating frame) vs the frozen omega_c = 1, frozen tolerances, draw 50
+  POCKET  M=2  exact n rel diff 1.5e-14   plain n 0.0e+00   V7 n 0.0e+00   V7 charged max (omega_c=0) 2.2e-14
+  POCKET  M=3  exact n rel diff 2.3e-14   plain n 0.0e+00   V7 n 0.0e+00   V7 charged max (omega_c=0) 1.2e-14
+  CONTROL M=2  exact n rel diff 7.1e-15   plain n 0.0e+00   V7 n 0.0e+00   V7 charged max (omega_c=0) 2.0e-14
+  CONTROL M=3  exact n rel diff 4.9e-15   plain n 0.0e+00   V7 n 0.0e+00   V7 charged max (omega_c=0) 5.0e-15
+
+Part B: plain second order, POCKET M=2 -- charged-moment growth vs carrier and tolerance
+  largest charge-violating EOM coefficient: T2 1.4e-14   T3 3.8e-15   (exact value 0)
+  rtol 1e-04  omega_c=    1  charged max 3.3e-14   n rel diff vs omega_c=1 0.0e+00
+  rtol 1e-04  omega_c=    0  charged max 1.3e-14   n rel diff vs omega_c=1 0.0e+00
+  rtol 1e-04  omega_c=   10  charged max 1.9e-03   n rel diff vs omega_c=1 4.7e-04
+  rtol 1e-04  omega_c=  100  charged max 7.0e-03   n rel diff vs omega_c=1 5.0e-04
+  rtol 1e-08  omega_c=    1  charged max 3.2e-14   n rel diff vs omega_c=1 0.0e+00
+  rtol 1e-08  omega_c=    0  charged max 1.3e-14   n rel diff vs omega_c=1 0.0e+00
+  rtol 1e-08  omega_c=   10  charged max 5.2e-14   n rel diff vs omega_c=1 1.5e-15
+  rtol 1e-08  omega_c=  100  charged max 6.1e-07   n rel diff vs omega_c=1 4.7e-08
