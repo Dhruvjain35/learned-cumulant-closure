@@ -824,3 +824,166 @@ option, `45690c0`; P2, `78e9a38`) carry their own timestamps. Commit-level table
 
 The mechanism analysis also departed from its section above in three ways (metric, an unregistered threshold,
 the M = 5 confirmation not run). See FINDINGS, "Dated notes" D3.
+
+---
+
+## Pre-registration — Publication finalization P3: held-out-parameter burst-peak evaluation at M = 5
+
+Registered 2026-10-07, BEFORE any evaluation run. No cell in this design has been simulated by any method.
+V4 (`lc_v3dens.pkl`, sha256 `be2dde48…98f81`), V6 (`lc_v6.pkl`, sha256 `0599643e…b800b86`) and the V7 router
+(V6 iff κ ≤ 0.045 and γφ ≤ 0.05, else V4) are frozen. No retraining, re-tuning, rerouting, or change to
+features, memory rates, clipping or the training data. Additive only.
+
+### Question
+
+At fixed M = 5, how accurately does frozen V7 predict the superradiant burst peak at physical parameter points
+that were not used to train the closure, compared with plain second order?
+
+### Why M = 5, and why this design
+
+The M ≤ 5 headline (Result 24) held out only the disorder realization: CONTROL is a training-grid point and
+POCKET lies just outside the convex hull of trained (κ, γφ). M = 5 keeps an exact `mesolve` reference
+affordable and keeps parameter transfer separate from size transfer.
+
+### Training support (derived from source, `src/evaluation/training_support.py`)
+
+- Tuples: 81 (g_c, κ, γφ, σ) tuples at M = 2–5.
+  - Main grid (`gen_data_v3.py`): g_c ∈ {0.4, 0.7, 1.0} × κ ∈ {0.05, 0.15, 0.3} × γφ ∈ {0.02, 0.1} ×
+    σ ∈ {0.05, 0.15, 0.3}.
+  - Pocket slab (`gen_pocket_density.py`): g_c = 0.7 only × κ ∈ {0.03, 0.04, 0.05} × γφ ∈ {0.035, 0.05, 0.065}
+    × the same σ.
+- Fixed throughout training: γ↓ = 0.02, Gaussian disorder, fully inverted initial state, training disorder
+  seeds {0, 1, 2}. The training pool `train_v6.npz` contains exactly these 81 tuples × M = 2–5, with no Fock
+  skips.
+- Per-axis ranges: g_c [0.4, 1.0], κ [0.03, 0.3], γφ [0.02, 0.1], σ [0.05, 0.3].
+- Classes, computed in raw parameter units by LP convex-hull membership:
+  - **A** on grid;
+  - **B** inside the hull, off grid;
+  - **C** outside the hull, but one coordinate moved into its range fixes it;
+  - **D** outside the hull, and no single-coordinate move fixes it.
+- Caveat stated now: the closure's features use ratios to κ, so these classes describe physical-parameter
+  support, not feature-space support.
+
+### Cells (frozen; machine-readable copy `results/heldout_param_cells.json`; M = 5; seed = disorder draw)
+
+| id | g_c | κ | γφ | σ | seed | route | class | outside range |
+|---|---|---|---|---|---|---|---|---|
+| H01 | 0.55 | 0.10 | 0.06 | 0.10 | 300 | V4 | B | — |
+| H02 | 0.85 | 0.22 | 0.04 | 0.20 | 301 | V4 | B | — |
+| H03 | 0.70 | 0.10 | 0.05 | 0.15 | 302 | V4 | B | — |
+| H04 | 0.45 | 0.25 | 0.08 | 0.25 | 303 | V4 | B | — |
+| H05 | 0.95 | 0.08 | 0.03 | 0.08 | 304 | V4 | B | — |
+| H06 | 0.62 | 0.18 | 0.09 | 0.12 | 305 | V4 | B | — |
+| H07 | 0.70 | 0.048 | 0.04 | 0.15 | 306 | V4 | B | — |
+| H08 | 0.70 | 0.04 | 0.055 | 0.15 | 307 | V4 | B | — |
+| H09 | 0.70 | 0.035 | 0.042 | 0.15 | 308 | V6 | B | — |
+| H10 | 0.70 | 0.045 | 0.045 | 0.10 | 309 | V6 | B | — |
+| H11 | 0.65 | 0.04 | 0.04 | 0.20 | 310 | V6 | B | — |
+| H12 | 0.75 | 0.036 | 0.045 | 0.25 | 311 | V6 | B | — |
+| H13 | 0.70 | 0.025 | 0.05 | 0.15 | 312 | V6 | C | κ |
+| H14 | 0.70 | 0.36 | 0.05 | 0.15 | 313 | V4 | C | κ |
+| H15 | 0.70 | 0.04 | 0.015 | 0.15 | 314 | V6 | C | γφ |
+| H16 | 0.70 | 0.15 | 0.12 | 0.15 | 315 | V4 | C | γφ |
+| H17 | 0.33 | 0.15 | 0.05 | 0.15 | 316 | V4 | C | g_c |
+| H18 | 1.15 | 0.15 | 0.05 | 0.15 | 317 | V4 | C | g_c |
+| H19 | 0.70 | 0.10 | 0.06 | 0.02 | 318 | V4 | C | σ |
+| H20 | 0.70 | 0.10 | 0.06 | 0.38 | 319 | V4 | C | σ |
+| H21 | 0.70 | 0.035 | 0.04 | 0.38 | 320 | V6 | C | σ |
+| H22 | 0.70 | 0.04 | 0.045 | 0.02 | 321 | V6 | C | σ |
+| H23 | 0.90 | 0.035 | 0.025 | 0.15 | 322 | V6 | C | — (outside hull only) |
+| H24 | 0.45 | 0.035 | 0.04 | 0.10 | 323 | V6 | C | — (outside hull only) |
+| H25 | 1.10 | 0.20 | 0.12 | 0.15 | 324 | V4 | D | g_c, γφ |
+| H26 | 0.35 | 0.10 | 0.015 | 0.20 | 325 | V4 | D | g_c, γφ |
+| H27 | 0.70 | 0.025 | 0.015 | 0.15 | 326 | V6 | D | κ, γφ |
+| H28 | 0.80 | 0.36 | 0.06 | 0.38 | 327 | V4 | D | κ, σ |
+| H29 | 0.70 | 0.025 | 0.04 | 0.38 | 328 | V6 | D | κ, σ |
+| H30 | 0.70 | 0.04 | 0.015 | 0.38 | 329 | V6 | D | γφ, σ |
+
+- Totals: 30 cells.
+  - Class B: 12 (8 V4, 4 V6).
+  - Class C: 12 (6 V4, 6 V6).
+  - Class D: 6 (3 V4, 3 V6).
+  - No class A. The on-grid case is already Result 24.
+- Routing: 17 V4, 13 V6. 13 cells are within the stated near-boundary rule (in the JSON); that label is
+  descriptive only.
+- How the cells were chosen: by training-grid geometry and physical reasoning only (positive rates; a burst
+  expected, since g_c² ≫ κγ⊥/2 everywhere). Two intended class-D cells (H23, H24) were reclassified C by the
+  classifier and kept. No outcome was computed for any cell.
+
+### Seeds (new block, recorded here before use)
+
+300–329, one per cell, as listed. Checked against everything previously used:
+- every seed list in `src/` and `scripts/`: 0–5, 7–14, 16–29, 31–42, 50–52, 60–64, 12345 (Monte-Carlo);
+- the derived training rng seeds {5, 15, 30, 105, 115, 130, 205, 215, 230}.
+The block is disjoint from all of them. The evaluation script asserts disjointness. Seeds are never changed
+after this commit.
+
+### Methods (fixed)
+
+- **Exact reference:** QuTiP `mesolve` at Fock cutoff Nc = 16, through the same function as the headline
+  (`burst_pred.exact_ref_big`), t ∈ [0, 40], 200 points. Fock rule: if nc_peak/Nc ≥ 0.45, rerun the same
+  cell at Nc = 24 and use that. At M = 5 the photon number cannot exceed 5, so this is not expected to fire.
+- **Plain second order and V7:** `pilot_eval.build_cell` (ScalableEngine, Nc = 12, Fsafe = 6), `run_from` and
+  `v7.run_v7`, RK45 rtol 1e-4 / atol 1e-6. These are the frozen evaluation settings.
+- **Gates:** `make gates` is run and must pass before the campaign.
+- **Integrity checks:** the script asserts the frozen model hashes, recomputes every cell's class with
+  `training_support.classify` and asserts it matches this table, and asserts seed disjointness.
+- **Smoke test:** a separate infrastructure-only cell (M = 2, CONTROL, draw 50; not a campaign cell; its
+  values are already published) checks imports, model loading, one exact solve and the output format.
+
+### Metrics (per cell, fixed)
+
+- Exact: burst peak n_peak and t_peak.
+- Plain second order and V7: burst peak, signed relative error (pred − exact)/exact, absolute relative
+  error, and t_peak error.
+- V7 branch.
+- Stability: `stable_ok`, i.e. finite, max |moment| < 1e2, full length.
+- Physicality over the burst window t ≤ t_peak,exact + 2, and over the full window t ≤ 40: per-emitter
+  |⟨σᶻᵢ⟩| ≤ 1 + 1e-6 and ⟨a†a⟩ ≥ −1e-6.
+- An unstable method, or one whose burst peak cannot be read, counts as a **loss** with error recorded as
+  undefined. Its cell is never dropped.
+- A cell is a **V7 win** iff V7 is stable and |err_V7| < |err_plain|.
+- The independent unit is the (parameter cell, disorder draw) pair: 30 units.
+
+### Questions and summaries (fixed)
+
+- **Q1, overall** (classes B ∪ C; D is reported separately): V7 win fraction; median and mean |err| for V7
+  and plain; IQR; per-cell paired improvement |err_plain| − |err_V7|. Bootstrap 95% intervals (10,000
+  resamples over cells, rng 0) for the V7 median |err| and the median paired improvement. These are
+  interpreted as variation across this selected cell set, not as a population confidence statement.
+- **Q2, by class:** the same per class B, C, D.
+- **Q3, by branch:** the same per routed branch (V4, V6).
+- **Q4, failure modes:** every cell where V7 loses, is unstable, is non-physical in the burst window, or has
+  |err_V7| > 10% is listed with its parameters.
+- Raw per-cell values are always shown.
+
+### Interpretation bands (fixed now; applied to B ∪ C; D is descriptive only)
+
+- **Strong transfer:** all of
+  - V7 win fraction ≥ 0.9;
+  - no V7 instability in class B;
+  - median |err_V7| ≤ 3% in B and ≤ 5% in C;
+  - |err_V7| < 10% in ≥ 80% of B ∪ C cells.
+- **Partial transfer:** not strong, but win fraction ≥ 0.7 and median |err_V7| < 0.5 × median |err_plain|.
+- **Failed transfer:** win fraction < 0.7, or median |err_V7| ≥ 0.5 × median |err_plain|, or V7 unstable in
+  ≥ 20% of B ∪ C cells.
+- Branch and near-boundary breakdowns are descriptive.
+- The router box is not revised on these data: any revision would be a new method with a new pre-registration.
+
+### Kill / handling rules
+
+- No early stopping in either direction.
+- A technical failure (exception, not instability) is fixed only if it is infrastructure, then the identical
+  cell is rerun, and the failure and fix are recorded.
+- Instability is an outcome, not a failure.
+
+### Outputs
+
+Script `src/evaluation/heldout_parameter_burst.py`; log `results/heldout_param_burst.log`; data
+`results/heldout_param_burst.npz`; written up as the next numbered result in FINDINGS.md.
+
+### Optional, separate (not part of P3)
+
+After P3 completes, and only if cheap: a closure-only rerun of the Result 37 disordered M = 12 cell (seed 50,
+σ = 0.15, both regimes) to t = 40, to measure the first physicality-violation time against the burst time.
+Exploratory, reported separately.

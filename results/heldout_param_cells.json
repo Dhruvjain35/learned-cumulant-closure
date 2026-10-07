@@ -1,0 +1,666 @@
+{
+ "protocol": "PROTOCOL.md: Publication finalization P3 (held-out parameter evaluation)",
+ "M": 5,
+ "gamma_down": 0.02,
+ "initial_state": "cavity vacuum x all emitters excited",
+ "disorder": "gaussian about omega_c=1, draw_disorder(M, 1.0, sigma, seed)",
+ "model_sha256": {
+  "lc_v3dens.pkl": "be2dde48d47be006d97b7aa09c89f7a13e91dc2800fb6dc5cd6ea151fe798f81",
+  "lc_v6.pkl": "0599643ef05f355f7549e38325261246f0f848fdc71d906f9f0f82b88b800b86"
+ },
+ "cells": [
+  {
+   "id": "H01",
+   "g_c": 0.55,
+   "kappa": 0.1,
+   "gamma_phi": 0.06,
+   "sigma": 0.1,
+   "seed": 300,
+   "route": "v4",
+   "cls": "B",
+   "on_grid": false,
+   "in_hull": true,
+   "off_grid_axes": [
+    "g_c",
+    "kappa",
+    "gamma_phi",
+    "sigma"
+   ],
+   "out_of_range_axes": [],
+   "one_axis_fixes": [],
+   "near_router_boundary": false
+  },
+  {
+   "id": "H02",
+   "g_c": 0.85,
+   "kappa": 0.22,
+   "gamma_phi": 0.04,
+   "sigma": 0.2,
+   "seed": 301,
+   "route": "v4",
+   "cls": "B",
+   "on_grid": false,
+   "in_hull": true,
+   "off_grid_axes": [
+    "g_c",
+    "kappa",
+    "gamma_phi",
+    "sigma"
+   ],
+   "out_of_range_axes": [],
+   "one_axis_fixes": [],
+   "near_router_boundary": false
+  },
+  {
+   "id": "H03",
+   "g_c": 0.7,
+   "kappa": 0.1,
+   "gamma_phi": 0.05,
+   "sigma": 0.15,
+   "seed": 302,
+   "route": "v4",
+   "cls": "B",
+   "on_grid": false,
+   "in_hull": true,
+   "off_grid_axes": [
+    "kappa"
+   ],
+   "out_of_range_axes": [],
+   "one_axis_fixes": [],
+   "near_router_boundary": false
+  },
+  {
+   "id": "H04",
+   "g_c": 0.45,
+   "kappa": 0.25,
+   "gamma_phi": 0.08,
+   "sigma": 0.25,
+   "seed": 303,
+   "route": "v4",
+   "cls": "B",
+   "on_grid": false,
+   "in_hull": true,
+   "off_grid_axes": [
+    "g_c",
+    "kappa",
+    "gamma_phi",
+    "sigma"
+   ],
+   "out_of_range_axes": [],
+   "one_axis_fixes": [],
+   "near_router_boundary": false
+  },
+  {
+   "id": "H05",
+   "g_c": 0.95,
+   "kappa": 0.08,
+   "gamma_phi": 0.03,
+   "sigma": 0.08,
+   "seed": 304,
+   "route": "v4",
+   "cls": "B",
+   "on_grid": false,
+   "in_hull": true,
+   "off_grid_axes": [
+    "g_c",
+    "kappa",
+    "gamma_phi",
+    "sigma"
+   ],
+   "out_of_range_axes": [],
+   "one_axis_fixes": [],
+   "near_router_boundary": false
+  },
+  {
+   "id": "H06",
+   "g_c": 0.62,
+   "kappa": 0.18,
+   "gamma_phi": 0.09,
+   "sigma": 0.12,
+   "seed": 305,
+   "route": "v4",
+   "cls": "B",
+   "on_grid": false,
+   "in_hull": true,
+   "off_grid_axes": [
+    "g_c",
+    "kappa",
+    "gamma_phi",
+    "sigma"
+   ],
+   "out_of_range_axes": [],
+   "one_axis_fixes": [],
+   "near_router_boundary": false
+  },
+  {
+   "id": "H07",
+   "g_c": 0.7,
+   "kappa": 0.048,
+   "gamma_phi": 0.04,
+   "sigma": 0.15,
+   "seed": 306,
+   "route": "v4",
+   "cls": "B",
+   "on_grid": false,
+   "in_hull": true,
+   "off_grid_axes": [
+    "kappa",
+    "gamma_phi"
+   ],
+   "out_of_range_axes": [],
+   "one_axis_fixes": [],
+   "near_router_boundary": true
+  },
+  {
+   "id": "H08",
+   "g_c": 0.7,
+   "kappa": 0.04,
+   "gamma_phi": 0.055,
+   "sigma": 0.15,
+   "seed": 307,
+   "route": "v4",
+   "cls": "B",
+   "on_grid": false,
+   "in_hull": true,
+   "off_grid_axes": [
+    "gamma_phi"
+   ],
+   "out_of_range_axes": [],
+   "one_axis_fixes": [],
+   "near_router_boundary": true
+  },
+  {
+   "id": "H09",
+   "g_c": 0.7,
+   "kappa": 0.035,
+   "gamma_phi": 0.042,
+   "sigma": 0.15,
+   "seed": 308,
+   "route": "v6",
+   "cls": "B",
+   "on_grid": false,
+   "in_hull": true,
+   "off_grid_axes": [
+    "kappa",
+    "gamma_phi"
+   ],
+   "out_of_range_axes": [],
+   "one_axis_fixes": [],
+   "near_router_boundary": true
+  },
+  {
+   "id": "H10",
+   "g_c": 0.7,
+   "kappa": 0.045,
+   "gamma_phi": 0.045,
+   "sigma": 0.1,
+   "seed": 309,
+   "route": "v6",
+   "cls": "B",
+   "on_grid": false,
+   "in_hull": true,
+   "off_grid_axes": [
+    "kappa",
+    "gamma_phi",
+    "sigma"
+   ],
+   "out_of_range_axes": [],
+   "one_axis_fixes": [],
+   "near_router_boundary": true
+  },
+  {
+   "id": "H11",
+   "g_c": 0.65,
+   "kappa": 0.04,
+   "gamma_phi": 0.04,
+   "sigma": 0.2,
+   "seed": 310,
+   "route": "v6",
+   "cls": "B",
+   "on_grid": false,
+   "in_hull": true,
+   "off_grid_axes": [
+    "g_c",
+    "gamma_phi",
+    "sigma"
+   ],
+   "out_of_range_axes": [],
+   "one_axis_fixes": [],
+   "near_router_boundary": true
+  },
+  {
+   "id": "H12",
+   "g_c": 0.75,
+   "kappa": 0.036,
+   "gamma_phi": 0.045,
+   "sigma": 0.25,
+   "seed": 311,
+   "route": "v6",
+   "cls": "B",
+   "on_grid": false,
+   "in_hull": true,
+   "off_grid_axes": [
+    "g_c",
+    "kappa",
+    "gamma_phi",
+    "sigma"
+   ],
+   "out_of_range_axes": [],
+   "one_axis_fixes": [],
+   "near_router_boundary": true
+  },
+  {
+   "id": "H13",
+   "g_c": 0.7,
+   "kappa": 0.025,
+   "gamma_phi": 0.05,
+   "sigma": 0.15,
+   "seed": 312,
+   "route": "v6",
+   "cls": "C",
+   "on_grid": false,
+   "in_hull": false,
+   "off_grid_axes": [
+    "kappa"
+   ],
+   "out_of_range_axes": [
+    "kappa"
+   ],
+   "one_axis_fixes": [
+    "kappa"
+   ],
+   "near_router_boundary": true
+  },
+  {
+   "id": "H14",
+   "g_c": 0.7,
+   "kappa": 0.36,
+   "gamma_phi": 0.05,
+   "sigma": 0.15,
+   "seed": 313,
+   "route": "v4",
+   "cls": "C",
+   "on_grid": false,
+   "in_hull": false,
+   "off_grid_axes": [
+    "kappa"
+   ],
+   "out_of_range_axes": [
+    "kappa"
+   ],
+   "one_axis_fixes": [
+    "kappa"
+   ],
+   "near_router_boundary": false
+  },
+  {
+   "id": "H15",
+   "g_c": 0.7,
+   "kappa": 0.04,
+   "gamma_phi": 0.015,
+   "sigma": 0.15,
+   "seed": 314,
+   "route": "v6",
+   "cls": "C",
+   "on_grid": false,
+   "in_hull": false,
+   "off_grid_axes": [
+    "gamma_phi"
+   ],
+   "out_of_range_axes": [
+    "gamma_phi"
+   ],
+   "one_axis_fixes": [
+    "gamma_phi"
+   ],
+   "near_router_boundary": true
+  },
+  {
+   "id": "H16",
+   "g_c": 0.7,
+   "kappa": 0.15,
+   "gamma_phi": 0.12,
+   "sigma": 0.15,
+   "seed": 315,
+   "route": "v4",
+   "cls": "C",
+   "on_grid": false,
+   "in_hull": false,
+   "off_grid_axes": [
+    "gamma_phi"
+   ],
+   "out_of_range_axes": [
+    "gamma_phi"
+   ],
+   "one_axis_fixes": [
+    "gamma_phi"
+   ],
+   "near_router_boundary": false
+  },
+  {
+   "id": "H17",
+   "g_c": 0.33,
+   "kappa": 0.15,
+   "gamma_phi": 0.05,
+   "sigma": 0.15,
+   "seed": 316,
+   "route": "v4",
+   "cls": "C",
+   "on_grid": false,
+   "in_hull": false,
+   "off_grid_axes": [
+    "g_c"
+   ],
+   "out_of_range_axes": [
+    "g_c"
+   ],
+   "one_axis_fixes": [
+    "g_c"
+   ],
+   "near_router_boundary": false
+  },
+  {
+   "id": "H18",
+   "g_c": 1.15,
+   "kappa": 0.15,
+   "gamma_phi": 0.05,
+   "sigma": 0.15,
+   "seed": 317,
+   "route": "v4",
+   "cls": "C",
+   "on_grid": false,
+   "in_hull": false,
+   "off_grid_axes": [
+    "g_c"
+   ],
+   "out_of_range_axes": [
+    "g_c"
+   ],
+   "one_axis_fixes": [
+    "g_c"
+   ],
+   "near_router_boundary": false
+  },
+  {
+   "id": "H19",
+   "g_c": 0.7,
+   "kappa": 0.1,
+   "gamma_phi": 0.06,
+   "sigma": 0.02,
+   "seed": 318,
+   "route": "v4",
+   "cls": "C",
+   "on_grid": false,
+   "in_hull": false,
+   "off_grid_axes": [
+    "kappa",
+    "gamma_phi",
+    "sigma"
+   ],
+   "out_of_range_axes": [
+    "sigma"
+   ],
+   "one_axis_fixes": [
+    "sigma"
+   ],
+   "near_router_boundary": false
+  },
+  {
+   "id": "H20",
+   "g_c": 0.7,
+   "kappa": 0.1,
+   "gamma_phi": 0.06,
+   "sigma": 0.38,
+   "seed": 319,
+   "route": "v4",
+   "cls": "C",
+   "on_grid": false,
+   "in_hull": false,
+   "off_grid_axes": [
+    "kappa",
+    "gamma_phi",
+    "sigma"
+   ],
+   "out_of_range_axes": [
+    "sigma"
+   ],
+   "one_axis_fixes": [
+    "sigma"
+   ],
+   "near_router_boundary": false
+  },
+  {
+   "id": "H21",
+   "g_c": 0.7,
+   "kappa": 0.035,
+   "gamma_phi": 0.04,
+   "sigma": 0.38,
+   "seed": 320,
+   "route": "v6",
+   "cls": "C",
+   "on_grid": false,
+   "in_hull": false,
+   "off_grid_axes": [
+    "kappa",
+    "gamma_phi",
+    "sigma"
+   ],
+   "out_of_range_axes": [
+    "sigma"
+   ],
+   "one_axis_fixes": [
+    "sigma"
+   ],
+   "near_router_boundary": true
+  },
+  {
+   "id": "H22",
+   "g_c": 0.7,
+   "kappa": 0.04,
+   "gamma_phi": 0.045,
+   "sigma": 0.02,
+   "seed": 321,
+   "route": "v6",
+   "cls": "C",
+   "on_grid": false,
+   "in_hull": false,
+   "off_grid_axes": [
+    "gamma_phi",
+    "sigma"
+   ],
+   "out_of_range_axes": [
+    "sigma"
+   ],
+   "one_axis_fixes": [
+    "sigma"
+   ],
+   "near_router_boundary": true
+  },
+  {
+   "id": "H23",
+   "g_c": 0.9,
+   "kappa": 0.035,
+   "gamma_phi": 0.025,
+   "sigma": 0.15,
+   "seed": 322,
+   "route": "v6",
+   "cls": "C",
+   "on_grid": false,
+   "in_hull": false,
+   "off_grid_axes": [
+    "g_c",
+    "kappa",
+    "gamma_phi"
+   ],
+   "out_of_range_axes": [],
+   "one_axis_fixes": [
+    "kappa"
+   ],
+   "near_router_boundary": false
+  },
+  {
+   "id": "H24",
+   "g_c": 0.45,
+   "kappa": 0.035,
+   "gamma_phi": 0.04,
+   "sigma": 0.1,
+   "seed": 323,
+   "route": "v6",
+   "cls": "C",
+   "on_grid": false,
+   "in_hull": false,
+   "off_grid_axes": [
+    "g_c",
+    "kappa",
+    "gamma_phi",
+    "sigma"
+   ],
+   "out_of_range_axes": [],
+   "one_axis_fixes": [
+    "g_c",
+    "kappa"
+   ],
+   "near_router_boundary": true
+  },
+  {
+   "id": "H25",
+   "g_c": 1.1,
+   "kappa": 0.2,
+   "gamma_phi": 0.12,
+   "sigma": 0.15,
+   "seed": 324,
+   "route": "v4",
+   "cls": "D",
+   "on_grid": false,
+   "in_hull": false,
+   "off_grid_axes": [
+    "g_c",
+    "kappa",
+    "gamma_phi"
+   ],
+   "out_of_range_axes": [
+    "g_c",
+    "gamma_phi"
+   ],
+   "one_axis_fixes": [],
+   "near_router_boundary": false
+  },
+  {
+   "id": "H26",
+   "g_c": 0.35,
+   "kappa": 0.1,
+   "gamma_phi": 0.015,
+   "sigma": 0.2,
+   "seed": 325,
+   "route": "v4",
+   "cls": "D",
+   "on_grid": false,
+   "in_hull": false,
+   "off_grid_axes": [
+    "g_c",
+    "kappa",
+    "gamma_phi",
+    "sigma"
+   ],
+   "out_of_range_axes": [
+    "g_c",
+    "gamma_phi"
+   ],
+   "one_axis_fixes": [],
+   "near_router_boundary": false
+  },
+  {
+   "id": "H27",
+   "g_c": 0.7,
+   "kappa": 0.025,
+   "gamma_phi": 0.015,
+   "sigma": 0.15,
+   "seed": 326,
+   "route": "v6",
+   "cls": "D",
+   "on_grid": false,
+   "in_hull": false,
+   "off_grid_axes": [
+    "kappa",
+    "gamma_phi"
+   ],
+   "out_of_range_axes": [
+    "kappa",
+    "gamma_phi"
+   ],
+   "one_axis_fixes": [],
+   "near_router_boundary": false
+  },
+  {
+   "id": "H28",
+   "g_c": 0.8,
+   "kappa": 0.36,
+   "gamma_phi": 0.06,
+   "sigma": 0.38,
+   "seed": 327,
+   "route": "v4",
+   "cls": "D",
+   "on_grid": false,
+   "in_hull": false,
+   "off_grid_axes": [
+    "g_c",
+    "kappa",
+    "gamma_phi",
+    "sigma"
+   ],
+   "out_of_range_axes": [
+    "kappa",
+    "sigma"
+   ],
+   "one_axis_fixes": [],
+   "near_router_boundary": false
+  },
+  {
+   "id": "H29",
+   "g_c": 0.7,
+   "kappa": 0.025,
+   "gamma_phi": 0.04,
+   "sigma": 0.38,
+   "seed": 328,
+   "route": "v6",
+   "cls": "D",
+   "on_grid": false,
+   "in_hull": false,
+   "off_grid_axes": [
+    "kappa",
+    "gamma_phi",
+    "sigma"
+   ],
+   "out_of_range_axes": [
+    "kappa",
+    "sigma"
+   ],
+   "one_axis_fixes": [],
+   "near_router_boundary": true
+  },
+  {
+   "id": "H30",
+   "g_c": 0.7,
+   "kappa": 0.04,
+   "gamma_phi": 0.015,
+   "sigma": 0.38,
+   "seed": 329,
+   "route": "v6",
+   "cls": "D",
+   "on_grid": false,
+   "in_hull": false,
+   "off_grid_axes": [
+    "gamma_phi",
+    "sigma"
+   ],
+   "out_of_range_axes": [
+    "gamma_phi",
+    "sigma"
+   ],
+   "one_axis_fixes": [],
+   "near_router_boundary": true
+  }
+ ],
+ "router": "v6 iff kappa <= 0.045 and gamma_phi <= 0.05 else v4 (frozen, src/closures/v7.py)",
+ "near_boundary_rule": "(|kappa-0.045|<=0.005 and gamma_phi<=0.06) or (|gamma_phi-0.05|<=0.010 and kappa<=0.05)"
+}
