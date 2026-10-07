@@ -374,6 +374,9 @@ NON-NEGOTIABLES:
     the inverted-state linearization is treated as final physics.
 
 ## PHYSICS-PREDICTION EXTENSION PRE-REGISTRATION (superradiant burst vs M) -- written BEFORE any run
+> **Provenance note (2026-10-07):** this section's text first appears in version control together with the
+> computation it governs; prospective timing is not verifiable (`docs/HISTORY_PROVENANCE.md`). The decision rule
+> below is preserved exactly as written.
 GOAL (the ISEF-caliber headline, if it survives): show that the STANDARD 2nd-order cumulant closure's error
 on a MEASURABLE collective-emission observable is not random -- it grows systematically with molecule number
 M in the long-coherence pocket -- and that the frozen V7 recovers the reference in the validated window.
@@ -428,6 +431,9 @@ OUTCOME (recorded post-run; see FINDINGS Result 24): K1 TRIGGERED -> scaling hea
   Replication artifact: replicate_cumulant.jl + results/replication_params.json + REPLICATION.md.
 
 ## MECHANISM ANALYSIS PRE-REGISTRATION (final frozen internal computation) -- written BEFORE any run
+> **Provenance note (2026-10-07):** this section's text first appears in version control together with the
+> computation it governs; prospective timing is not verifiable (`docs/HISTORY_PROVENANCE.md`). The decision rule
+> below is preserved exactly as written.
 GOAL: is the exact superradiant burst-peak correction driven by ONE dominant connected-third-cumulant (kappa3)
 family, a SMALL set, or is it broadly distributed? NO retrain, NO tune, NO reroute, NO new V7 variant. Frozen
 V7, frozen engines. Ablations zero a kappa3 family on the CLOSURE OUTPUT only (frozen weights untouched).
@@ -480,6 +486,9 @@ OUTCOME (recorded post-run; see FINDINGS Result 25): CONCLUSION 2 = SMALL-FAMILY
   MODELING FROZEN. Scripts: mechanism.py (compute), mechanism_report.py (decision+figure).
 
 ## DISORDER-SWEEP KILL TEST (candidate Phase II) -- pre-registered in-session, recorded here
+> **Provenance note (2026-10-07):** this section's text first appears in version control together with the
+> computation it governs; prospective timing is not verifiable (`docs/HISTORY_PROVENANCE.md`). The decision rule
+> below is preserved exactly as written.
 HYPOTHESIS (candidate, NOT a discovery): does spectral disorder sigma produce a non-trivial (ideally
 non-monotonic, intermediate-sigma) change in the two Result-25 connected-third-order channels AND make the
 2nd-order closure meaningfully more wrong, tied to a burst-observable change? Exact + plain 2nd-order only
@@ -495,6 +504,9 @@ candidate is dead as novelty. Scripts: disorder_sweep.py, disorder_report.py; fi
 Third killed extension (after Results 22-23 criterion and Result 24 M-scaling): extension well is dry.
 
 ## FOURTH-ORDER CUMULANT BASELINE (the fairness test) -- pre-registered, tightly scoped
+> **Provenance note (2026-10-07):** this section's text first appears in version control together with the
+> computation it governs; prospective timing is not verifiable (`docs/HISTORY_PROVENANCE.md`). The decision rule
+> below is preserved exactly as written.
 QUESTION (the one baseline that can challenge the core "learned closure is useful/necessary" claim): does a
 PROPERLY IMPLEMENTED fourth-order cumulant closure (track moments to order 4, set connected kappa5=0) solve the
 disordered open-cavity burst peak at M=3,4 -- and at what COST and STABILITY? NOT "build a giant engine and hope
@@ -789,3 +801,26 @@ OVERALL PASS iff every row passes for every (regime, M, C).
 
 Script `src/validation/check_carrier_invariance.py`; log `results/carrier_invariance.log`; data
 `results/carrier_invariance.npz`. Result written up as the next numbered result in FINDINGS.md.
+
+---
+
+## Provenance note on this document (2026-10-07; nothing above was changed)
+
+This repository's history starts with a bulk import on 2026-07-05, so it cannot by itself show that any section
+written before that date predates its results. The original development history (local, unpublished, HEAD
+`82f3aff`) does show that ordering for these sections:
+- the v3 protocol and pilot gate;
+- the reporting rules and support-risk numerics;
+- the V5, V6 and V7 pre-registrations;
+- Phase B and its pre-final lock;
+- the interpretability pre-registration and formula-selection rule;
+- memory-criterion Step 1 and its wording lock.
+
+It does **not** show it for the four sections marked above. Their text first appears together with their
+computations, so for publication they are treated as non-preregistered. The 2x2 decision tree was committed
+after its runs were launched but before the verdict. Memory-criterion Step 0's text and result share one
+commit. Sections registered in this repository after the import (V8 Step 0, `cdca2e3`; the positivity-architecture
+option, `45690c0`; P2, `78e9a38`) carry their own timestamps. Commit-level table: `docs/HISTORY_PROVENANCE.md`.
+
+The mechanism analysis also departed from its section above in three ways (metric, an unregistered threshold,
+the M = 5 confirmation not run). See FINDINGS, "Dated notes" D3.

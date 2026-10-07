@@ -77,3 +77,23 @@ shifted run. Results commit: the commit that adds `results/carrier_invariance.lo
 The audit takes ~6.6 h on the benchmark machine, almost all of it in the omega_c = 1000 closure runs, where
 explicit RK45 is limited by the fast-rotating charged components. C = 0 rows reproduce
 `results/burst_pred_exact.npz` (draw 50) to 0.0 relative.
+
+## Dated notes (2026-10-07)
+
+- **"V8 line" (above) is an internal label** for the large-M reference audits of the frozen V7: the
+  permutation-invariant, trajectory and MPS references, and the physicality studies. No V8 model exists. The only
+  V8 model step ("V8 Step 1", a positivity-preserving closure) is a registered option that has **not been
+  started** (PROTOCOL, hard stop 2026-12-31).
+- **External reproduction precision, by quantity.** The returned CSV
+  (`external_validation/replication_cumulant.csv`) against `results/burst_pred_exact.npz`
+  (draw 50) at full precision:
+  - exact F_peak: ≤ 2.7e-6 relative;
+  - second-order F_peak: ≤ 7.6e-5 relative;
+  - signed overshoot: ≤ 1.0e-4.
+  The "< 4e-4" in row 1's external table is limited by a four-significant-figure reference.
+- **Unarchived development check.** The 8.11e-10 Julia/Python closure agreement quoted in
+  `REPLICATION_QUICKSTART.md` §7 comes from `scripts/crosscheck_negativity.{jl,py}`, run by the author at a
+  strong-coupling point outside the evaluated cells. Only the Julia output (`results/crosscheck_negativity_julia.csv`)
+  is committed. It has no provenance row and carries no publication weight.
+- **Pre-registration timing.** Rows 1–8 above (Results 24 and 27) are not verifiably pre-registered; see
+  `docs/HISTORY_PROVENANCE.md`.

@@ -1,5 +1,6 @@
 """
-The validated operating range of the frozen closure, enforced in code rather than in prose.
+A conservative, regime-blind rollout guard for the frozen closure, enforced in code rather than in prose.
+(The status string "validated" below is a legacy label for "inside this guard", not a scientific claim.)
 
 WHY THIS EXISTS
 ---------------
@@ -19,22 +20,29 @@ The instability is therefore a property of the learned closure evaluated far out
 training window, not of any mechanism that can be gated or dispatched around. What remains is
 to stop pretending otherwise, and to make the boundary impossible to cross by accident.
 
-WHAT IS ACTUALLY VALIDATED
---------------------------
-  M <= 10   exact or trajectory references exist; V7 is physical on every seed tested and
-            reproduces the burst peak to about +/-0.7% on the exact-validated cells.
-  M >= 12   no reference exists AND V7 leaves the physical set: seed-dependent at M=12-16
-            (1 of 3 seeds) and systematic at M=20 (3 of 3). Both frozen branches fail.
+WHAT THIS GUARD IS, AND WHAT IT IS NOT (rewritten 2026-10-07; behaviour unchanged)
+------------------------------------------------------------------------------------
+VALIDATED_MAX_M and KNOWN_UNSTABLE_MIN_M are a conservative, regime-blind SOFTWARE GUARD on full-length
+rollouts, set in August 2026 from Results 30-31. They are not a statement of the scientific validity envelope,
+which has two parts that a single integer cannot express (FINDINGS Results 30, 34-38; the paper, S10):
 
-The gap at M=11 is not a claim, it is simply untested.
+  Full-trajectory physicality, regime-dependent (t <= 40):
+    low loss (kappa 0.03, gamma_phi 0.02): physical on every tested draw through M = 8; leaks on 1 of 3 draws
+      at M = 10; late-time divergence at M >= 12 (1 of 3 draws at M = 12-16, 3 of 3 at M = 20), with or
+      without disorder, on both frozen branches.
+    normal loss (kappa 0.15): exactly physical through M = 20 at sigma = 0; not measured with disorder above
+      M = 10 over the full horizon.
+    far-M trajectory check (g_c 0.8, kappa 0.1): the V4 branch was unstable on 1 of 3 draws at M = 9 and 10
+      (Result 19) -- so "M <= 10 is always physical" is NOT true either.
 
-REFINED BY RESULTS 34 AND 37, WITHOUT CHANGING THIS GUARD'S BEHAVIOUR. The failure is late-time: the
-burst peak lands at t ~ 4 while the first physicality violation occurs at t ~ 7.3 independently of M,
-and integration is causal, so a burst-peak value extracted at M = 12 is meaningful even though the
-trajectory it came from is not. Against quantum-trajectory references WITH disorder at M = 12 the
-learned closure reads +5.7% (low loss) and +4.0% (normal loss). None of that makes the ROLLOUT valid,
-which is what this module guards, so check() still refuses M >= 12 by default. Burst-peak evaluation at
-those sizes is a deliberate, separately referenced exception -- not a reason to relax the guard.
+  Burst-peak accuracy, referenced beyond M = 10: exact permutation-invariant solves at sigma = 0 to M = 16
+    (error grows ~0.8-0.9 points per emitter) and one disordered quantum-trajectory draw at M = 12
+    (+5.7% low loss, +4.0% normal loss). In the low-loss sigma = 0 runs the burst peak (t ~ 4) precedes the
+    first violation (t ~ 7.3), so burst values outlive the late-time failure; that is exactly why burst-peak
+    evaluation at those sizes is a deliberate, separately referenced exception to this guard.
+
+The guard stays conservative on purpose: by default check() refuses every M > 10 (M = 11 as untested,
+M >= 12 as known-unstable), because the failure it guards against is silent.
 
 Calling `check(M)` before a rollout turns a silent unphysical trajectory into an explicit,
 citable refusal. `mode="warn"` is available for deliberate exploration, but the default is to
@@ -48,7 +56,7 @@ KNOWN_UNSTABLE_MIN_M = 12
 
 
 class OutsideValidatedRange(RuntimeError):
-    """Raised when a rollout is requested outside the range the closure is validated on."""
+    """Raised when a full rollout is requested outside the conservative guard range."""
 
 
 def status(M):
@@ -72,10 +80,11 @@ def check(M, mode="raise"):
         return s
 
     if s == "known-unstable":
-        msg = (f"M={M} is outside the validated range and inside the region where the frozen "
-               f"closure is measured to diverge (positivity violated at M>=12; systematic at "
-               f"M=20). Results here are not merely unvalidated, they are known to leave the "
-               f"physical set. See docs/FINDINGS.md and src/analysis/positivity_audit.py.")
+        msg = (f"M={M} is past this conservative rollout guard. In the low-loss regime the frozen "
+               f"closure is measured to leave the physical set at late times for M>=12 (systematic "
+               f"at M=20); the normal-loss regime was physical to M=20 at sigma=0. Full rollouts "
+               f"here are not trustworthy by default. See docs/FINDINGS.md Results 30, 34 and "
+               f"src/analysis/positivity_audit.py.")
     else:
         msg = (f"M={M} is past the validated range (M<={VALIDATED_MAX_M}) and below the "
                f"measured failure onset (M>={KNOWN_UNSTABLE_MIN_M}). It is untested in either "

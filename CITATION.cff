@@ -4,7 +4,8 @@ title: "Learned Cumulant Closure"
 abstract: >-
   A permutation-equivariant, Hermiticity-preserving learned third-cumulant closure that
   recovers the superradiant burst peak of an open, disordered Tavis-Cummings ensemble,
-  validated against exact QuTiP references.
+  benchmarked against exact master-equation (QuTiP), permutation-invariant, and
+  quantum-trajectory references.
 authors:
   - family-names: Jain
     given-names: Dhruv

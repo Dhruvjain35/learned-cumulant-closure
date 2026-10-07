@@ -143,7 +143,8 @@ ran cleanly. Record this outcome exactly as it is — a non-reproduction is a va
   That is a positivity violation of the closure itself, not of this script. It is cross-checked in
   `scripts/crosscheck_negativity.{jl,py}`: at an identical strong-coupling point, on a shared time grid at
   matched tolerances, the Julia closure and the project's own Python engine agree to **8.11e-10** over all 201
-  grid points while the exact `mesolve` reference stays non-negative. The evaluated cells (`g_c = 0.70`,
+  grid points while the exact `mesolve` reference stays non-negative. (This is an author-run development check
+  outside the evaluated cells; only the Julia output is committed, so it carries no publication weight.) The evaluated cells (`g_c = 0.70`,
   i.e. `g = g_c/√M`) are far from this and show no such excursion.
 - **Remaining fragility.** `product_state_value` is still the most version-sensitive part. It now fails loudly
   instead of silently, but if your QuantumCumulants version renders operators differently it *will* halt with

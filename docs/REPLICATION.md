@@ -4,7 +4,7 @@
 > - [`REPLICATION_QUICKSTART.md`](REPLICATION_QUICKSTART.md) — install, one command to run, expected output, pass/fail criteria.
 > - [`REPLICATION_SIGNOFF.md`](REPLICATION_SIGNOFF.md) — fill-in table to record environment, results, and verdict.
 > - [`REPLICATION_AUDIT.md`](REPLICATION_AUDIT.md) — line-by-line model/convention audit, assumptions, mismatch risks, questions to check.
-> - [`replicate_cumulant.jl`](../replicate_cumulant.jl) — the reproduction script (Julia; not execution-verified by the author).
+> - [`replicate_cumulant.jl`](../replicate_cumulant.jl) — the reproduction script (Julia). Execution-verified against the pinned manifests; reproduced cross-platform by an outside collaborator on 2026-08-30 (`external_validation/`).
 > - [`results/replication_params.json`](../results/replication_params.json) — exact parameters incl. disorder draws.
 >
 > This document gives the model spec and reproduction targets; the quickstart is the fastest path to running it.
@@ -16,8 +16,9 @@ Purpose: have someone **who did not write the Python code** independently confir
 2. that the **standard 2nd-order cumulant closure overshoots the superradiant burst peak** by ~29%.
 
 The learned closure (V7) is **not** part of this replication — it is the model under test. The point of the
-replication is to establish the **baseline** (exact solve + plain cumulant) independently, so that V7's
-measured advantage rests on an externally-validated reference, not on our own engine alone.
+replication is to establish the **baseline** (exact solve + plain cumulant) outside this codebase, so that V7's
+measured advantage rests on a reference that has been reproduced cross-platform, not on our own engine alone.
+Status (2026-10-07): the cross-platform tier is done; the independent-replication tier below is not.
 
 ## Model (exact spec)
 
@@ -66,10 +67,11 @@ overshoot is the pass condition; matching floats to 3 digits is a bonus (disorde
 
 ## Files
 
-- `replicate_cumulant.jl` — QuantumCumulants.jl + QuantumOptics.jl script (reads the JSON). **NOT
-  execution-verified by its author** (no Julia runtime was available); expect minor API drift, especially the
-  cumulant initial-value mapping (flagged in-file). A competent QuantumCumulants user (this is the intended
-  independent replicator) should verify/adjust and run.
+- `replicate_cumulant.jl` — QuantumCumulants.jl + QuantumOptics.jl script (reads the JSON). *Originally written
+  without a Julia runtime; since 2026-08-16 it is execution-verified by the author against the committed
+  `Manifest.toml` / `Manifest-v1.11.toml`, and on 2026-08-30 it was reproduced cross-platform by an outside
+  collaborator (`external_validation/`).* The initial-value mapping remains the most
+  version-sensitive part (see `REPLICATION_QUICKSTART.md` §7).
 - `results/replication_params.json` — exact per-cell parameters incl. disorder.
 - Output: `results/replication_cumulant.csv` (regime, M, F_peak exact vs cumulant, rel err, t_peak).
 
@@ -89,7 +91,7 @@ the most transparent triple-check and is poster-friendly (the equations fit on a
   QuantumCumulants setup, (iii) recorded Julia version, package versions, OS/hardware, commit hash,
   parameters, and the numerical difference. Only this tier earns: **"A cross-platform implementation in
   QuantumCumulants.jl independently reproduced the exact-vs-cumulant burst-peak discrepancy within the stated
-  tolerance."** Until then, say "cross-platform reproduction pending," not "independently replicated."
+  tolerance."** Until then, say "reproduced cross-platform in QuantumCumulants.jl" (done 2026-08-30), not "independently replicated."
 
 Sign-off record (replicator fills in): code/commit, Julia + package versions, OS/hardware, reproduced
 overshoot table, confirmation `⟨a†a⟩(t)` matches, sign/direction match, name + date.

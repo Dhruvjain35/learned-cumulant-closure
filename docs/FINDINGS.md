@@ -240,6 +240,8 @@ path to an accurate large-M closure, and it is only possible because the engine 
 
 ## Result 9 — retraining on the M the engine unlocked RECOVERS large-M accuracy (the ladder works)
 
+> **Dated note (2026-10-07):** see "Dated notes" D1 at the end of this document. The text below is unchanged.
+
 Result 8's honest limit was that a closure trained on M=2,3 collapses to ~1x by M=10. The promised fix was to
 retrain on larger M, which the new machinery makes cheap: the e_ops data path (gen_data_v2.py) computes exact
 training moments WITHOUT the dense engine -- proven EXACTLY equal to the old moments_from_rho path
@@ -854,6 +856,8 @@ only means no universal physical rule for choosing V4 vs V6 is claimed. CRITERIO
 ## Result 24 — Physics-prediction extension (superradiant burst vs M): scaling headline FALSIFIED; a real,
 ## exact-validated burst-peak-overshoot of standard cumulants survives (constant, not a scaling law)
 
+> **Dated note (2026-10-07):** see "Dated notes" D2, D6 at the end of this document. The text below is unchanged.
+
 Pre-registered (PROTOCOL "PHYSICS-PREDICTION EXTENSION") BEFORE any run: does the standard 2nd-order cumulant
 closure's error on a MEASURABLE collective-emission observable -- superradiant burst peak flux
 F_peak = kappa*max_t<a^dag a> and delay t_peak = argmax_t<a^dag a> -- grow systematically with molecule number
@@ -913,6 +917,8 @@ replicator request embedded).
 ## Result 25 — Mechanism of the burst-peak error: a SMALL-FAMILY (two-channel) connected-third-cumulant
 ## correction, reconstructed by V7 (final frozen internal computation)
 
+> **Dated note (2026-10-07):** see "Dated notes" D2, D3 at the end of this document. The text below is unchanged.
+
 Pre-registered (PROTOCOL "MECHANISM ANALYSIS") BEFORE the run; frozen V7, no retrain/tune/reroute; ablations
 zero a kappa3 family on the CLOSURE OUTPUT only. Fresh seeds 37/38/39; POCKET and CONTROL cells at M=4;
 kappa3_exact = <k> - v3_factorized(m2_exact); GATE kappa3_exact(t=0) < 1e-6 passed every cell; burst window =
@@ -958,6 +964,8 @@ manuscript, ISEF poster, whiteboard defense.
 ## Result 26 — Disorder-sweep kill test (candidate extension): NULL. Standard-method failure is disorder-robust
 ## at fixed G; disorder only monotonically redistributes the connected correlations. Third killed extension.
 
+> **Dated note (2026-10-07):** see "Dated notes" D2 at the end of this document. The text below is unchanged.
+
 Pre-registered candidate hypothesis (honest framing; NOT a discovery): does spectral disorder sigma produce a
 non-trivial (ideally non-monotonic) change in the two Result-25 connected-third-order channels and make the
 2nd-order closure meaningfully more wrong, tied to a burst observable? Exact + plain 2nd-order ONLY (no V7),
@@ -988,6 +996,8 @@ external replication + manuscript, is the work -- not further novelty hunts.
 ## gave a stable, accurate burst closure in the evaluated cells (kappa5=0 DIVERGES); V7's practical value
 ## established, not field-defining. [WORDING: never say "no working standard truncation exists" -- only that the
 ## TESTED zero-next-cumulant truncations through 4th order failed in the EVALUATED disordered open-cavity cells.]
+
+> **Dated note (2026-10-07):** see "Dated notes" D2, D4 at the end of this document. The text below is unchanged.
 
 The fairness question a referee will ask (PROTOCOL "FOURTH-ORDER CUMULANT BASELINE"): would a properly-built
 fourth-order cumulant closure (track to order 4, set connected kappa5=0) just solve the burst peak, making a
@@ -1154,6 +1164,8 @@ see this failure mode; the per-site bound can. Any future stability check in thi
 ## Result 31 -- Three attempted repairs of the M>=12 divergence, all FAILED; the operating range
 ## is now enforced in code
 
+> **Dated note (2026-10-07):** see "Dated notes" D5 at the end of this document. The text below is unchanged.
+
 1. PHYSICALITY GATING (physicality_gate.py). Fades the learned correction toward kappa3=0 as the state leaves
    the physical set. Reduces the blow-up by up to eight orders of magnitude but NEVER restores positivity: the
    ODE solver commits a step past the boundary before any violation is observable. Passes the
@@ -1204,6 +1216,8 @@ Artifacts: results/risk_validation.log, results/risk_validation.npz.
 ---
 
 ## Standing consequence of Results 28-33 for how this work is described
+
+> **Dated note (2026-10-07):** see "Dated notes" D5 at the end of this document. The text below is unchanged.
 
 The headline result is unchanged and the freeze holds. What changed is the honest boundary around it:
 
@@ -1411,6 +1425,8 @@ that the data specifically rule out.
 
 ## Result 37 — Can ANYTHING reference sigma > 0 at M >= 12? Tensor networks NO (measured),
 ## quantum trajectories YES; and the whole zero-disorder V8 line TRANSFERS to the real regime
+
+> **Dated note (2026-10-07):** see "Dated notes" D7 at the end of this document. The text below is unchanged.
 
 Results 34-36 were all measured at sigma = 0, because the permutation-invariant reference cannot do
 otherwise. The obvious objection is that none of it need apply to the DISORDERED model the closure was
@@ -1648,3 +1664,63 @@ WHAT THIS LICENSES, AND WHAT IT DOES NOT.
   shifted-carrier check itself was not repeated above M = 3.
 - No manuscript wording changes on this result alone; the argument goes to the outside reviewer (who raised the
   ultrastrong caveat) first.
+
+---
+
+# Dated notes (2026-10-07)
+
+Added during the publication claim audit (`docs/PUBLICATION_CLAIM_AUDIT.md`, commit `60f6479`). They correct
+or qualify earlier text **without rewriting it**: every result above stands as originally recorded, and each
+note says what later evidence or provenance checks change about how it may be cited.
+
+**D1 — Result 9 is not a V7 result.** The "2.8× at M = 10" comparison used `lc_new`
+(`src/training/retrain_eval.py`). That is the pre-V3, regime-blind `LocalClosure`, retrained on M = 2–5 at one
+regime (g_c 0.8, κ 0.1), scored on one disorder draw by max-abs error in (n, mean z) against quantum-trajectory
+references. It must not be quoted as evidence about the frozen V7. V7 itself was trained at M ≤ 5 and never
+retrained.
+
+**D2 — Pre-registration status of Results 24–27.** The protocol texts for these four analyses (PROTOCOL
+sections "PHYSICS-PREDICTION EXTENSION", "MECHANISM ANALYSIS", "DISORDER-SWEEP KILL TEST" and "FOURTH-ORDER
+CUMULANT BASELINE") first appear in version control together with their scripts and result logs, in both
+surviving histories (`docs/HISTORY_PROVENANCE.md`). The statements "Pre-registered … BEFORE any run" above
+record the author's account at the time; version control cannot verify them. For publication these four are
+classified as **non-preregistered analyses that followed a documented decision rule**. Their numerical results
+are unaffected.
+
+**D3 — Result 25 deviated from its written protocol in three ways.**
+1. The protocol's adjudicating measure was the direct-contribution score E_f. It is structurally single-family
+   for this observable. The adjudication used D_f and closed-loop ablation instead, chosen after E_f's
+   behaviour was seen.
+2. The "small-family" rule that produced "Conclusion 2" (top-two D-share ≥ 0.9 and second ≥ 0.15) is in
+   `src/analysis/mechanism_report.py`, not in the protocol.
+3. The M = 5 confirmation the protocol called for was not run (`mechanism.py` uses M = 4 only).
+
+By the letter of the E_f criterion, the outcome is **Conclusion 1 (single family, ⟨a†aσᶻ⟩)**: E-share 1.00,
+V7 magnitude 1.00–1.02, ablation 0.81–0.84. The two-channel attribution above is therefore exploratory
+mechanistic evidence, not a pre-registered conclusion.
+
+**D4 — Result 27 wording.** "GENUINELY DIVERGES — finite-time blow-up" (and the matching PROTOCOL outcome text)
+predates the locked wording. What was established is **reproducible runaway growth that triggers the divergence
+guard**, the same across four integrators. A mathematical finite-time divergence was not shown.
+
+**D5 — Results 30–31 and "Standing consequence of Results 28–33".**
+- "Every headline number lives at M ≤ 10, and that is now the enforced operating range" is superseded by
+  Results 34–38. Burst-peak accuracy and full-trajectory physicality are separate envelopes. Physicality is
+  regime-dependent: in the low-loss regime it is lost at late times from M ≈ 10–12; in the normal-loss regime it
+  holds to M = 20 at σ = 0.
+- The guard lives at `src/closures/validated_range.py`, not `src/validation/`.
+- `VALIDATED_MAX_M = 10` is a conservative, regime-blind software guard, not a statement of either envelope. Its
+  docstring was rewritten 2026-10-07; its behaviour is unchanged.
+- Result 19's far-M check (V4 branch unstable on 1 of 3 draws at M = 9 and 10) means "physical on every seed at
+  M ≤ 10" was never true either.
+
+**D6 — Scope of the Result 24 "±0.7%".** The 24 cells hold out the disorder realization only. CONTROL
+(g_c 0.7, κ 0.15, γφ 0.02, σ 0.15) is a training-grid point at every M = 2–5. POCKET (κ 0.03, γφ 0.02) lies just
+outside the convex hull of trained (κ, γφ) points, i.e. a modest γφ extrapolation (`src/data_gen/gen_data_v3.py`,
+`gen_pocket_density.py`). Worst signed V7 error over the 24 cells is 0.74%.
+
+**D7 — Result 37 is one disorder realization.** The disordered M = 12 values (+5.73%, +4.00%) are for draw 50
+only. Result 38 measured realization scatter of 1.9–2.9 points at fixed M = 10, so these are single-draw values,
+not distribution estimates. Its statement that the burst peak "survives the divergence in the real regime"
+relies on the zero-disorder violation timing (Result 34D). The disordered closure trajectory was not checked
+for its first violation time.
