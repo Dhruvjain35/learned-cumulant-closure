@@ -2,12 +2,14 @@
 
 # Learned Cumulant Closure
 
-### Recovering the superradiant burst where the standard cumulant hierarchy breaks
+### Recovering the superradiant burst peak where the tested cumulant truncations miss it
 
 Second-order cumulants **overshoot** the superradiant burst peak. Fourth-order **runs away**. A small,
-structure-preserving **learned third-cumulant closure** stays stable and tracks the exact reference — in the
-open, *disordered* cavity–emitter regime where the standard truncation hierarchy doesn't. Every extension that
-*didn't* survive is kept in the record.
+structure-preserving **learned third-cumulant closure** tracks the exact burst peak at small M and stays several
+times more accurate than second order out to M = 16, in an open, *disordered* cavity–emitter model where the
+tested truncations through fourth order do not. Its limits are measured, not assumed: its error grows with M,
+and in the low-loss regime its trajectories leave the physical set at late times from M ≈ 10. Every extension
+that *didn't* survive is kept in the record.
 
 [![CI](https://github.com/Dhruvjain35/learned-cumulant-closure/actions/workflows/ci.yml/badge.svg)](https://github.com/Dhruvjain35/learned-cumulant-closure/actions/workflows/ci.yml)
 &nbsp;![Python](https://img.shields.io/badge/python-3.12-3776AB?logo=python&logoColor=white)
@@ -26,10 +28,13 @@ open, *disordered* cavity–emitter regime where the standard truncation hierarc
 > collective-emission observable — the standard second-order cumulant closure is off by ≈ **+29%**, the tested
 > κ4 = 0 third-order closure by ≈ **−25% to −28%** (and it runs away in the low-loss pocket), and the κ5 = 0 fourth-order
 > closure **runs away** — its integration triggers a divergence guard. A frozen, physics-routed **learned closure
-> (V7)** stays within ≈ **±0.7%** at M ≤ 5, degrading by ≈ 0.9% per emitter (≈ 8–9% at M = 16), of the
-> exact reference in the tested cells. This repo has the engines, the learned closure, the mechanism analysis,
-> the rejected hypotheses, and a cross-platform reproduction package — independently run and reproduced at
-> the Notre Dame CRC (2026-08-30, `external_validation/`).
+> (V7)** stays within ≈ **±0.7%** of the exact reference at M ≤ 5. Those 24 cells hold out the disorder
+> realization, while their parameters are on or just outside the training grid. At emitter counts it never saw,
+> its error grows ≈ 0.8–0.9 points per emitter (≈ 8–9% at M = 16, zero disorder; 4–6% at M = 12 for one
+> disordered draw), against ≈ 30% for second order. This repo has the engines, the learned closure, the
+> mechanism analysis, the rejected hypotheses, and a cross-platform reproduction package. That package's
+> second-order result was reproduced cross-platform in QuantumCumulants.jl by an outside collaborator at the
+> Notre Dame CRC (2026-08-30, `external_validation/`). The learned closure has not been run outside this work.
 
 ## The result in one table
 
@@ -41,11 +46,12 @@ Signed burst-peak error vs. an exact master-equation solve, in the evaluated dis
 | **2nd-order cumulant** | overshoots ≈ **+29%** | stable | no high-order engine to construct |
 | κ4 = 0 (3rd-order) | undershoots ≈ **−25% to −28%** | runaway growth (guard triggered) in the low-loss pocket | heavier than 2nd; M = 4 pocket case failed |
 | κ5 = 0 (4th-order) | overshoots, then **runaway growth** | guard triggered in all M = 3 cells (both regimes) | substantial, highly variable at M = 3 |
-| **V7 (learned)** | ≈ **±0.7%** at M ≤ 5, degrading ≈ 0.9%/emitter (≈ 8–9% at M = 16) | stable | no high-order engine to construct; per-rollout time not near second order |
+| **V7 (learned)** | ≈ **±0.7%** at M ≤ 5, degrading ≈ 0.9%/emitter (≈ 8–9% at M = 16) | stable in these cells (M ≤ 5); see *Scope* for its physicality envelope | no high-order engine to construct; per-rollout time not near second order |
 
 Among the tested zero-next-cumulant truncations through fourth order, none produced a stable, accurate burst
-closure in these cells. *(Scope: exact-referenced at the tested molecule counts; behaviour beyond the exact
-ceiling is reported as an estimate, not a result.)*
+closure in these cells. *(Scope: rows are exact-referenced at M ≤ 5, on disorder draws held out from training,
+at a training-grid parameter point (normal loss) and a point just outside the trained γφ range (low loss). The
+larger-M figures are against the references listed under* Scope.)
 
 ## V7 against the closure ladder
 
@@ -54,16 +60,23 @@ ceiling is reported as an estimate, not a result.)*
 </div>
 
 *Stability (%) and median conditional NRMSE for each closure across regimes (in-box / seam / sanity / far-M),
-measured against the exact reference on held-out disorder draws. V7 (right column) carries the lowest error while
-staying stable everywhere it is defined. The on-figure tag "bit-identical" means V7 exactly reproduces its own
+on the untouched disorder draws 32/33/34. The far-M column is against quantum-trajectory references with stated
+Monte-Carlo error; the others are against exact solves. V7 (right column) carries the lowest error and is stable
+in every cell of this figure. Far-M stability is draw-dependent: on an earlier draw set (26–28), V7's memoryless
+branch was unstable on one draw at M = 9 and 10. The on-figure tag "bit-identical" means V7 exactly reproduces its own
 routed frozen branch (max diff = 0.0; see `src/evaluation/eval_v7.py`), not the scalable-vs-dense
 machine-precision (≤ 5e-14) gate.*
 
 ## Why it fails, mechanistically
 
-The burst-peak error is carried by **two connected third-cumulant channels**: photon-number–inversion
-`⟨a†a σᶻ⟩` (dominant) and photon-polarization–inversion `⟨a σ⁺ σᶻ⟩` (secondary). Second order sets both to
-zero (→ overshoot); κ4 = 0 over-corrects them (→ undershoot); V7 reconstructs them.
+In an exploratory analysis (M = 4, three disorder draws, two regimes), the burst-peak correction is carried by
+**two connected third-cumulant channels**: photon-number–inversion `⟨a†a σᶻ⟩` (dominant) and
+photon-polarization–inversion `⟨a σ⁺ σᶻ⟩` (secondary). Second order sets both to zero (→ overshoot); κ4 = 0
+mis-estimates the dominant one (→ undershoot); V7 reconstructs them.
+
+The analysis did not follow its written protocol exactly. The protocol's direct-contribution score can only
+see the dominant channel, so the second channel was identified with a whole-dynamics score and ablation
+chosen after the run, and the planned M = 5 confirmation was not run. Details: `docs/MANUSCRIPT_DRAFT.md` §7.
 
 <div align="center">
 <img src="assets/img/mechanism.png" width="92%" alt="Mechanism figure: which kappa3 channels carry the correction, the dominant channel's kappa3 trajectory for exact vs V7 vs T3 vs plain, and closed-loop ablation."/>
@@ -123,8 +136,10 @@ julia --project=. replicate_cumulant.jl  # exact vs 2nd-order burst peak → res
 
 Start with **[`docs/REPLICATION_QUICKSTART.md`](docs/REPLICATION_QUICKSTART.md)**; record results in
 **[`docs/REPLICATION_SIGNOFF.md`](docs/REPLICATION_SIGNOFF.md)**; assumptions and mismatch risks are in
-**[`docs/REPLICATION_AUDIT.md`](docs/REPLICATION_AUDIT.md)**. The Julia script has **not** been executed by the
-author and is not asserted to be validated — that judgement is the collaborator's to record.
+**[`docs/REPLICATION_AUDIT.md`](docs/REPLICATION_AUDIT.md)**. The script has been run by the author against the
+pinned manifests and, separately, by an outside collaborator, whose returned run is the cross-platform
+reproduction recorded in `external_validation/`. It covers the exact reference and the second-order closure,
+not the learned closure.
 
 **Python side** (run from the repo root; `run.py` puts the flat imports on the path):
 
@@ -140,15 +155,32 @@ python run.py src/baselines/t4_eval.py
 
 ## Scope and discipline
 
-- **Two different ranges, and only one of them is capped.** *Trajectory* validity stops at M ≤ 10: M = 11 is
-  untested, and at M ≥ 12 the closure is measured to leave the physical set (both branches; three attempted
-  repairs all failed), so `validated_range.py` refuses those sizes by default. *Burst-peak* accuracy reaches
-  further, because the failure is late-time — the peak lands at t ≈ 4 while the first violation occurs at
-  t ≈ 7.3 regardless of M. The peak is referenced to M = 16 against exact permutation-invariant solves at zero
-  disorder, and to M = 12 against quantum trajectories **with** disorder. Anything beyond those is numerical
-  reach, not demonstrated accuracy, and is labelled as such throughout.
-- **Frozen after evaluation.** V7 and its two branches were frozen before final testing; pre-registrations and
-  held-out disorder draws are in [`docs/PROTOCOL.md`](docs/PROTOCOL.md).
+- **Two envelopes, not one validated M.** *Burst-peak accuracy* is referenced in three ways:
+  - by exact solves at M ≤ 5;
+  - by exact permutation-invariant solves at zero disorder through M = 16 (error grows ≈ 0.8–0.9 points per
+    emitter; this ladder is the primary measurement of that rate);
+  - by quantum trajectories **with** disorder at M = 12, for one disorder realization (realization scatter at
+    M = 10 is 2–3 points).
+
+  *Full-trajectory physicality* depends on regime:
+  - low loss: physical on all tested draws through M = 8, a leak on one of three draws at M = 10, and late-time
+    divergence at M ≥ 12 (both branches; three attempted repairs all failed);
+  - normal loss: physical through M = 20 at zero disorder.
+
+  In the low-loss regime at zero disorder the burst peak (t ≈ 4) precedes the first violation (t ≈ 7.3), so
+  burst values outlive the trajectory failure. That ordering is assumed, not measured, for the disordered
+  M = 12 cell. `validated_range.py` is a conservative, regime-blind software guard that refuses full rollouts
+  above M = 10 by default; it is not a statement of either envelope. Anything beyond the references above is
+  numerical reach, not demonstrated accuracy.
+- **What the small-M result does and does not test.** The M ≤ 5 comparison holds out the disorder realization.
+  Its normal-loss cell is a training-grid parameter point and its low-loss cell lies just outside the trained γφ
+  range. Transfer to unseen emitter counts is the larger-M ladder above. Out-of-distribution behaviour is mixed:
+  V7 destabilizes on Lorentzian disorder and on half-inversion where second order merely degrades.
+- **Frozen before evaluation; pre-registration status stated per analysis.** V7 and its two branches were frozen
+  before final testing; protocols and held-out disorder draws are in [`docs/PROTOCOL.md`](docs/PROTOCOL.md).
+  Which protocols are timestamp-verifiable as written before their results, and which (the burst-peak,
+  mechanism, disorder-sweep and fourth-order analyses) are not, is set out in
+  [`docs/HISTORY_PROVENANCE.md`](docs/HISTORY_PROVENANCE.md).
 - **Rejected hypotheses are kept.** A once-calibrated parameter-only routing criterion, an M-scaling story, and a
   disorder-dependence story were each tested and did **not** survive — they live in
   [`docs/FINDINGS.md`](docs/FINDINGS.md) (Results 22–24, 26) as documented negatives, e.g.:
@@ -163,8 +195,8 @@ python run.py src/baselines/t4_eval.py
 - **No claim of exclusivity.** Tensor-network, trajectory, and higher-order-closure methods can address parts of
   this problem; this repository reports what these specific closures do in these specific cells.
 
-- The physics model, the validation targets, and every reported number come from the runnable code in this repository, gated by the checks in
-  [`docs/PROTOCOL.md`](docs/PROTOCOL.md).
+- The physics model, the validation targets, and every reported number come from the runnable code in this
+  repository; each number maps to a script, artifact and commit in [`RESULTS_PROVENANCE.md`](RESULTS_PROVENANCE.md).
 
 ## How to cite
 

@@ -109,9 +109,11 @@ and the nine emitter–emitter products `σ^α₁σ^β₂` with α, β ∈ {+, �
 
 At `M = 3` this becomes 60 tracked moments and 112 third-order monomials.
 
-The two connected third-cumulant channels that carry the burst-peak error, identified in Result 25,
-are the photon-number-inversion channel `⟨a†aσᶻ⟩` (dominant, roughly two thirds of the correction)
-and the photon-polarization-inversion channel `⟨aσ⁺σᶻ⟩` (the remainder).
+The exploratory mechanism analysis (Result 25; M = 4, three disorder draws, two regimes) attributes the
+burst-peak error to two connected third-cumulant channels: the photon-number-inversion channel `⟨a†aσᶻ⟩`
+(dominant, 65–67% of the whole-dynamics influence score D_f) and the photon-polarization-inversion channel
+`⟨aσ⁺σᶻ⟩` (33–35%). The protocol's pre-specified direct-contribution score can resolve only the first; how the
+second was identified is described in the manuscript, §7.
 
 ## A.5 The derivation is machine-checked
 
@@ -141,11 +143,17 @@ Machine-checked and rerunnable:
   splitting `2g√M` (`validate_model.py`, gates 1 and 2).
 - The second-order equations of motion and the cumulant assembly are exact given `H` and the jump
   operators (`check_eom_identity.py`).
-- The closure algebra is independently reproduced by a third-party library: QuantumCumulants.jl
-  derives the second-order equations symbolically on its own and agrees with the Python engine to
-  8e-10 at trajectory level and to 6e-4 on the burst-peak scalar.
-- The exact reference is reproduced by two independently developed solvers, QuTiP and
-  QuantumOptics.jl, and cross-platform by an outside runner (`external_validation/`).
+- The second-order closure is reproduced through a separate code path: QuantumCumulants.jl derives the
+  second-order equations symbolically, without this project's engine. On the six evaluated cells, run by an
+  outside collaborator (`external_validation/`), its burst peaks agree with the Python engine to within
+  1e-4 in the signed overshoot (0.01 percentage points).
+  A development cross-check at a strong-coupling point outside the evaluated cells
+  (`scripts/crosscheck_negativity.{jl,py}`, run by the author) agreed to 8e-10 over the trajectory. Only its
+  Julia output is committed, so it is recorded here as an unarchived development check and carries no weight.
+- The exact reference is computed by two separately developed solvers, QuTiP and QuantumOptics.jl. Their
+  burst peaks agree to within 3e-6 (relative) on the six evaluated cells, in the outside collaborator's run.
+- None of this is independent replication in the sense of `EXTERNAL_VALIDATION_STATUS.md`: the outside run used
+  this repository's model definitions, parameters and disorder draws.
 
 Not established by any of the above:
 
