@@ -1,0 +1,35 @@
+HELD-OUT CELLS IN RATIO-FEATURE COORDINATES (post-hoc, not pre-registered)
+training per-axis ranges: g_c/kappa [1.33, 23.3], kappa [0.03, 0.3], gamma_phi/kappa [0.0667, 2.17], sigma/kappa [0.167, 10]
+
+H01 class B  ratio-space outside range: -                                  V7 signed error -0.0105
+H02 class B  ratio-space outside range: -                                  V7 signed error -0.0010
+H03 class B  ratio-space outside range: -                                  V7 signed error -0.0088
+H04 class B  ratio-space outside range: -                                  V7 signed error -0.0007
+H05 class B  ratio-space outside range: -                                  V7 signed error -0.0105
+H06 class B  ratio-space outside range: -                                  V7 signed error -0.0012
+H07 class B  ratio-space outside range: -                                  V7 signed error -0.0094
+H08 class B  ratio-space outside range: -                                  V7 signed error -0.0063
+H09 class B  ratio-space outside range: -                                  V7 signed error +0.0036
+H10 class B  ratio-space outside range: -                                  V7 signed error +0.0021
+H11 class B  ratio-space outside range: -                                  V7 signed error +0.0002
+H12 class B  ratio-space outside range: -                                  V7 signed error +0.0016
+H13 class C  ratio-space outside range: g_c/kappa, kappa                   V7 signed error +0.0089
+H14 class C  ratio-space outside range: kappa                              V7 signed error +0.0016
+H15 class C  ratio-space outside range: -                                  V7 signed error -0.0088
+H16 class C  ratio-space outside range: -                                  V7 signed error -0.0057
+H17 class C  ratio-space outside range: -                                  V7 signed error +0.0034
+H18 class C  ratio-space outside range: -                                  V7 signed error -0.0010
+H19 class C  ratio-space outside range: -                                  V7 signed error -0.0082
+H20 class C  ratio-space outside range: -                                  V7 signed error -0.0075
+H21 class C  ratio-space outside range: sigma/kappa                        V7 signed error +0.0021
+H22 class C  ratio-space outside range: -                                  V7 signed error +0.0012
+H23 class C  ratio-space outside range: g_c/kappa                          V7 signed error -0.0072
+H24 class C  ratio-space outside range: -                                  V7 signed error -0.0012
+H25 class D  ratio-space outside range: -                                  V7 signed error -0.0005
+H26 class D  ratio-space outside range: -                                  V7 signed error -0.0100
+H27 class D  ratio-space outside range: g_c/kappa, kappa                   V7 signed error -0.0146
+H28 class D  ratio-space outside range: kappa                              V7 signed error +0.0024
+H29 class D  ratio-space outside range: g_c/kappa, kappa, sigma/kappa      V7 signed error +0.0131
+H30 class D  ratio-space outside range: -                                  V7 signed error +0.0109
+
+7 of 30 cells lie outside the training range on at least one ratio axis.

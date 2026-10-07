@@ -1724,3 +1724,158 @@ only. Result 38 measured realization scatter of 1.9–2.9 points at fixed M = 10
 not distribution estimates. Its statement that the burst peak "survives the divergence in the real regime"
 relies on the zero-disorder violation timing (Result 34D). The disordered closure trajectory was not checked
 for its first violation time.
+
+**D8 — Result 37's disordered M = 12 cells are physical to t = 40 (added with Result 41).** The Result 37
+sentence "POCKET M = 12 is a cell where V7's trajectory leaves the physical set at t ~ 7.2 (Result 34)" applies
+the zero-disorder violation timing to the disordered draw. Result 41 shows that draw (seed 50) stays exactly
+physical through t = 40 in both regimes, with its burst peak at t = 4.02. The burst-peak values of Result 37
+are unaffected; only that inference is corrected.
+
+---
+
+## Result 40 — Held-out-parameter burst-peak evaluation at M = 5: frozen V7 transfers to 30 unseen parameter
+## points, interpolation and extrapolation alike (pre-registered verdict: STRONG TRANSFER)
+
+Pre-registered in PROTOCOL.md ("Publication finalization P3", commit `34178e7`) before any cell was simulated.
+V4/V6 hashes asserted equal to the frozen artifacts; router, features, clipping and training data untouched.
+Script `src/evaluation/heldout_parameter_burst.py`; log `results/heldout_param_burst.log`; data
+`results/heldout_param_burst.npz`; cell table `results/heldout_param_cells.json`. `make gates` passed and an
+infrastructure-only smoke cell (M = 2 CONTROL draw 50) reproduced the headline exactly before the campaign.
+Wall time 2874 s. No technical failure, rerun or Fock-cutoff fallback (max nc_peak/Nc 0.23).
+
+THE QUESTION. Results 24 and 27 held out only the disorder draw: CONTROL is a training-grid point and POCKET
+lies just outside the hull. Does frozen V7 keep its burst-peak accuracy at physical parameter points it was
+never trained on, at fixed M = 5?
+
+DESIGN.
+- 30 cells at M = 5, each with its own fresh disorder draw (seeds 300–329, disjoint from every seed used
+  before).
+- Classes are computed against the 81 training tuples by convex-hull geometry in raw parameters
+  (`src/evaluation/training_support.py`):
+  - 12 interpolation (B);
+  - 12 one-axis extrapolation (C), with κ, γφ, g_c and σ each taken below and above its trained range, plus
+    two outside-the-hull corners;
+  - 6 two-axis extrapolation (D);
+  - 0 on the grid.
+- Routing: 17 V4, 13 V6. 13 cells sit near the router box.
+
+RAW OUTCOME (signed relative burst-peak errors; win = V7 stable and |err_V7| < |err_plain|):
+
+  id   g_c   kappa  gphi   sigma seed cls br | exact n_pk  t_pk | plain err | V7 err   | win
+  H01  0.55  0.100  0.060  0.10  300  B  v4 |   3.02999  4.02 | +0.3043   | -0.0105  | V7
+  H02  0.85  0.220  0.040  0.20  301  B  v4 |   2.92661  2.61 | +0.3037   | -0.0010  | V7
+  H03  0.70  0.100  0.050  0.15  302  B  v4 |   3.20054  3.22 | +0.2965   | -0.0088  | V7
+  H04  0.45  0.250  0.080  0.25  303  B  v4 |   1.96326  4.82 | +0.3143   | -0.0007  | V7
+  H05  0.95  0.080  0.030  0.08  304  B  v4 |   3.58518  2.41 | +0.2853   | -0.0105  | V7
+  H06  0.62  0.180  0.090  0.12  305  B  v4 |   2.67601  3.62 | +0.3083   | -0.0012  | V7
+  H07  0.70  0.048  0.040  0.15  306  B  v4 |   3.37477  3.22 | +0.2968   | -0.0094  | V7
+  H08  0.70  0.040  0.055  0.15  307  B  v4 |   3.50638  3.22 | +0.2915   | -0.0063  | V7
+  H09  0.70  0.035  0.042  0.15  308  B  v6 |   3.53365  3.22 | +0.2907   | +0.0036  | V7
+  H10  0.70  0.045  0.045  0.10  309  B  v6 |   3.46761  3.22 | +0.2919   | +0.0021  | V7
+  H11  0.65  0.040  0.040  0.20  310  B  v6 |   3.47460  3.42 | +0.2965   | +0.0002  | V7
+  H12  0.75  0.036  0.045  0.25  311  B  v6 |   3.56878  3.02 | +0.2873   | +0.0016  | V7
+  H13  0.70  0.025  0.050  0.15  312  C  v6 |   3.58138  3.22 | +0.2902   | +0.0089  | V7
+  H14  0.70  0.360  0.050  0.15  313  C  v4 |   2.26703  3.02 | +0.3142   | +0.0016  | V7
+  H15  0.70  0.040  0.015  0.15  314  C  v6 |   3.61188  3.22 | +0.2874   | -0.0088  | V7
+  H16  0.70  0.150  0.120  0.15  315  C  v4 |   2.84575  3.22 | +0.3075   | -0.0057  | V7
+  H17  0.33  0.150  0.050  0.15  316  C  v4 |   1.77129  6.23 | +0.3146   | +0.0034  | V7
+  H18  1.15  0.150  0.050  0.15  317  C  v4 |   3.41742  2.01 | +0.2862   | -0.0010  | V7
+  H19  0.70  0.100  0.060  0.02  318  C  v4 |   3.24785  3.22 | +0.2950   | -0.0082  | V7
+  H20  0.70  0.100  0.060  0.38  319  C  v4 |   2.59138  3.02 | +0.3310   | -0.0075  | V7
+  H21  0.70  0.035  0.040  0.38  320  C  v6 |   3.27099  3.22 | +0.3000   | +0.0021  | V7
+  H22  0.70  0.040  0.045  0.02  321  C  v6 |   3.56068  3.22 | +0.2887   | +0.0012  | V7
+  H23  0.90  0.035  0.025  0.15  322  C  v6 |   3.68939  2.41 | +0.2979   | -0.0072  | V7
+  H24  0.45  0.035  0.040  0.10  323  C  v6 |   3.23906  5.03 | +0.3008   | -0.0012  | V7
+  H25  1.10  0.200  0.120  0.15  324  D  v4 |   3.09280  2.01 | +0.3066   | -0.0005  | V7
+  H26  0.35  0.100  0.015  0.20  325  D  v4 |   2.64990  6.23 | +0.3090   | -0.0100  | V7
+  H27  0.70  0.025  0.015  0.15  326  D  v6 |   3.63190  3.22 | +0.2890   | -0.0146  | V7
+  H28  0.80  0.360  0.060  0.38  327  D  v4 |   2.43085  2.81 | +0.3089   | +0.0024  | V7
+  H29  0.70  0.025  0.040  0.38  328  D  v6 |   3.48262  3.22 | +0.2946   | +0.0131  | V7
+  H30  0.70  0.040  0.015  0.38  329  D  v6 |   2.98487  3.02 | +0.3257   | +0.0109  | V7
+
+AGGREGATE (|err| = absolute relative burst-peak error):
+
+  set          n   V7 wins  V7 median |err| [IQR]        V7 mean   plain median  median paired improvement (boot95)
+  B           12   12/12    0.29% [0.11–0.90%]           0.46%     29.65%        28.9 pts (28.6–30.0)
+  C           12   12/12    0.45% [0.15–0.77%]           0.47%     29.90%        29.4 pts (28.6–30.7)
+  B ∪ C       24   24/24    0.35% [0.12–0.84%]           0.47%     29.66%        29.0 pts (28.7–30.0)
+  D            6    6/6     1.05% [0.43–1.25%]           0.86%     30.77%        30.3 pts (27.8–31.1)
+  all         30   30/30    0.47% [0.13–0.89%]           0.55%     29.73%        29.2 pts (28.7–30.1)
+  V4-routed   17   17/17    0.57%                        0.52%     30.66%
+  V6-routed   13   13/13    0.36%                        0.58%     29.19%
+
+- Bootstrap intervals are over cells (10,000 resamples, rng 0). They describe variation across this
+  selected set, not a population.
+- V7 is stable and exactly physical (per-emitter |⟨σᶻᵢ⟩| ≤ 1, ⟨a†a⟩ ≥ 0) in all 30 cells, over the burst
+  window and over the full t ≤ 40.
+- Plain second order, by contrast, leaves the physical set in 18 of 30 cells over t ≤ 40 (16 already inside
+  the burst window), by up to 6.7% in |⟨σᶻᵢ⟩|. That is the same small-M ordering Result 30 recorded, now on
+  held-out parameters.
+- Burst timing: V7's t_peak error is 0 in 29 cells and one grid step (0.2) in H23. Plain is within one grid
+  step everywhere.
+
+PRE-REGISTERED VERDICT (B ∪ C): **STRONG TRANSFER**. Every condition holds:
+- win fraction 1.00 (≥ 0.9 required);
+- no V7 instability in B;
+- median |err_V7| 0.29% in B (≤ 3% required) and 0.45% in C (≤ 5% required);
+- |err_V7| < 10% in 24/24 cells (≥ 80% required).
+The Q4 failure list is empty: no loss, no instability, no non-physical burst window, and no cell above 10%.
+
+WORST FIVE CELLS (all still beat second order by > 28 points):
+- H27 (g_c 0.70, κ 0.025, γφ 0.015, σ 0.15; D; V6): −1.46%
+- H29 (0.70, 0.025, 0.04, 0.38; D; V6): +1.31%
+- H30 (0.70, 0.04, 0.015, 0.38; D; V6): +1.09%
+- H05 (0.95, 0.08, 0.03, 0.08; B; V4): −1.05%
+- H01 (0.55, 0.10, 0.06, 0.10; B; V4): −1.05%
+The three largest are all two-axis extrapolations below the trained κ or γφ, combined with large σ or very
+low γφ: the low-loss corner again. The extrapolation classes do degrade, but the degradation is from ~0.3% to
+~1%, not toward the ~30% baseline.
+
+POST-HOC NUANCE (not pre-registered; `src/evaluation/heldout_feature_support.py`,
+`results/heldout_feature_support.log`). The closure's inputs are ratios to κ (plus κ itself).
+- In those coordinates only **7 of 30 cells** lie outside the trained per-axis ranges: H13, H14, H21, H23,
+  H27, H28, H29. Many raw-parameter extrapolations (the g_c, γφ and σ cells) map back inside the trained
+  ranges of g_c/κ, γφ/κ and σ/κ.
+- So "extrapolation in physical parameters" is partly interpolation in the model's own coordinates. That is
+  the expected consequence of the ratio representation (Result 10), not a design flaw, but it bounds what C
+  and D demonstrate.
+- On those 7 feature-space-extrapolated cells V7's |err| is 0.16–1.46%. The two largest errors in the
+  campaign (H27, H29) are both in that set.
+
+WHAT THIS ESTABLISHES, AND WHAT IT DOES NOT.
+- Establishes: at M = 5, frozen V7's sub-percent burst-peak accuracy is **not** an artifact of evaluating
+  on training-grid parameter points. Across 30 unseen points spanning interpolation, one-axis and two-axis
+  extrapolation in all four physical parameters and both branches, it stays within 1.5% (median 0.47%) where
+  second order is off by 28.5–33.1%, and it is the more physical of the two. This removes the
+  training-overlap objection for the small-M claim.
+- Does not establish:
+  - anything at unseen M. Size transfer is still governed by Results 34–38: error grows ≈ 0.8–0.9 points per
+    emitter;
+  - behaviour for other initial states, disorder families, or γ↓ ≠ 0.02 (never varied). Result 29's
+    out-of-distribution failures stand;
+  - a distributional statement over parameter space: these are 30 chosen points, one draw each;
+  - anything far outside the support. The two-axis cells were chosen to stay physically reasonable, so they
+    are a deliberately moderate stress test.
+- The router box is not revised. These data only describe it.
+
+## Result 41 — EXPLORATORY: the disordered M = 12 cells of Result 37 never leave the physical set
+
+Not pre-registered; noted as optional in PROTOCOL P3 and run after Result 40 was complete. Closure-only. Script
+`src/evaluation/m12_violation_timing.py`; log `results/m12_violation_timing.log`.
+
+- It rebuilds exactly the frozen V7 runs behind Result 37 (M = 12, seed 50, σ = 0.15), to t = 40.
+- It reproduces Result 37's errors (+0.0573 POCKET, +0.0400 CONTROL) to the printed digits.
+- In **both** regimes the V7 trajectory stays exactly physical through t = 40: max per-site |⟨σᶻᵢ⟩| = 1,
+  min ⟨a†a⟩ = 0.
+- In both regimes the maximum of ⟨a†a⟩ over the whole run is the burst peak, at t = 4.02. So Result 37's
+  whole-run maximum was the burst, not a late excursion.
+
+CONSEQUENCE.
+- The ordering question left open in the manuscript ("we assume, but have not measured, the same ordering in
+  the disordered M = 12 cell") is answered more strongly than asked: in this draw there is no violation at
+  all.
+- Result 37's remark that the disordered POCKET M = 12 cell is one "where V7's trajectory leaves the physical
+  set at t ~ 7.2" borrowed the zero-disorder timing (Result 34). It does not hold for this disordered draw
+  (FINDINGS "Dated notes" D8).
+- This is one draw. Result 30 found the low-loss M = 12 failure on 1 of 3 other draws (seeds 7–9), so
+  low-loss disordered M = 12 physicality is now 3 of 4 tested draws. That is draw-dependent, not cleared.

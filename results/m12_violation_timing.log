@@ -1,0 +1,13 @@
+M = 12 DISORDERED V7 VIOLATION TIMING (exploratory; Result 37 cells, seed 50, sigma 0.15, t <= 40)
+
+POCKET (kappa 0.03, gphi 0.02, branch v6), 200 points to t = 40
+  burst peak (max over t <= 10):   n = 8.5711 at t = 4.02
+  max over whole run (as R37):     n = 8.5711 at t = 4.02  -> relerr +0.0573 (Result 37: +0.0573; reproduced: True)
+  first physicality violation:     none to t = 40
+  max per-site |<sz_i>| over run:  1.000e+00; min n 0.000e+00
+
+CONTROL (kappa 0.15, gphi 0.02, branch v4), 200 points to t = 40
+  burst peak (max over t <= 10):   n = 7.0808 at t = 4.02
+  max over whole run (as R37):     n = 7.0808 at t = 4.02  -> relerr +0.0400 (Result 37: +0.0400; reproduced: True)
+  first physicality violation:     none to t = 40
+  max per-site |<sz_i>| over run:  1.000e+00; min n 0.000e+00

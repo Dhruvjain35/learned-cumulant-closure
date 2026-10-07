@@ -1,0 +1,51 @@
+HELD-OUT-PARAMETER BURST-PEAK EVALUATION, M = 5 (PROTOCOL P3, pre-registered 34178e7)
+guards passed: model hashes, 30 classifications recomputed, seeds 300-329 fresh
+id     g_c  kappa   gphi sigma seed cls  br | exact n_pk  t_pk | plain err |   V7 err   dt7 stab physB physF | win
+H01   0.55  0.100  0.060  0.10  300   B  v4 |    3.02999  4.02 |   +0.3043 |  -0.0105 +0.00   ok    ok    ok | V7   (56s exact, Nc=16, fock 0.19)
+H02   0.85  0.220  0.040  0.20  301   B  v4 |    2.92661  2.61 |   +0.3037 |  -0.0010 +0.00   ok    ok    ok | V7   (84s exact, Nc=16, fock 0.18)
+H03   0.70  0.100  0.050  0.15  302   B  v4 |    3.20054  3.22 |   +0.2965 |  -0.0088 +0.00   ok    ok    ok | V7   (79s exact, Nc=16, fock 0.20)
+H04   0.45  0.250  0.080  0.25  303   B  v4 |    1.96326  4.82 |   +0.3143 |  -0.0007 +0.00   ok    ok    ok | V7   (59s exact, Nc=16, fock 0.12)
+H05   0.95  0.080  0.030  0.08  304   B  v4 |    3.58518  2.41 |   +0.2853 |  -0.0105 +0.00   ok    ok    ok | V7   (95s exact, Nc=16, fock 0.22)
+H06   0.62  0.180  0.090  0.12  305   B  v4 |    2.67601  3.62 |   +0.3083 |  -0.0012 +0.00   ok    ok    ok | V7   (92s exact, Nc=16, fock 0.17)
+H07   0.70  0.048  0.040  0.15  306   B  v4 |    3.37477  3.22 |   +0.2968 |  -0.0094 +0.00   ok    ok    ok | V7   (30s exact, Nc=16, fock 0.21)
+H08   0.70  0.040  0.055  0.15  307   B  v4 |    3.50638  3.22 |   +0.2915 |  -0.0063 +0.00   ok    ok    ok | V7   (79s exact, Nc=16, fock 0.22)
+H09   0.70  0.035  0.042  0.15  308   B  v6 |    3.53365  3.22 |   +0.2907 |  +0.0036 +0.00   ok    ok    ok | V7   (57s exact, Nc=16, fock 0.22)
+H10   0.70  0.045  0.045  0.10  309   B  v6 |    3.46761  3.22 |   +0.2919 |  +0.0021 +0.00   ok    ok    ok | V7   (51s exact, Nc=16, fock 0.22)
+H11   0.65  0.040  0.040  0.20  310   B  v6 |    3.47460  3.42 |   +0.2965 |  +0.0002 +0.00   ok    ok    ok | V7   (67s exact, Nc=16, fock 0.22)
+H12   0.75  0.036  0.045  0.25  311   B  v6 |    3.56878  3.02 |   +0.2873 |  +0.0016 +0.00   ok    ok    ok | V7   (83s exact, Nc=16, fock 0.22)
+H13   0.70  0.025  0.050  0.15  312   C  v6 |    3.58138  3.22 |   +0.2902 |  +0.0089 +0.00   ok    ok    ok | V7   (63s exact, Nc=16, fock 0.22)
+H14   0.70  0.360  0.050  0.15  313   C  v4 |    2.26703  3.02 |   +0.3142 |  +0.0016 +0.00   ok    ok    ok | V7   (66s exact, Nc=16, fock 0.14)
+H15   0.70  0.040  0.015  0.15  314   C  v6 |    3.61188  3.22 |   +0.2874 |  -0.0088 +0.00   ok    ok    ok | V7   (43s exact, Nc=16, fock 0.23)
+H16   0.70  0.150  0.120  0.15  315   C  v4 |    2.84575  3.22 |   +0.3075 |  -0.0057 +0.00   ok    ok    ok | V7   (16s exact, Nc=16, fock 0.18)
+H17   0.33  0.150  0.050  0.15  316   C  v4 |    1.77129  6.23 |   +0.3146 |  +0.0034 +0.00   ok    ok    ok | V7   (50s exact, Nc=16, fock 0.11)
+H18   1.15  0.150  0.050  0.15  317   C  v4 |    3.41742  2.01 |   +0.2862 |  -0.0010 +0.00   ok    ok    ok | V7   (118s exact, Nc=16, fock 0.21)
+H19   0.70  0.100  0.060  0.02  318   C  v4 |    3.24785  3.22 |   +0.2950 |  -0.0082 +0.00   ok    ok    ok | V7   (68s exact, Nc=16, fock 0.20)
+H20   0.70  0.100  0.060  0.38  319   C  v4 |    2.59138  3.02 |   +0.3310 |  -0.0075 +0.00   ok    ok    ok | V7   (76s exact, Nc=16, fock 0.16)
+H21   0.70  0.035  0.040  0.38  320   C  v6 |    3.27099  3.22 |   +0.3000 |  +0.0021 +0.00   ok    ok    ok | V7   (73s exact, Nc=16, fock 0.20)
+H22   0.70  0.040  0.045  0.02  321   C  v6 |    3.56068  3.22 |   +0.2887 |  +0.0012 +0.00   ok    ok    ok | V7   (74s exact, Nc=16, fock 0.22)
+H23   0.90  0.035  0.025  0.15  322   C  v6 |    3.68939  2.41 |   +0.2979 |  -0.0072 +0.20   ok    ok    ok | V7   (88s exact, Nc=16, fock 0.23)
+H24   0.45  0.035  0.040  0.10  323   C  v6 |    3.23906  5.03 |   +0.3008 |  -0.0012 +0.00   ok    ok    ok | V7   (53s exact, Nc=16, fock 0.20)
+H25   1.10  0.200  0.120  0.15  324   D  v4 |    3.09280  2.01 |   +0.3066 |  -0.0005 +0.00   ok    ok    ok | V7   (126s exact, Nc=16, fock 0.19)
+H26   0.35  0.100  0.015  0.20  325   D  v4 |    2.64990  6.23 |   +0.3090 |  -0.0100 +0.00   ok    ok    ok | V7   (50s exact, Nc=16, fock 0.17)
+H27   0.70  0.025  0.015  0.15  326   D  v6 |    3.63190  3.22 |   +0.2890 |  -0.0146 +0.00   ok    ok    ok | V7   (81s exact, Nc=16, fock 0.23)
+H28   0.80  0.360  0.060  0.38  327   D  v4 |    2.43085  2.81 |   +0.3089 |  +0.0024 +0.00   ok    ok    ok | V7   (105s exact, Nc=16, fock 0.15)
+H29   0.70  0.025  0.040  0.38  328   D  v6 |    3.48262  3.22 |   +0.2946 |  +0.0131 +0.00   ok    ok    ok | V7   (77s exact, Nc=16, fock 0.22)
+H30   0.70  0.040  0.015  0.38  329   D  v6 |    2.98487  3.02 |   +0.3257 |  +0.0109 +0.00   ok    ok    ok | V7   (83s exact, Nc=16, fock 0.19)
+
+SUMMARY (|err| = absolute relative burst-peak error; improvement = |err_plain| - |err_V7|)
+  B              n=12  win 1.00  V7 med 0.0029 [IQR 0.0011-0.0090] mean 0.0046 (boot95 0.0011-0.0091)  | plain med 0.2965 mean 0.2973  | impr med 0.2887 mean 0.2926 (boot95 0.2864-0.2996)  | V7 unstable 0, plain unstable 0, V7 non-physical in burst window 0, V7<10% 1.00
+  C              n=12  win 1.00  V7 med 0.0045 [IQR 0.0015-0.0077] mean 0.0047 (boot95 0.0014-0.0079)  | plain med 0.2990 mean 0.3011  | impr med 0.2943 mean 0.2964 (boot95 0.2860-0.3065)  | V7 unstable 0, plain unstable 0, V7 non-physical in burst window 0, V7<10% 1.00
+  D              n= 6  win 1.00  V7 med 0.0105 [IQR 0.0043-0.0125] mean 0.0086 (boot95 0.0015-0.0138)  | plain med 0.3077 mean 0.3056  | impr med 0.3025 mean 0.2970 (boot95 0.2780-0.3106)  | V7 unstable 0, plain unstable 0, V7 non-physical in burst window 0, V7<10% 1.00
+  B+C            n=24  win 1.00  V7 med 0.0035 [IQR 0.0012-0.0084] mean 0.0047 (boot95 0.0016-0.0075)  | plain med 0.2966 mean 0.2992  | impr med 0.2902 mean 0.2945 (boot95 0.2871-0.2996)  | V7 unstable 0, plain unstable 0, V7 non-physical in burst window 0, V7<10% 1.00
+  all            n=30  win 1.00  V7 med 0.0047 [IQR 0.0013-0.0089] mean 0.0055 (boot95 0.0019-0.0085)  | plain med 0.2973 mean 0.3005  | impr med 0.2923 mean 0.2950 (boot95 0.2872-0.3007)  | V7 unstable 0, plain unstable 0, V7 non-physical in burst window 0, V7<10% 1.00
+  V4 (B+C)       n=14  win 1.00  V7 med 0.0060 [IQR 0.0013-0.0087] mean 0.0054 (boot95 0.0012-0.0088)  | plain med 0.3040 mean 0.3035  | impr med 0.2978 mean 0.2981 (boot95 0.2867-0.3098)  | V7 unstable 0, plain unstable 0, V7 non-physical in burst window 0, V7<10% 1.00
+  V6 (B+C)       n=10  win 1.00  V7 med 0.0021 [IQR 0.0013-0.0063] mean 0.0037 (boot95 0.0012-0.0072)  | plain med 0.2913 mean 0.2931  | impr med 0.2886 mean 0.2895 (boot95 0.2842-0.2963)  | V7 unstable 0, plain unstable 0, V7 non-physical in burst window 0, V7<10% 1.00
+  V4 (all)       n=17  win 1.00  V7 med 0.0057 [IQR 0.0012-0.0088] mean 0.0052 (boot95 0.0012-0.0088)  | plain med 0.3066 mean 0.3043  | impr med 0.3018 mean 0.2991 (boot95 0.2874-0.3071)  | V7 unstable 0, plain unstable 0, V7 non-physical in burst window 0, V7<10% 1.00
+  V6 (all)       n=13  win 1.00  V7 med 0.0036 [IQR 0.0016-0.0089] mean 0.0058 (boot95 0.0016-0.0089)  | plain med 0.2919 mean 0.2954  | impr med 0.2875 mean 0.2896 (boot95 0.2815-0.2963)  | V7 unstable 0, plain unstable 0, V7 non-physical in burst window 0, V7<10% 1.00
+  near-boundary  n=13  win 1.00  V7 med 0.0036 [IQR 0.0016-0.0089] mean 0.0053 (boot95 0.0016-0.0089)  | plain med 0.2919 mean 0.2955  | impr med 0.2874 mean 0.2902 (boot95 0.2853-0.2963)  | V7 unstable 0, plain unstable 0, V7 non-physical in burst window 0, V7<10% 1.00
+
+PRE-REGISTERED BAND (B u C): STRONG TRANSFER
+
+Q4 FAILURE LIST (0 cells: V7 loses, unstable, non-physical in burst window, or |err| > 10%)
+
+wall time 2874s

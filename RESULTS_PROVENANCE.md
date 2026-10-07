@@ -97,3 +97,23 @@ explicit RK45 is limited by the fast-rotating charged components. C = 0 rows rep
   is committed. It has no provenance row and carries no publication weight.
 - **Pre-registration timing.** Rows 1–8 above (Results 24 and 27) are not verifiably pre-registered; see
   `docs/HISTORY_PROVENANCE.md`.
+
+## Held-out-parameter evaluation (Result 40) and M = 12 violation timing (Result 41)
+
+- **Pre-registration:** PROTOCOL "Publication finalization P3", commit `34178e7`, committed before any run.
+- **Results commit:** the commit that adds `results/heldout_param_burst.log`
+  (`git log --oneline -- results/heldout_param_burst.log`).
+- **Frozen models:** sha256 asserted by the script before any solve.
+  - `lc_v3dens.pkl`: `be2dde48d47be006d97b7aa09c89f7a13e91dc2800fb6dc5cd6ea151fe798f81`
+  - `lc_v6.pkl`: `0599643ef05f355f7549e38325261246f0f848fdc71d906f9f0f82b88b800b86`
+- **Solver settings:**
+  - Exact: QuTiP `mesolve` via `burst_pred.exact_ref_big`, Nc = 16 (fallback Nc = 24 if nc_peak/Nc ≥ 0.45;
+    never triggered), t ≤ 40, 200 points.
+  - Closures: `pilot_eval.build_cell` (ScalableEngine Nc = 12, Fsafe = 6), RK45 rtol 1e-4 / atol 1e-6.
+
+| Claim | Script | Parameters | Draws | Output | Criterion (pre-registered) |
+|---|---|---|---|---|---|
+| Frozen V7 beats second order in 30/30 held-out-parameter cells at M = 5; V7 median \|err\| 0.29% (B), 0.45% (C), 1.05% (D); max 1.46%; second order 28.5–33.1%; V7 exactly physical in all 30 | `src/evaluation/heldout_parameter_burst.py` (guards: model hashes, `training_support.classify`, seed disjointness) | 30 cells in `results/heldout_param_cells.json` (12 B, 12 C, 6 D; 17 V4, 13 V6), M = 5, γ↓ = 0.02, fully inverted IC, Gaussian disorder | 300–329, one per cell | `results/heldout_param_burst.log`, `.npz` | Bands in PROTOCOL P3 → **STRONG TRANSFER** |
+| Training support (81 tuples) and the per-cell class | `src/evaluation/training_support.py` (grid imported from `gen_data_v3.py`, `gen_pocket_density.py`; self-test asserts CONTROL = A, POCKET = C) | — | — | `results/heldout_param_cells.json` | — |
+| 7 of 30 cells lie outside the trained per-axis ranges in ratio-feature coordinates (POST-HOC) | `src/evaluation/heldout_feature_support.py` | same | — | `results/heldout_feature_support.log` | none (post-hoc) |
+| Result 37 disordered M = 12 cells stay physical to t = 40; burst peak t = 4.02 is the whole-run maximum; Result 37 errors reproduced (EXPLORATORY) | `src/evaluation/m12_violation_timing.py` | M = 12, σ = 0.15, POCKET and CONTROL, t ≤ 40 | 50 | `results/m12_violation_timing.log` | none (exploratory) |
