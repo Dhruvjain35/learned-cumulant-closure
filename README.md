@@ -128,9 +128,10 @@ src/
 ├── evaluation/    pilot / campaign / burst-peak / transfer evaluation harnesses
 ├── analysis/      mechanism attribution + ablation, disorder sweep, interpretability, criterion tests
 ├── validation/    engine gates and equivalence checks
-├── figures/       figure-generating scripts
+├── figures/       figure-generating scripts (pubstyle.py: shared style for the manuscript figures)
 └── tools/         export exact replication parameters
 scripts/           runtime benchmark, frozen-trajectory export, and plotting utilities (read-only over results)
+figures/           the five main manuscript figures (PDF + PNG), rebuilt by `make figures` from committed results only
 docs/              FINDINGS (every result incl. rejected hypotheses), PROTOCOL, REPLICATION package
 results/           figures, small result artifacts, frozen V7 model pickles, replication params
 replicate_cumulant.jl · julia_setup.jl   cross-platform reproduction (Julia)
@@ -163,6 +164,7 @@ pip install -r requirements.txt
 make test               # import smoke test
 make burst              # exact vs 2nd-order vs V7 burst peak
 make mechanism          # connected-kappa3 channel attribution + ablation
+make figures            # rebuild the five main manuscript figures from committed results (no simulation)
 # or run any module directly:
 python run.py src/baselines/t4_eval.py
 ```
