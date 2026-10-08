@@ -28,13 +28,24 @@ that *didn't* survive is kept in the record.
 > collective-emission observable — the standard second-order cumulant closure is off by ≈ **+29%**, the tested
 > κ4 = 0 third-order closure by ≈ **−25% to −28%** (and it runs away in the low-loss pocket), and the κ5 = 0 fourth-order
 > closure **runs away** — its integration triggers a divergence guard. A frozen, physics-routed **learned closure
-> (V7)** stays within ≈ **±0.7%** of the exact reference at M ≤ 5. Those 24 cells hold out the disorder
-> realization, while their parameters are on or just outside the training grid. At emitter counts it never saw,
-> its error grows ≈ 0.8–0.9 points per emitter (≈ 8–9% at M = 16, zero disorder; 4–6% at M = 12 for one
-> disordered draw), against ≈ 30% for second order. This repo has the engines, the learned closure, the
-> mechanism analysis, the rejected hypotheses, and a cross-platform reproduction package. That package's
-> second-order result was reproduced cross-platform in QuantumCumulants.jl by an outside collaborator at the
-> Notre Dame CRC (2026-08-30, `external_validation/`). The learned closure has not been run outside this work.
+> (V7)**, measured against exact (and, at M = 12 with disorder, quantum-trajectory) references:
+>
+> - **Small M, original cells:** ≈ **±0.7%** at M ≤ 5 (24 cells; the disorder draw is held out, the parameters
+>   are on or just outside the training grid).
+> - **Held-out physical parameters (pre-registered):** at M = 5, on 30 parameter points absent from training
+>   (interpolation and one- and two-axis extrapolation, both branches), V7 beats second order in **30/30**
+>   cells. Median error **0.47%**, worst **1.46%**, against 28.5–33.1% for second order.
+> - **Unseen M:** the error grows ≈ 0.8–0.9 points per emitter, to ≈ 8–9% at M = 16 (zero disorder) and 4–6% at
+>   M = 12 (one disordered draw), against ≈ 30% for second order.
+> - **Large-M physicality:** in the low-loss regime the trajectories still leave the physical set at late times
+>   on some draws from M ≈ 10, even where the burst peak itself remains accurate.
+>
+> This repo has the engines, the learned closure, the mechanism analysis, the rejected hypotheses, and two
+> reproduction packages:
+> - the second-order result, reproduced cross-platform in QuantumCumulants.jl by an outside collaborator at the
+>   Notre Dame CRC (2026-08-30, `external_validation/`);
+> - a portable frozen-V7 package (`portable_v7/`) prepared for an outside run, which is pending. The learned
+>   closure has not yet been run outside this work.
 
 ## The result in one table
 
@@ -164,17 +175,24 @@ python run.py src/baselines/t4_eval.py
 
   *Full-trajectory physicality* depends on regime:
   - low loss: physical on all tested draws through M = 8, a leak on one of three draws at M = 10, and late-time
-    divergence at M ≥ 12 (both branches; three attempted repairs all failed);
-  - normal loss: physical through M = 20 at zero disorder.
+    divergence at M ≥ 12 on some draws (1 of 3 at M = 12–16, 3 of 3 at M = 20; a fourth disordered draw at
+    M = 12 stayed physical); both branches fail, and three attempted repairs all failed;
+  - normal loss: physical through M = 20 at zero disorder, and through t = 40 for the one disordered M = 12 draw
+    followed that far.
 
   In the low-loss regime at zero disorder the burst peak (t ≈ 4) precedes the first violation (t ≈ 7.3), so
-  burst values outlive the trajectory failure. That ordering is assumed, not measured, for the disordered
-  M = 12 cell. `validated_range.py` is a conservative, regime-blind software guard that refuses full rollouts
+  burst values outlive the trajectory failure. The disordered M = 12 reference draw was followed to t = 40 and
+  never leaves the physical set; its burst peak (t = 4.02) is the maximum of the whole run (Result 41;
+  exploratory, one draw). `validated_range.py` is a conservative, regime-blind software guard that refuses full rollouts
   above M = 10 by default; it is not a statement of either envelope. Anything beyond the references above is
   numerical reach, not demonstrated accuracy.
-- **What the small-M result does and does not test.** The M ≤ 5 comparison holds out the disorder realization.
-  Its normal-loss cell is a training-grid parameter point and its low-loss cell lies just outside the trained γφ
-  range. Transfer to unseen emitter counts is the larger-M ladder above. Out-of-distribution behaviour is mixed:
+- **What the small-M results do and do not test.** The original M ≤ 5 comparison holds out only the disorder
+  realization: its normal-loss cell is a training-grid point and its low-loss cell lies just outside the trained
+  γφ range. The pre-registered held-out-parameter campaign (Result 40; protocol `34178e7`, before any cell ran)
+  tests 30 physical parameter points absent from training, at M = 5 with one draw each. Its limits:
+  - in the model's own ratio-to-κ coordinates only 7 of those points are outside the trained ranges;
+  - extreme extrapolation, other initial states, other disorder families and γ↓ ≠ 0.02 are untested.
+  Transfer to unseen emitter counts is the larger-M ladder above. Out-of-distribution behaviour is mixed:
   V7 destabilizes on Lorentzian disorder and on half-inversion where second order merely degrades.
 - **Frozen before evaluation; pre-registration status stated per analysis.** V7 and its two branches were frozen
   before final testing; protocols and held-out disorder draws are in [`docs/PROTOCOL.md`](docs/PROTOCOL.md).
