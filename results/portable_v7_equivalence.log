@@ -1,0 +1,53 @@
+PORTABLE V7 EQUIVALENCE GATES (portable_v7/pv7 vs frozen pickles + src/)
+1. Vendored engine
+  [PASS] pv7/engine/exact_tc.py == src/engines/exact_tc.py modulo relative imports
+  [PASS] pv7/engine/cumulant.py == src/engines/cumulant.py modulo relative imports
+  [PASS] pv7/engine/scalable_engine.py == src/engines/scalable_engine.py modulo relative imports
+2. Router
+  [PASS] portable route == repository route on 64 points incl. exact boundaries  []
+  [PASS] route(0.045, 0.05) == 'v6' (inclusive)
+3. Feature specification
+  [PASS] ratio-transformed columns in feature_spec.json == columns ratio_transform changes  [12, 13, 14, 18, 20]
+  [PASS] spec widths 21 / 27 and column lists complete
+  [PASS] spec ratio flags agree with divide_columns
+4. Clip bounds and network arrays
+  [PASS] v4: same 19 types; clip bounds bit-identical; weights/biases/scaler bit-identical
+  [PASS] v6: same 19 types; clip bounds bit-identical; weights/biases/scaler bit-identical
+5-7. Rollouts, features, kappa3 and static predictions on Result 40 cells (not the external panel)
+  [PASS] FIX-V4 (v4) branch identical  ('v4', 'v4')
+  [PASS] FIX-V4 trajectory: all tracked moments max|diff| 0.00e+00; n 0.00e+00; mean z 0.00e+00; peak 0.00e+00; t_peak 0.00e+00; plain 0.00e+00
+  [PASS] FIX-V4 features vs training-time extract_v3: max|diff| 0.00e+00
+  [PASS] FIX-V4 kappa3 vs original applier: direct 0.00e+00 (190 key-evals), conjugated 0.00e+00 (160 key-evals), self-conjugate 0.00e+00 (20 key-evals)
+  [PASS] FIX-V6 (v6) branch identical  ('v6', 'v6')
+  [PASS] FIX-V6 trajectory: all tracked moments max|diff| 0.00e+00; n 0.00e+00; mean z 0.00e+00; peak 0.00e+00; t_peak 0.00e+00; plain 0.00e+00
+  [PASS] FIX-V6 features vs training-time extract_v6: max|diff| 0.00e+00
+  [PASS] FIX-V6 kappa3 vs original applier: direct 0.00e+00 (190 key-evals), conjugated 0.00e+00 (160 key-evals), self-conjugate 0.00e+00 (20 key-evals)
+  [PASS] H02 (v4) branch identical  ('v4', 'v4')
+  [PASS] H02 trajectory: all tracked moments max|diff| 0.00e+00; n 0.00e+00; mean z 0.00e+00; peak 0.00e+00; t_peak 0.00e+00; plain 0.00e+00
+  [PASS] H02 features vs training-time extract_v3: max|diff| 0.00e+00
+  [PASS] H02 kappa3 vs original applier: direct 0.00e+00 (2420 key-evals), conjugated 0.00e+00 (2360 key-evals), self-conjugate 0.00e+00 (150 key-evals)
+  [PASS] H10 (v6) branch identical  ('v6', 'v6')
+  [PASS] H10 trajectory: all tracked moments max|diff| 0.00e+00; n 0.00e+00; mean z 0.00e+00; peak 0.00e+00; t_peak 0.00e+00; plain 0.00e+00
+  [PASS] H10 features vs training-time extract_v6: max|diff| 0.00e+00
+  [PASS] H10 kappa3 vs original applier: direct 0.00e+00 (2420 key-evals), conjugated 0.00e+00 (2360 key-evals), self-conjugate 0.00e+00 (150 key-evals)
+  [PASS] H16 (v4) branch identical  ('v4', 'v4')
+  [PASS] H16 trajectory: all tracked moments max|diff| 0.00e+00; n 0.00e+00; mean z 0.00e+00; peak 0.00e+00; t_peak 0.00e+00; plain 0.00e+00
+  [PASS] H16 features vs training-time extract_v3: max|diff| 0.00e+00
+  [PASS] H16 kappa3 vs original applier: direct 0.00e+00 (2420 key-evals), conjugated 0.00e+00 (2360 key-evals), self-conjugate 0.00e+00 (150 key-evals)
+  [PASS] H15 (v6) branch identical  ('v6', 'v6')
+  [PASS] H15 trajectory: all tracked moments max|diff| 0.00e+00; n 0.00e+00; mean z 0.00e+00; peak 0.00e+00; t_peak 0.00e+00; plain 0.00e+00
+  [PASS] H15 features vs training-time extract_v6: max|diff| 0.00e+00
+  [PASS] H15 kappa3 vs original applier: direct 0.00e+00 (2420 key-evals), conjugated 0.00e+00 (2360 key-evals), self-conjugate 0.00e+00 (150 key-evals)
+  [PASS] H26 (v4) branch identical  ('v4', 'v4')
+  [PASS] H26 trajectory: all tracked moments max|diff| 0.00e+00; n 0.00e+00; mean z 0.00e+00; peak 0.00e+00; t_peak 0.00e+00; plain 0.00e+00
+  [PASS] H26 features vs training-time extract_v3: max|diff| 0.00e+00
+  [PASS] H26 kappa3 vs original applier: direct 0.00e+00 (2420 key-evals), conjugated 0.00e+00 (2360 key-evals), self-conjugate 0.00e+00 (150 key-evals)
+  [PASS] H29 (v6) branch identical  ('v6', 'v6')
+  [PASS] H29 trajectory: all tracked moments max|diff| 0.00e+00; n 0.00e+00; mean z 0.00e+00; peak 0.00e+00; t_peak 0.00e+00; plain 0.00e+00
+  [PASS] H29 features vs training-time extract_v6: max|diff| 0.00e+00
+  [PASS] H29 kappa3 vs original applier: direct 0.00e+00 (2420 key-evals), conjugated 0.00e+00 (2360 key-evals), self-conjugate 0.00e+00 (150 key-evals)
+8. Static network equivalence (sklearn predict vs NumPy forward, before clipping)
+  [PASS] v4: 19 networks, 53160 inputs (random + real trajectory features): max abs diff 0.00e+00, max rel diff 0.00e+00; types with nonzero diff: 0
+  [PASS] v6: 19 networks, 53160 inputs (random + real trajectory features): max abs diff 0.00e+00, max rel diff 0.00e+00; types with nonzero diff: 0
+
+RESULT: ALL PASS

@@ -1,0 +1,470 @@
+{
+ "branch": "v6",
+ "source_pickle": "results/lc_v6.pkl",
+ "source_pickle_sha256": "0599643ef05f355f7549e38325261246f0f848fdc71d906f9f0f82b88b800b86",
+ "estimator": "sklearn MLPRegressor + StandardScaler (exported arrays only; no sklearn needed)",
+ "hidden_activation": "relu",
+ "output_activation": "identity",
+ "forward": "z = (x - mean) / scale; h1 = relu(z @ W0 + b0); h2 = relu(h1 @ W1 + b1); y = h2 @ W2 + b2; y_clipped = clip(y, lo, hi) componentwise",
+ "input_width": 27,
+ "n_types": 19,
+ "dtype": "float64",
+ "types": [
+  {
+   "type": [
+    "a",
+    "a",
+    "a"
+   ],
+   "key": "a-a-a",
+   "layers": [
+    [
+     27,
+     128
+    ],
+    [
+     128,
+     128
+    ],
+    [
+     128,
+     2
+    ]
+   ],
+   "n_features_in": 27,
+   "n_outputs": 2
+  },
+  {
+   "type": [
+    "a",
+    "a",
+    "sm"
+   ],
+   "key": "a-a-sm",
+   "layers": [
+    [
+     27,
+     128
+    ],
+    [
+     128,
+     128
+    ],
+    [
+     128,
+     2
+    ]
+   ],
+   "n_features_in": 27,
+   "n_outputs": 2
+  },
+  {
+   "type": [
+    "a",
+    "a",
+    "sp"
+   ],
+   "key": "a-a-sp",
+   "layers": [
+    [
+     27,
+     128
+    ],
+    [
+     128,
+     128
+    ],
+    [
+     128,
+     2
+    ]
+   ],
+   "n_features_in": 27,
+   "n_outputs": 2
+  },
+  {
+   "type": [
+    "a",
+    "a",
+    "sz"
+   ],
+   "key": "a-a-sz",
+   "layers": [
+    [
+     27,
+     128
+    ],
+    [
+     128,
+     128
+    ],
+    [
+     128,
+     2
+    ]
+   ],
+   "n_features_in": 27,
+   "n_outputs": 2
+  },
+  {
+   "type": [
+    "a",
+    "sm",
+    "sm"
+   ],
+   "key": "a-sm-sm",
+   "layers": [
+    [
+     27,
+     128
+    ],
+    [
+     128,
+     128
+    ],
+    [
+     128,
+     2
+    ]
+   ],
+   "n_features_in": 27,
+   "n_outputs": 2
+  },
+  {
+   "type": [
+    "a",
+    "sm",
+    "sz"
+   ],
+   "key": "a-sm-sz",
+   "layers": [
+    [
+     27,
+     128
+    ],
+    [
+     128,
+     128
+    ],
+    [
+     128,
+     2
+    ]
+   ],
+   "n_features_in": 27,
+   "n_outputs": 2
+  },
+  {
+   "type": [
+    "a",
+    "sp",
+    "sm"
+   ],
+   "key": "a-sp-sm",
+   "layers": [
+    [
+     27,
+     128
+    ],
+    [
+     128,
+     128
+    ],
+    [
+     128,
+     2
+    ]
+   ],
+   "n_features_in": 27,
+   "n_outputs": 2
+  },
+  {
+   "type": [
+    "a",
+    "sp",
+    "sp"
+   ],
+   "key": "a-sp-sp",
+   "layers": [
+    [
+     27,
+     128
+    ],
+    [
+     128,
+     128
+    ],
+    [
+     128,
+     2
+    ]
+   ],
+   "n_features_in": 27,
+   "n_outputs": 2
+  },
+  {
+   "type": [
+    "a",
+    "sp",
+    "sz"
+   ],
+   "key": "a-sp-sz",
+   "layers": [
+    [
+     27,
+     128
+    ],
+    [
+     128,
+     128
+    ],
+    [
+     128,
+     2
+    ]
+   ],
+   "n_features_in": 27,
+   "n_outputs": 2
+  },
+  {
+   "type": [
+    "a",
+    "sz",
+    "sz"
+   ],
+   "key": "a-sz-sz",
+   "layers": [
+    [
+     27,
+     128
+    ],
+    [
+     128,
+     128
+    ],
+    [
+     128,
+     2
+    ]
+   ],
+   "n_features_in": 27,
+   "n_outputs": 2
+  },
+  {
+   "type": [
+    "ad",
+    "a",
+    "a"
+   ],
+   "key": "ad-a-a",
+   "layers": [
+    [
+     27,
+     128
+    ],
+    [
+     128,
+     128
+    ],
+    [
+     128,
+     2
+    ]
+   ],
+   "n_features_in": 27,
+   "n_outputs": 2
+  },
+  {
+   "type": [
+    "ad",
+    "a",
+    "sm"
+   ],
+   "key": "ad-a-sm",
+   "layers": [
+    [
+     27,
+     128
+    ],
+    [
+     128,
+     128
+    ],
+    [
+     128,
+     2
+    ]
+   ],
+   "n_features_in": 27,
+   "n_outputs": 2
+  },
+  {
+   "type": [
+    "ad",
+    "a",
+    "sz"
+   ],
+   "key": "ad-a-sz",
+   "layers": [
+    [
+     27,
+     128
+    ],
+    [
+     128,
+     128
+    ],
+    [
+     128,
+     2
+    ]
+   ],
+   "n_features_in": 27,
+   "n_outputs": 2
+  },
+  {
+   "type": [
+    "sm",
+    "sm",
+    "sm"
+   ],
+   "key": "sm-sm-sm",
+   "layers": [
+    [
+     27,
+     128
+    ],
+    [
+     128,
+     128
+    ],
+    [
+     128,
+     2
+    ]
+   ],
+   "n_features_in": 27,
+   "n_outputs": 2
+  },
+  {
+   "type": [
+    "sm",
+    "sm",
+    "sz"
+   ],
+   "key": "sm-sm-sz",
+   "layers": [
+    [
+     27,
+     128
+    ],
+    [
+     128,
+     128
+    ],
+    [
+     128,
+     2
+    ]
+   ],
+   "n_features_in": 27,
+   "n_outputs": 2
+  },
+  {
+   "type": [
+    "sm",
+    "sz",
+    "sz"
+   ],
+   "key": "sm-sz-sz",
+   "layers": [
+    [
+     27,
+     128
+    ],
+    [
+     128,
+     128
+    ],
+    [
+     128,
+     2
+    ]
+   ],
+   "n_features_in": 27,
+   "n_outputs": 2
+  },
+  {
+   "type": [
+    "sp",
+    "sm",
+    "sm"
+   ],
+   "key": "sp-sm-sm",
+   "layers": [
+    [
+     27,
+     128
+    ],
+    [
+     128,
+     128
+    ],
+    [
+     128,
+     2
+    ]
+   ],
+   "n_features_in": 27,
+   "n_outputs": 2
+  },
+  {
+   "type": [
+    "sp",
+    "sm",
+    "sz"
+   ],
+   "key": "sp-sm-sz",
+   "layers": [
+    [
+     27,
+     128
+    ],
+    [
+     128,
+     128
+    ],
+    [
+     128,
+     2
+    ]
+   ],
+   "n_features_in": 27,
+   "n_outputs": 2
+  },
+  {
+   "type": [
+    "sz",
+    "sz",
+    "sz"
+   ],
+   "key": "sz-sz-sz",
+   "layers": [
+    [
+     27,
+     128
+    ],
+    [
+     128,
+     128
+    ],
+    [
+     128,
+     2
+    ]
+   ],
+   "n_features_in": 27,
+   "n_outputs": 2
+  }
+ ]
+}

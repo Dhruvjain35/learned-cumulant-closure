@@ -1,0 +1,9 @@
+{
+ "rule": "branch = 'v6' if (kappa <= kappa_max and gamma_phi <= gamma_phi_max) else 'v4'",
+ "kappa_max": 0.045,
+ "gamma_phi_max": 0.05,
+ "inequality": "<= (inclusive) on both",
+ "decided": "once at t = 0 from (kappa, gamma_phi); no blending, no switching",
+ "v4_model": "models/v4 (frozen lc_v3dens.pkl)",
+ "v6_model": "models/v6 (frozen lc_v6.pkl)"
+}

@@ -3,7 +3,7 @@
 # the Julia reproduction is standalone.
 PY ?= python
 
-.PHONY: help test gates burst mechanism fourth-order replicate
+.PHONY: help test gates burst mechanism fourth-order replicate portable-export portable-test
 
 help:
 	@echo "make test          # import smoke test (fast, no simulation)"
@@ -12,6 +12,8 @@ help:
 	@echo "make mechanism     # connected-kappa3 channel attribution + closed-loop ablation"
 	@echo "make fourth-order  # exact vs 2nd vs 3rd vs 4th vs V7 fairness test"
 	@echo "make replicate     # Julia cross-platform reproduction (needs Julia; see docs/REPLICATION_QUICKSTART.md)"
+	@echo "make portable-export # re-export frozen V7 to portable_v7/ (NPZ+JSON; byte-identical on rerun)"
+	@echo "make portable-test   # portable V7 vs frozen pickles: features, networks, kappa3, full rollouts (~1-2 min)"
 	@echo ""
 	@echo "run any module:    $(PY) run.py src/<subpackage>/<module>.py"
 
@@ -31,3 +33,7 @@ fourth-order:
 	$(PY) run.py src/baselines/t4_eval.py
 replicate:
 	julia --project=. julia_setup.jl && julia --project=. replicate_cumulant.jl
+portable-export:
+	$(PY) run.py src/tools/export_portable_v7.py
+portable-test:
+	$(PY) run.py tests/test_portable_v7.py

@@ -1,0 +1,338 @@
+{
+ "note": "Machine-readable statement of the features the frozen closures consume, in column order. The ratio transform divides columns 12, 13, 14, 18 and 20 by column 19 (kappa) AFTER assembly, at train and apply time identically. Verified against the original code by tests/test_portable_v7.py.",
+ "v4_width": 21,
+ "v6_width": 27,
+ "ratio_transform": {
+  "divide_columns": [
+   12,
+   13,
+   14,
+   18,
+   20
+  ],
+  "by_column": 19,
+  "applied_after_assembly": true
+ },
+ "columns_v4": [
+  {
+   "col": 0,
+   "name": "single0_re",
+   "definition": "Re <f0> for canonical factor 0 of the monomial",
+   "ratio": false
+  },
+  {
+   "col": 1,
+   "name": "single0_im",
+   "definition": "Im <f0>",
+   "ratio": false
+  },
+  {
+   "col": 2,
+   "name": "single1_re",
+   "definition": "Re <f1>",
+   "ratio": false
+  },
+  {
+   "col": 3,
+   "name": "single1_im",
+   "definition": "Im <f1>",
+   "ratio": false
+  },
+  {
+   "col": 4,
+   "name": "single2_re",
+   "definition": "Re <f2>",
+   "ratio": false
+  },
+  {
+   "col": 5,
+   "name": "single2_im",
+   "definition": "Im <f2>",
+   "ratio": false
+  },
+  {
+   "col": 6,
+   "name": "pair01_re",
+   "definition": "Re <f0 f1> (normal-ordered pair monomial)",
+   "ratio": false
+  },
+  {
+   "col": 7,
+   "name": "pair01_im",
+   "definition": "Im <f0 f1>",
+   "ratio": false
+  },
+  {
+   "col": 8,
+   "name": "pair02_re",
+   "definition": "Re <f0 f2>",
+   "ratio": false
+  },
+  {
+   "col": 9,
+   "name": "pair02_im",
+   "definition": "Im <f0 f2>",
+   "ratio": false
+  },
+  {
+   "col": 10,
+   "name": "pair12_re",
+   "definition": "Re <f1 f2>",
+   "ratio": false
+  },
+  {
+   "col": 11,
+   "name": "pair12_im",
+   "definition": "Im <f1 f2>",
+   "ratio": false
+  },
+  {
+   "col": 12,
+   "name": "det0_over_kappa",
+   "definition": "(w_site(f0) - omega_c) / kappa; 0 if f0 is a cavity factor",
+   "ratio": true
+  },
+  {
+   "col": 13,
+   "name": "det1_over_kappa",
+   "definition": "(w_site(f1) - omega_c) / kappa; 0 if f1 is a cavity factor",
+   "ratio": true
+  },
+  {
+   "col": 14,
+   "name": "det2_over_kappa",
+   "definition": "(w_site(f2) - omega_c) / kappa; 0 if f2 is a cavity factor",
+   "ratio": true
+  },
+  {
+   "col": 15,
+   "name": "nc_per_M",
+   "definition": "Re <a'a> / M",
+   "ratio": false
+  },
+  {
+   "col": 16,
+   "name": "mean_z",
+   "definition": "mean over i of Re <sz_i>",
+   "ratio": false
+  },
+  {
+   "col": 17,
+   "name": "mean_abs_coh",
+   "definition": "mean over ordered pairs i != j of |<s+_i s-_j>| (0 if M = 1)",
+   "ratio": false
+  },
+  {
+   "col": 18,
+   "name": "gc_over_kappa",
+   "definition": "g_c / kappa (g_c = collective coupling; g_i = g_c/sqrt(M))",
+   "ratio": true
+  },
+  {
+   "col": 19,
+   "name": "kappa",
+   "definition": "kappa (raw, NOT divided)",
+   "ratio": false
+  },
+  {
+   "col": 20,
+   "name": "gphi_over_kappa",
+   "definition": "gamma_phi / kappa",
+   "ratio": true
+  }
+ ],
+ "columns_v6": [
+  {
+   "col": 0,
+   "name": "single0_re",
+   "definition": "Re <f0> for canonical factor 0 of the monomial",
+   "ratio": false
+  },
+  {
+   "col": 1,
+   "name": "single0_im",
+   "definition": "Im <f0>",
+   "ratio": false
+  },
+  {
+   "col": 2,
+   "name": "single1_re",
+   "definition": "Re <f1>",
+   "ratio": false
+  },
+  {
+   "col": 3,
+   "name": "single1_im",
+   "definition": "Im <f1>",
+   "ratio": false
+  },
+  {
+   "col": 4,
+   "name": "single2_re",
+   "definition": "Re <f2>",
+   "ratio": false
+  },
+  {
+   "col": 5,
+   "name": "single2_im",
+   "definition": "Im <f2>",
+   "ratio": false
+  },
+  {
+   "col": 6,
+   "name": "pair01_re",
+   "definition": "Re <f0 f1> (normal-ordered pair monomial)",
+   "ratio": false
+  },
+  {
+   "col": 7,
+   "name": "pair01_im",
+   "definition": "Im <f0 f1>",
+   "ratio": false
+  },
+  {
+   "col": 8,
+   "name": "pair02_re",
+   "definition": "Re <f0 f2>",
+   "ratio": false
+  },
+  {
+   "col": 9,
+   "name": "pair02_im",
+   "definition": "Im <f0 f2>",
+   "ratio": false
+  },
+  {
+   "col": 10,
+   "name": "pair12_re",
+   "definition": "Re <f1 f2>",
+   "ratio": false
+  },
+  {
+   "col": 11,
+   "name": "pair12_im",
+   "definition": "Im <f1 f2>",
+   "ratio": false
+  },
+  {
+   "col": 12,
+   "name": "det0_over_kappa",
+   "definition": "(w_site(f0) - omega_c) / kappa; 0 if f0 is a cavity factor",
+   "ratio": true
+  },
+  {
+   "col": 13,
+   "name": "det1_over_kappa",
+   "definition": "(w_site(f1) - omega_c) / kappa; 0 if f1 is a cavity factor",
+   "ratio": true
+  },
+  {
+   "col": 14,
+   "name": "det2_over_kappa",
+   "definition": "(w_site(f2) - omega_c) / kappa; 0 if f2 is a cavity factor",
+   "ratio": true
+  },
+  {
+   "col": 15,
+   "name": "nc_per_M",
+   "definition": "Re <a'a> / M",
+   "ratio": false
+  },
+  {
+   "col": 16,
+   "name": "mean_z",
+   "definition": "mean over i of Re <sz_i>",
+   "ratio": false
+  },
+  {
+   "col": 17,
+   "name": "mean_abs_coh",
+   "definition": "mean over ordered pairs i != j of |<s+_i s-_j>| (0 if M = 1)",
+   "ratio": false
+  },
+  {
+   "col": 18,
+   "name": "gc_over_kappa",
+   "definition": "g_c / kappa (g_c = collective coupling; g_i = g_c/sqrt(M))",
+   "ratio": true
+  },
+  {
+   "col": 19,
+   "name": "kappa",
+   "definition": "kappa (raw, NOT divided)",
+   "ratio": false
+  },
+  {
+   "col": 20,
+   "name": "gphi_over_kappa",
+   "definition": "gamma_phi / kappa",
+   "ratio": true
+  },
+  {
+   "col": 21,
+   "name": "h_nc",
+   "definition": "memory trace of nc/M (col 15)",
+   "ratio": false
+  },
+  {
+   "col": 22,
+   "name": "nc_minus_h_nc",
+   "definition": "col15 - h_nc",
+   "ratio": false
+  },
+  {
+   "col": 23,
+   "name": "h_z",
+   "definition": "memory trace of mean_z (col 16)",
+   "ratio": false
+  },
+  {
+   "col": 24,
+   "name": "z_minus_h_z",
+   "definition": "col16 - h_z",
+   "ratio": false
+  },
+  {
+   "col": 25,
+   "name": "h_coh",
+   "definition": "memory trace of mean_abs_coh (col 17)",
+   "ratio": false
+  },
+  {
+   "col": 26,
+   "name": "coh_minus_h_coh",
+   "definition": "col17 - h_coh",
+   "ratio": false
+  }
+ ],
+ "monomial_key": "(p, q, es): normal-ordered a'^p a^q times one emitter operator per site, es[i] in {0: identity, 1: s+, 2: s-, 3: sz}",
+ "factor_labels": {
+  "ad": "a dagger",
+  "a": "a",
+  "sp": "sigma+",
+  "sm": "sigma-",
+  "sz": "sigma z (= |e><e| - |g><g|)"
+ },
+ "canonical_factor_order": "Factors of an order-3 monomial are sorted by (type order ad<a<sp<sm<sz, then site index; cavity factors have site -1). Singles are the three factors in that order; pairs are (0,1), (0,2), (1,2); detunings use the factors' sites in that order.",
+ "type_signature": "tuple of the three sorted factor labels, e.g. (ad, a, sz)",
+ "conjugation": {
+  "conj_key": "(p, q, es) -> (q, p, es with 1<->2 swapped)",
+  "routing": "canonical_sig(k): s = sig(k), sc = sig(conj k). If s < sc: predict with k's own features. If s > sc: use type sc with conj(k)'s features and conjugate the output. If s == sc: use k's own features iff k <= conj(k) (tuple order), else conj(k)'s features and conjugate.",
+  "self_conjugate": "if k == conj(k): imaginary part of the output is set to exactly 0"
+ },
+ "output": {
+  "components": "network output column 0 = Re kappa3, column 1 = Im kappa3 (of the canonical key)",
+  "clip": "each component clipped to [lo, hi] = the per-type training-target min/max, BEFORE conjugation",
+  "assembly": "kappa3(k) = Vc[0] + 1j * csign * Vc[1]; csign = +1 direct, -1 conjugated, 0 self-conjugate",
+  "missing_type": "a monomial whose canonical type has no network gets kappa3 = 0"
+ },
+ "context_definition": "cols 15-17 are computed from the CURRENT tracked moments at every right-hand-side call",
+ "memory": {
+  "signals": "x = (nc/M, mean_z, mean_abs_coh) = cols 15, 16, 17",
+  "dynamics": "dh/dt = lambda * (x - h), integrated as extra ODE state alongside the moments",
+  "rates": "lambda = (kappa, gamma_down, gamma_down/2 + gamma_phi) with gamma_down = 0.02",
+  "initial": "h(0) = x(0) (the context of the initial moments)",
+  "ratio_transform": "memory columns 21-26 are NOT ratio-transformed",
+  "ode_state": "y = [Re m (n_tracked), Im m (n_tracked), h (3)]; solve_ivp RK45, rtol 1e-4, atol 1e-6"
+ }
+}

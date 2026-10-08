@@ -37,3 +37,6 @@ jobs:
 
       - name: Derivation gates (conventions + EOM identity)
         run: make gates
+
+      - name: Portable V7 equivalence (portable_v7/ vs frozen pickles)
+        run: make portable-test

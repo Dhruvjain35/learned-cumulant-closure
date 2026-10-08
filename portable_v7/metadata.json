@@ -1,0 +1,68 @@
+{
+ "package": "portable frozen V7 (learned third-cumulant closure); export only, no retraining",
+ "source_repo_commit": "f0685cb70a6f5a07b0c2a6a998267374d7807bb3",
+ "source_tree_dirty_at_export": false,
+ "source_pickles": {
+  "results/lc_v3dens.pkl": "be2dde48d47be006d97b7aa09c89f7a13e91dc2800fb6dc5cd6ea151fe798f81",
+  "results/lc_v6.pkl": "0599643ef05f355f7549e38325261246f0f848fdc71d906f9f0f82b88b800b86"
+ },
+ "models": {
+  "v4": {
+   "npz_sha256": "f3ce9dca8c7cdf79796c9e9a22cb9a471520d06c3151c1a193f4dfe90d8eb77a",
+   "n_types": 19,
+   "input_width": 21
+  },
+  "v6": {
+   "npz_sha256": "2cc2a4b53d74ef429c7770939da9a6d1d40d6b5299961d60bdf20775b99fd969",
+   "n_types": 19,
+   "input_width": 27
+  }
+ },
+ "defining_sources": {
+  "src/closures/closure_v3.py": "c9f1a62d1ae7ee19e46b93edf4778a0bcc91a287847aa54e37cb4da70a46172a",
+  "src/closures/closure_v6.py": "918503c3efdbcb2be4ff5082dc70b86edd69896d73e2f76cdd1bb584741b9ebb",
+  "src/closures/v7.py": "e82ad2a43a6e5b526f589ebd5055dfedb6d3c3c64bb58871955da6429bb872ea",
+  "src/closures/local_closure.py": "d3c4856242851e6b8402b611029369cb0064c6b1f8d8c3ae7e29c752c8593cf8",
+  "src/engines/exact_tc.py": "7b4a577cb04a7e70bc24732d7bafb717e843b36ab540f217c9407717e8a7dc78",
+  "src/engines/cumulant.py": "d4b415c08622695a689cfeff428c3611113e3cebc4da19bebc7114eb5748ab00",
+  "src/engines/scalable_engine.py": "3bf9e11a824abcccced8e3a2ec4902f5729ea432a8e1c5e1783936068db282db",
+  "src/evaluation/pilot_eval.py": "242be510615c96cf9863ec475794db86dd281c739600057fd61e10784a941b67",
+  "src/evaluation/local_run.py": "a6a2ef3fc2416904e5f0bf011364e4b211b39c14271b363d0306a9a76fcaa55c",
+  "src/evaluation/burst_pred.py": "4c82cd156eaedd65b085ef101997d75fe52be719a3e61feaf07a79756efef38d"
+ },
+ "vendored_engine": {
+  "src/engines/exact_tc.py": {
+   "source_sha256": "7b4a577cb04a7e70bc24732d7bafb717e843b36ab540f217c9407717e8a7dc78",
+   "vendored_sha256": "7b4a577cb04a7e70bc24732d7bafb717e843b36ab540f217c9407717e8a7dc78",
+   "substitutions": []
+  },
+  "src/engines/cumulant.py": {
+   "source_sha256": "d4b415c08622695a689cfeff428c3611113e3cebc4da19bebc7114eb5748ab00",
+   "vendored_sha256": "bbdc1809c15bde62bd79bb4409660589770c00eba0a998a7c41510ecc5b05d54",
+   "substitutions": [
+    [
+     "from exact_tc import",
+     "from .exact_tc import"
+    ]
+   ]
+  },
+  "src/engines/scalable_engine.py": {
+   "source_sha256": "3bf9e11a824abcccced8e3a2ec4902f5729ea432a8e1c5e1783936068db282db",
+   "vendored_sha256": "a86b4e1db6981f39009ae2aca9cc5e08302a960084b0f9d52660066a60879fc9",
+   "substitutions": [
+    [
+     "from cumulant import",
+     "from .cumulant import"
+    ]
+   ]
+  }
+ },
+ "feature_spec_sha256": "fb8ed18e693f8fa5ac380ad84fed50fd7cde3476620e82c8d0867bb7631ced12",
+ "router_sha256": "43b8f181cb7fcfe376651bfe8ff9bdc5ffafafb1acda98a71030b1364a19ed66",
+ "export_script_sha256": "769be154d6c8252c875d2a44e5edc66b4f2882f1ef7887679092387a40d2f274",
+ "export_environment": {
+  "python": "3.12.13",
+  "numpy": "2.4.6",
+  "sklearn": "1.9.0"
+ }
+}
