@@ -174,7 +174,7 @@ def campaign():
                      share_all={fam_label(f): float(v) for f, v in share.items()})
             cells[regime].append(c)
             win = r["win"]
-            slim.append(dict(regime=regime, seed=sd, ts=r["ts"], win=win, **{k: c[k] for k in c if k not in ("share", "loss")},
+            slim.append(dict(regime=regime, seed=sd, ts=r["ts"], win=win, **{k: c[k] for k in c if k not in ("share", "loss", "seed")},
                              share_aaz=share[AAZ], share_apz=share[APZ], loss_aaz=loss[AAZ], loss_apz=loss[APZ],
                              kap_ex_aaz=r["kap_ex"][:, r["fam2idx"][AAZ]], kap_v7tf_aaz=r["kap_v7_tf"][:, r["fam2idx"][AAZ]],
                              kap_ex_apz=r["kap_ex"][:, r["fam2idx"][APZ]], kap_v7tf_apz=r["kap_v7_tf"][:, r["fam2idx"][APZ]]))
