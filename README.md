@@ -80,14 +80,17 @@ machine-precision (≤ 5e-14) gate.*
 
 ## Why it fails, mechanistically
 
-In an exploratory analysis (M = 4, three disorder draws, two regimes), the burst-peak correction is carried by
-**two connected third-cumulant channels**: photon-number–inversion `⟨a†a σᶻ⟩` (dominant) and
-photon-polarization–inversion `⟨a σ⁺ σᶻ⟩` (secondary). Second order sets both to zero (→ overshoot); κ4 = 0
-mis-estimates the dominant one (→ undershoot); V7 reconstructs them.
+The burst-peak correction is carried by **two connected third-cumulant channels**: photon-number–inversion
+`⟨a†a σᶻ⟩` (dominant) and photon-polarization–inversion `⟨a σ⁺ σᶻ⟩` (secondary). Second order sets both to zero
+(→ overshoot); κ4 = 0 mis-estimates the dominant one (→ undershoot); V7 reconstructs them.
 
-The analysis did not follow its written protocol exactly. The protocol's direct-contribution score can only
-see the dominant channel, so the second channel was identified with a whole-dynamics score and ablation
-chosen after the run, and the planned M = 5 confirmation was not run. Details: `docs/MANUSCRIPT_DRAFT.md` §7.
+- **Exploratory at M = 4 (Result 25).** That analysis did not follow its written protocol exactly.
+- **Confirmed prospectively at M = 5 (Result 42).** A pre-registered test on six fresh draws per regime found the
+  dominant channel carries 62–71% of the influence and both channels are load-bearing for the frozen closure.
+- **Partly structural.** Only these two families can couple to the tracked equations in this model, so "two
+  channels" is structural; the split between them and the ablation results are what was tested.
+
+Details: `docs/MANUSCRIPT_DRAFT.md` §7.
 
 <div align="center">
 <img src="assets/img/mechanism.png" width="92%" alt="Mechanism figure: which kappa3 channels carry the correction, the dominant channel's kappa3 trajectory for exact vs V7 vs T3 vs plain, and closed-loop ablation."/>

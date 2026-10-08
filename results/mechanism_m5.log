@@ -1,0 +1,30 @@
+PROSPECTIVE M = 5 MECHANISM CONFIRMATION (PROTOCOL P5); frozen V7; seeds [500, 501, 502, 503, 504, 505]; regimes {'POCKET': (0.7, 0.03, 0.02), 'CONTROL': (0.7, 0.15, 0.02)}
+  POCKET  seed 500: gate0 0.0e+00 | D_share Aaz 0.704 (rank 1) a+z 0.296 (rank 2) other 5.6e-16 | loss Aaz   +inf (critical) a+z   +inf (critical) | err plain 0.290 V7 0.0065 | V7 stable True physical True | E_share(Aaz) 1.00 | V7 mag Aaz 1.03 a+z 1.01
+  POCKET  seed 501: gate0 0.0e+00 | D_share Aaz 0.716 (rank 1) a+z 0.284 (rank 2) other 4.4e-16 | loss Aaz   +inf (critical) a+z   +inf (critical) | err plain 0.286 V7 0.0052 | V7 stable True physical True | E_share(Aaz) 1.00 | V7 mag Aaz 1.02 a+z 0.92
+  POCKET  seed 502: gate0 0.0e+00 | D_share Aaz 0.708 (rank 1) a+z 0.292 (rank 2) other 5.0e-16 | loss Aaz   +inf (critical) a+z +0.279 | err plain 0.285 V7 0.0047 | V7 stable True physical True | E_share(Aaz) 1.00 | V7 mag Aaz 1.02 a+z 0.92
+  POCKET  seed 503: gate0 0.0e+00 | D_share Aaz 0.697 (rank 1) a+z 0.303 (rank 2) other 3.9e-16 | loss Aaz   +inf (critical) a+z   +inf (critical) | err plain 0.288 V7 0.0002 | V7 stable True physical True | E_share(Aaz) 1.00 | V7 mag Aaz 1.01 a+z 0.98
+  POCKET  seed 504: gate0 0.0e+00 | D_share Aaz 0.714 (rank 1) a+z 0.286 (rank 2) other 4.4e-16 | loss Aaz   +inf (critical) a+z   +inf (critical) | err plain 0.289 V7 0.0058 | V7 stable True physical True | E_share(Aaz) 1.00 | V7 mag Aaz 1.02 a+z 0.97
+  POCKET  seed 505: gate0 0.0e+00 | D_share Aaz 0.708 (rank 1) a+z 0.292 (rank 2) other 5.0e-16 | loss Aaz   +inf (critical) a+z   +inf (critical) | err plain 0.291 V7 0.0001 | V7 stable True physical True | E_share(Aaz) 1.00 | V7 mag Aaz 1.02 a+z 0.97
+  CONTROL seed 500: gate0 0.0e+00 | D_share Aaz 0.618 (rank 1) a+z 0.382 (rank 2) other 5.0e-16 | loss Aaz +0.817 a+z +0.309 | err plain 0.302 V7 0.0014 | V7 stable True physical True | E_share(Aaz) 1.00 | V7 mag Aaz 1.01 a+z 1.06
+  CONTROL seed 501: gate0 0.0e+00 | D_share Aaz 0.621 (rank 1) a+z 0.379 (rank 2) other 5.0e-16 | loss Aaz +0.811 a+z +0.319 | err plain 0.298 V7 0.0022 | V7 stable True physical True | E_share(Aaz) 1.00 | V7 mag Aaz 1.01 a+z 1.01
+  CONTROL seed 502: gate0 0.0e+00 | D_share Aaz 0.624 (rank 1) a+z 0.376 (rank 2) other 5.6e-16 | loss Aaz +0.808 a+z +0.318 | err plain 0.297 V7 0.0027 | V7 stable True physical True | E_share(Aaz) 1.00 | V7 mag Aaz 1.01 a+z 1.04
+  CONTROL seed 503: gate0 0.0e+00 | D_share Aaz 0.621 (rank 1) a+z 0.379 (rank 2) other 4.4e-16 | loss Aaz +0.810 a+z +0.308 | err plain 0.300 V7 0.0031 | V7 stable True physical True | E_share(Aaz) 1.00 | V7 mag Aaz 1.01 a+z 1.04
+  CONTROL seed 504: gate0 0.0e+00 | D_share Aaz 0.618 (rank 1) a+z 0.382 (rank 2) other 5.0e-16 | loss Aaz +0.815 a+z +0.310 | err plain 0.301 V7 0.0018 | V7 stable True physical True | E_share(Aaz) 1.00 | V7 mag Aaz 1.01 a+z 1.03
+  CONTROL seed 505: gate0 0.0e+00 | D_share Aaz 0.616 (rank 1) a+z 0.384 (rank 2) other 6.1e-16 | loss Aaz +0.815 a+z +0.304 | err plain 0.303 V7 0.0024 | V7 stable True physical True | E_share(Aaz) 1.00 | V7 mag Aaz 1.01 a+z 1.02
+
+PER-REGIME DECISION QUANTITIES (pre-registered)
+  POCKET: Aaz D_share median 0.708 IQR 0.705-0.713, Aaz > a+z in 6/6 -> C1 True
+           a+z D_share median 0.292 IQR 0.287-0.295, >= 0.15 in 6/6 -> C2 True
+           Aaz ablation loss median +inf IQR +nan-+nan, positive in 6/6 -> C3 True
+           a+z ablation loss median +inf IQR +nan-+nan, positive in 6/6 -> C4 True
+  CONTROL: Aaz D_share median 0.620 IQR 0.618-0.621, Aaz > a+z in 6/6 -> C1 True
+           a+z D_share median 0.380 IQR 0.379-0.382, >= 0.15 in 6/6 -> C2 True
+           Aaz ablation loss median +0.813 IQR +0.810-+0.815, positive in 6/6 -> C3 True
+           a+z ablation loss median +0.310 IQR +0.308-+0.316, positive in 6/6 -> C4 True
+
+POOLED (secondary, 12 cells): Aaz D_share median 0.660; a+z 0.340; Aaz loss median +inf; a+z loss median +0.318
+STRUCTURAL CHECK: max share outside {Aaz, a+z} over all cells: 6.1e-16 (pre-registered: structurally ~0)
+technical failures: none
+
+PRE-REGISTERED VERDICT: CONFIRMED
+(864s)

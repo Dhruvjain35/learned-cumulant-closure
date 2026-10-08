@@ -136,3 +136,20 @@ explicit RK45 is limited by the fast-rotating charged components. C = 0 rows rep
 | Portable V7 is bit-identical to the frozen originals: features, networks, κ3 (direct / conjugated / self-conjugate), full V4- and V6-routed rollouts on 2 fixtures + 6 Result 40 cells | `tests/test_portable_v7.py` (`make portable-test`, CI) | `results/portable_v7_equivalence.log` | tolerances fixed in the test header (all observed differences are 0) |
 | The package runs from a copy outside the repository, in a fresh venv with NumPy/SciPy/QuTiP only (no scikit-learn installed); the self-check passes; Result 40 cell H02 (seed 301) reproduces exactly; QuantumOptics.jl exact agrees with QuTiP exact to < 1e-6 on the fixture cells | `portable_v7/run_selfcheck.py`, `run_external_v7_reproduction.py`, `julia/exact_panel.jl`, `compare_julia_exact.py` | `results/portable_v7_clean_env_test.log` | installation test, not science |
 | External panel and criterion, pre-declared | `docs/EXTERNAL_V7_REPRODUCTION_PROTOCOL.md`, `portable_v7/external_panel.json` | — | reserved seeds 400–405, not run by the authors |
+
+## Prospective M = 5 mechanism confirmation (Result 42)
+
+- **Pre-registration:** PROTOCOL "Publication finalization P5", commit `7f67a97`, pushed before any M = 5
+  mechanism quantity existed.
+- **Bookkeeping fix:** `fcb09cf`. The first launch crashed before producing output; the campaign was rerun in
+  full.
+- **Results commit:** the commit adding `results/mechanism_m5.log`.
+- **Frozen models:** sha256 `be2dde48…98f81`, `0599643e…b800b86`.
+- **Settings:** M = 5, σ = 0.15, γ↓ = 0.02; POCKET (0.70, 0.03, 0.02), CONTROL (0.70, 0.15, 0.02); exact mesolve
+  at Nc = 16; closures at Nc = 12, Fsafe = 6, RK45 1e-4 / 1e-6.
+
+| Claim | Script | Draws | Output | Criterion |
+|---|---|---|---|---|
+| Current mechanism code reproduces Result 25 line for line (M = 4, seeds 37–39) | `src/analysis/mechanism_m5.py --regression` | 37, 38, 39 | `results/mechanism_m4_regression.log` | identical to `results/mechanism.log` (21/21 lines) |
+| Aaz dominant (D share median 0.708 POCKET, 0.620 CONTROL), a+z non-negligible (0.292, 0.380); both load-bearing under ablation (CONTROL losses 0.81 / 0.31; POCKET removal destabilizes V7 in 11/12 ablations); verdict CONFIRMED | `src/analysis/mechanism_m5.py --campaign` (definitions from `src/analysis/mechanism.py`, unchanged) | 500–505, paired across regimes | `results/mechanism_m5.log`, `.npz`, `_fig.png` | C1–C4 in both regimes (PROTOCOL P5) |
+| Only Aaz and a+z can carry D_f (structural: charged κ3 ≡ 0; +−z, zzz uncoupled) | engine coefficients, recorded in PROTOCOL P5; checked per cell in the campaign log | — | `results/mechanism_m5.log` (share outside the two ≤ 6e-16) | — |

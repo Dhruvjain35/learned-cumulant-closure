@@ -109,11 +109,15 @@ and the nine emitter–emitter products `σ^α₁σ^β₂` with α, β ∈ {+, �
 
 At `M = 3` this becomes 60 tracked moments and 112 third-order monomials.
 
-The exploratory mechanism analysis (Result 25; M = 4, three disorder draws, two regimes) attributes the
-burst-peak error to two connected third-cumulant channels: the photon-number-inversion channel `⟨a†aσᶻ⟩`
-(dominant, 65–67% of the whole-dynamics influence score D_f) and the photon-polarization-inversion channel
-`⟨aσ⁺σᶻ⟩` (33–35%). The protocol's pre-specified direct-contribution score can resolve only the first; how the
-second was identified is described in the manuscript, §7.
+Only two connected third-cumulant families can enter these equations with a nonzero value for the burst
+initial state:
+- the photon-number-inversion channel `⟨a†aσᶻ⟩`;
+- the photon-polarization-inversion channel `⟨aσ⁺σᶻ⟩`.
+Every charge-carrying family vanishes by excitation-number conservation, and the remaining neutral families do
+not couple to the tracked moments. Their split in the whole-dynamics influence score D_f was:
+- 65–67% / 33–35% exploratorily at M = 4 (Result 25);
+- 71% / 29% (low loss) and 62% / 38% (normal loss) in the pre-registered M = 5 confirmation (Result 42).
+See the manuscript, §7.
 
 ## A.5 The derivation is machine-checked
 

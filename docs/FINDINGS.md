@@ -918,6 +918,7 @@ replicator request embedded).
 ## correction, reconstructed by V7 (final frozen internal computation)
 
 > **Dated note (2026-10-07):** see "Dated notes" D2, D3 at the end of this document. The text below is unchanged.
+> **Later (2026-10-08):** a prospective, pre-registered M = 5 confirmation of this mechanism exists: Result 42.
 
 Pre-registered (PROTOCOL "MECHANISM ANALYSIS") BEFORE the run; frozen V7, no retrain/tune/reroute; ablations
 zero a kappa3 family on the CLOSURE OUTPUT only. Fresh seeds 37/38/39; POCKET and CONTROL cells at M=4;
@@ -1879,3 +1880,98 @@ CONSEQUENCE.
   (FINDINGS "Dated notes" D8).
 - This is one draw. Result 30 found the low-loss M = 12 failure on 1 of 3 other draws (seeds 7–9), so
   low-loss disordered M = 12 physicality is now 3 of 4 tested draws. That is draw-dependent, not cleared.
+
+---
+
+## Result 42 — Prospective M = 5 confirmation of the Result 25 mechanism: CONFIRMED in both regimes (pre-registered)
+
+Pre-registered in PROTOCOL.md ("Publication finalization P5", commit `7f67a97`, pushed before any M = 5
+mechanism quantity existed). Script `src/analysis/mechanism_m5.py --campaign`. Outputs:
+`results/mechanism_m5.log`, `results/mechanism_m5.npz`, `results/mechanism_m5_fig.png` (diagnostic). Frozen V7
+(sha256 `be2dde48…`, `0599643e…`).
+
+The definitions are Result 25's own code, unchanged: families, burst window, D_f, E_f and closed-loop ablation.
+The current code reproduced the committed Result 25 table line for line at M = 4 before the run
+(`results/mechanism_m4_regression.log`, 21/21 lines).
+
+RUN RECORD.
+- The first launch (2026-10-08 01:39Z) raised a TypeError in output bookkeeping (a duplicate dict key) for the
+  first cell, before any line was printed or any file was written. No M = 5 mechanism value was produced.
+- The line was fixed in `fcb09cf` (bookkeeping only, committed and pushed), the pipeline was smoke-tested end
+  to end at M = 3 on seed 37 in a scratch copy, and the identical campaign was rerun in full: 864 s, no
+  technical failure.
+
+WHAT WAS KNOWN BEFORE THE RUN (structural; recorded in the pre-registration).
+- Only Aaz = (a†, a, σᶻ) and a+z = (a, σ⁺, σᶻ) can have nonzero D_f in this model:
+  - charged families have exact κ3 ≡ 0 (excitation-number conservation);
+  - the other neutral families (+−z, zzz) do not couple to the tracked equations.
+- So their combined share is ≈ 1 and "a+z ranks second" by construction (measured share outside the two:
+  ≤ 6e-16 in every cell).
+- The test is therefore about (i) how the influence splits between the two families and (ii) whether removing
+  each one harms the frozen closure.
+
+DESIGN. M = 5, σ = 0.15, γ↓ = 0.02, POCKET (0.70, 0.03, 0.02; V6 branch) and CONTROL (0.70, 0.15, 0.02; V4
+branch). The same fresh draws 500–505 in both regimes: 12 cells.
+
+RAW OUTCOME (D_share = per-seed D_f share; loss = fraction of V7's burst-peak advantage lost when the family's κ3
+is zeroed in closed loop; +inf = the ablated rollout destabilizes, "critical"; V7 mag = ‖V7 κ3‖/‖exact κ3‖ on the
+family's keys over the burst window, teacher-forced):
+
+  regime   seed | D_share Aaz  a+z  | loss Aaz   loss a+z | err plain  err V7  | V7 mag Aaz  a+z | V7 physical
+  POCKET   500  |  0.704   0.296   |  +inf      +inf     |  0.290    0.0065  |  1.03   1.01    | yes
+  POCKET   501  |  0.716   0.284   |  +inf      +inf     |  0.286    0.0052  |  1.02   0.92    | yes
+  POCKET   502  |  0.708   0.292   |  +inf      +0.279   |  0.285    0.0047  |  1.02   0.92    | yes
+  POCKET   503  |  0.697   0.303   |  +inf      +inf     |  0.288    0.0002  |  1.01   0.98    | yes
+  POCKET   504  |  0.714   0.286   |  +inf      +inf     |  0.289    0.0058  |  1.02   0.97    | yes
+  POCKET   505  |  0.708   0.292   |  +inf      +inf     |  0.291    0.0001  |  1.02   0.97    | yes
+  CONTROL  500  |  0.618   0.382   |  +0.817    +0.309   |  0.302    0.0014  |  1.01   1.06    | yes
+  CONTROL  501  |  0.621   0.379   |  +0.811    +0.319   |  0.298    0.0022  |  1.01   1.01    | yes
+  CONTROL  502  |  0.624   0.376   |  +0.808    +0.318   |  0.297    0.0027  |  1.01   1.04    | yes
+  CONTROL  503  |  0.621   0.379   |  +0.810    +0.308   |  0.300    0.0031  |  1.01   1.04    | yes
+  CONTROL  504  |  0.618   0.382   |  +0.815    +0.310   |  0.301    0.0018  |  1.01   1.03    | yes
+  CONTROL  505  |  0.616   0.384   |  +0.815    +0.304   |  0.303    0.0024  |  1.01   1.02    | yes
+
+DECISION QUANTITIES (pre-registered thresholds in brackets):
+
+- POCKET:
+  - C1: Aaz share median 0.708 (IQR 0.705–0.713) [> 0.50]; Aaz > a+z in 6/6 [≥ 5].
+  - C2: a+z share median 0.292 (0.287–0.295) [≥ 0.15]; ≥ 0.15 in 6/6 [≥ 4].
+  - C3: Aaz loss +inf in 6/6 [median ≥ 0.50, positive ≥ 5].
+  - C4: a+z loss +inf in 5/6 and +0.279 in 1 [median ≥ 0.15, positive ≥ 4].
+  - All four hold.
+- CONTROL:
+  - C1: Aaz share median 0.620 (0.618–0.621); 6/6.
+  - C2: a+z share median 0.380 (0.379–0.382); 6/6.
+  - C3: Aaz loss median 0.813 (0.810–0.815); 6/6 positive.
+  - C4: a+z loss median 0.310 (0.308–0.316); 6/6 positive.
+  - All four hold.
+
+PRE-REGISTERED VERDICT: **CONFIRMED**.
+
+SECONDARY.
+- The direct score E_f is again single-family: share 1.00 for Aaz in every cell, the same structural
+  degeneracy as at M = 4.
+- V7 reconstructs both families' κ3 to within 8% in magnitude (ratio 0.92–1.06), with positive alignment.
+- Pooled over 12 cells: Aaz share median 0.660, a+z 0.340.
+- V7 is stable and physical in all 12 cells.
+- Every exact-κ3 gate passed (|κ3(t = 0)| = 0).
+
+WHAT IT MEANS, PRECISELY.
+- The split reproduces at M = 5 on fresh draws, close to its M = 4 values. Aaz carries ~0.71 of the influence in
+  the low-loss regime (M = 4: 0.67) and ~0.62 in the normal-loss regime (M = 4: 0.65); a+z carries the rest.
+  The low-loss / normal-loss difference is consistent across all six paired draws.
+- Both families are load-bearing in the frozen closure. In the normal-loss regime, removing Aaz costs ~81% of
+  V7's advantage and removing a+z ~31% (M = 4: 0.84 / 0.28).
+- In the low-loss regime (memory branch), removing either family **destabilizes** the closed loop in 11 of 12
+  ablations: Aaz in 6/6 draws, a+z in 5/6. The one finite case loses 28%. Here "load-bearing" means the
+  closure cannot run without the family, so a graded accuracy loss is not defined.
+- The draw-to-draw spread is small (IQR ≤ 0.01 in share). At M = 5 with σ = 0.15 the disorder realization barely
+  moves the mechanism. Six draws therefore establish stability across draws, not a broad distributional
+  statement.
+
+WHAT IT DOES NOT ESTABLISH.
+- That only two channels exist "in nature": that part is structural (above).
+- Causality outside the frozen closure: ablation shows the families are load-bearing inside V7's mechanism.
+- Anything beyond M = 5, the two regimes, the fully inverted initial state, Gaussian disorder and γ↓ = 0.02.
+- The original Result 25 is unchanged and remains an exploratory M = 4 analysis. This result is the separate,
+  prospective test it motivated.
