@@ -14,6 +14,11 @@ same machine.
 | `router.json` | V6 iff κ ≤ 0.045 **and** γφ ≤ 0.05 (inclusive), else V4; decided once at t = 0 |
 | `pv7/` | portable inference: `features.py`, `model.py`, `closure.py`, `router.py`, `rollout.py`; `engine/` is the moment engine vendored verbatim from the source repository, with only its imports made package-relative |
 | `metadata.json` | provenance: source commit, pickle and source-file hashes, export environment |
+| `external_panel.json` | the six-cell external panel (reserved seeds 400–405) and its selection rule |
+| `run_selfcheck.py`, `selfcheck_expected.json` | SELF-CHECK FIXTURE, NOT AN INDEPENDENT RESULT: M = 2, published draw 50, with expected values produced by the original pickle stack |
+| `run_external_v7_reproduction.py` | the panel runner: exact (QuTiP), plain second order and V7 → `external_output/` |
+| `julia/exact_panel.jl`, `compare_julia_exact.py` | optional Level 2: exact reference in QuantumOptics.jl for the same cells and draws |
+| `requirements-external.txt` | the only Python dependencies (NumPy, SciPy, QuTiP) |
 | `SHA256SUMS` | hashes of every file above |
 
 Requirements: Python 3.12, NumPy, SciPy and QuTiP. No scikit-learn, no joblib, and no pickle loading.
@@ -24,3 +29,19 @@ arrays and clip bounds, features against the training-time builders, κ3 on dire
 self-conjugate keys, static predictions, and full V4- and V6-routed rollouts.
 
 External-run instructions are in `docs/EXTERNAL_V7_REPRODUCTION_PROTOCOL.md`.
+
+## Running it (external collaborator)
+
+```bash
+python3.12 -m venv venv && . venv/bin/activate
+pip install -r requirements-external.txt          # NumPy, SciPy, QuTiP only
+python run_selfcheck.py                           # SELF-CHECK FIXTURE -- NOT AN INDEPENDENT RESULT; must PASS
+python run_external_v7_reproduction.py            # the six-cell panel -> external_output/
+# optional (Level 2), from the repository root:
+julia --project=. portable_v7/julia/exact_panel.jl portable_v7/external_output/panel_params_for_julia.json
+python portable_v7/compare_julia_exact.py portable_v7/external_output
+```
+
+QuTiP prints "matplotlib not found: Graphics will not work". That is harmless; nothing here plots. Run the
+scripts from this directory; no `PYTHONPATH` setting is needed. The full protocol, the panel, and the
+pre-declared reproduction criterion are in `docs/EXTERNAL_V7_REPRODUCTION_PROTOCOL.md`.

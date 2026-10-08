@@ -1,0 +1,6 @@
+# Minimal environment for the external V7 reproduction (Python 3.12). No scikit-learn, no joblib.
+# Pinned to the versions the package was verified with; newer patch releases are expected to work, and
+# run_selfcheck.py will say if they do not.
+numpy==2.4.6
+scipy==1.17.1
+qutip==5.3.0

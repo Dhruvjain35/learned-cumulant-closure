@@ -117,3 +117,22 @@ explicit RK45 is limited by the fast-rotating charged components. C = 0 rows rep
 | Training support (81 tuples) and the per-cell class | `src/evaluation/training_support.py` (grid imported from `gen_data_v3.py`, `gen_pocket_density.py`; self-test asserts CONTROL = A, POCKET = C) | — | — | `results/heldout_param_cells.json` | — |
 | 7 of 30 cells lie outside the trained per-axis ranges in ratio-feature coordinates (POST-HOC) | `src/evaluation/heldout_feature_support.py` | same | — | `results/heldout_feature_support.log` | none (post-hoc) |
 | Result 37 disordered M = 12 cells stay physical to t = 40; burst peak t = 4.02 is the whole-run maximum; Result 37 errors reproduced (EXPLORATORY) | `src/evaluation/m12_violation_timing.py` | M = 12, σ = 0.15, POCKET and CONTROL, t ≤ 40 | 50 | `results/m12_violation_timing.log` | none (exploratory) |
+
+## Portable frozen-V7 package and external reproduction protocol (2026-10-07)
+
+- **Export:** `src/tools/export_portable_v7.py`, run at source commit `f0685cb` (defining sources clean);
+  committed in `deee321`. Re-export is byte-identical.
+- **Source pickles** (sha256): `lc_v3dens.pkl` `be2dde48d47be006d97b7aa09c89f7a13e91dc2800fb6dc5cd6ea151fe798f81`;
+  `lc_v6.pkl` `0599643ef05f355f7549e38325261246f0f848fdc71d906f9f0f82b88b800b86`.
+- **Portable files** (sha256):
+  - `models/v4/networks.npz` `f3ce9dca8c7cdf79796c9e9a22cb9a471520d06c3151c1a193f4dfe90d8eb77a`
+  - `models/v6/networks.npz` `2cc2a4b53d74ef429c7770939da9a6d1d40d6b5299961d60bdf20775b99fd969`
+  - `router.json`, `feature_spec.json`, and the export script: hashes in `portable_v7/metadata.json`
+  - every package file: `portable_v7/SHA256SUMS`
+- **Export environment:** Python 3.12.13, NumPy 2.4.6, scikit-learn 1.9.0.
+
+| Claim | Script | Output | Criterion |
+|---|---|---|---|
+| Portable V7 is bit-identical to the frozen originals: features, networks, κ3 (direct / conjugated / self-conjugate), full V4- and V6-routed rollouts on 2 fixtures + 6 Result 40 cells | `tests/test_portable_v7.py` (`make portable-test`, CI) | `results/portable_v7_equivalence.log` | tolerances fixed in the test header (all observed differences are 0) |
+| The package runs from a copy outside the repository, in a fresh venv with NumPy/SciPy/QuTiP only (no scikit-learn installed); the self-check passes; Result 40 cell H02 (seed 301) reproduces exactly; QuantumOptics.jl exact agrees with QuTiP exact to < 1e-6 on the fixture cells | `portable_v7/run_selfcheck.py`, `run_external_v7_reproduction.py`, `julia/exact_panel.jl`, `compare_julia_exact.py` | `results/portable_v7_clean_env_test.log` | installation test, not science |
+| External panel and criterion, pre-declared | `docs/EXTERNAL_V7_REPRODUCTION_PROTOCOL.md`, `portable_v7/external_panel.json` | — | reserved seeds 400–405, not run by the authors |

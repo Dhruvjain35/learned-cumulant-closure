@@ -25,3 +25,7 @@ results/lc_new.pkl
 results/lc_v4.pkl
 results/lc_v4p.pkl
 results/lc_v5.pkl
+
+# portable_v7 run outputs (returned external runs are archived under external_validation/ instead)
+portable_v7/external_output/
+portable_v7/selfcheck_output/

@@ -1,0 +1,107 @@
+{
+ "purpose": "External reproduction panel for frozen V7 (docs/EXTERNAL_V7_REPRODUCTION_PROTOCOL.md). The physical parameter points are Result 40 cells; the disorder seeds are NEW and reserved for the outside run. No (cell, seed) combination below has been simulated by the authors.",
+ "selection_rule": "for each (support class, routed branch) in {B,C,D} x {v4,v6}, the Result 40 cell with the lowest ID; seeds 400-405 assigned in that order",
+ "M": 5,
+ "gamma_down": 0.02,
+ "omega_c": 1.0,
+ "initial_state": "cavity vacuum x all emitters excited",
+ "disorder": "w_i = omega_c + numpy.random.default_rng(seed).normal(0.0, sigma, M) -- the call in pv7/engine/exact_tc.py draw_disorder. NumPy does not formally guarantee identical Generator streams across versions; run_selfcheck.py verifies the draw for a published seed bit for bit before any panel cell is run, and the runner records every drawn array.",
+ "reserved_seeds": [
+  400,
+  401,
+  402,
+  403,
+  404,
+  405
+ ],
+ "cells": [
+  {
+   "panel_id": "X1",
+   "result40_parameter_cell": "H01",
+   "g_c": 0.55,
+   "kappa": 0.1,
+   "gamma_phi": 0.06,
+   "sigma": 0.1,
+   "seed": 400,
+   "support_class": "B",
+   "branch": "v4",
+   "out_of_range_axes": [],
+   "note": ""
+  },
+  {
+   "panel_id": "X2",
+   "result40_parameter_cell": "H09",
+   "g_c": 0.7,
+   "kappa": 0.035,
+   "gamma_phi": 0.042,
+   "sigma": 0.15,
+   "seed": 401,
+   "support_class": "B",
+   "branch": "v6",
+   "out_of_range_axes": [],
+   "note": ""
+  },
+  {
+   "panel_id": "X3",
+   "result40_parameter_cell": "H14",
+   "g_c": 0.7,
+   "kappa": 0.36,
+   "gamma_phi": 0.05,
+   "sigma": 0.15,
+   "seed": 402,
+   "support_class": "C",
+   "branch": "v4",
+   "out_of_range_axes": [
+    "kappa"
+   ],
+   "note": ""
+  },
+  {
+   "panel_id": "X4",
+   "result40_parameter_cell": "H13",
+   "g_c": 0.7,
+   "kappa": 0.025,
+   "gamma_phi": 0.05,
+   "sigma": 0.15,
+   "seed": 403,
+   "support_class": "C",
+   "branch": "v6",
+   "out_of_range_axes": [
+    "kappa"
+   ],
+   "note": ""
+  },
+  {
+   "panel_id": "X5",
+   "result40_parameter_cell": "H25",
+   "g_c": 1.1,
+   "kappa": 0.2,
+   "gamma_phi": 0.12,
+   "sigma": 0.15,
+   "seed": 404,
+   "support_class": "D",
+   "branch": "v4",
+   "out_of_range_axes": [
+    "g_c",
+    "gamma_phi"
+   ],
+   "note": ""
+  },
+  {
+   "panel_id": "X6",
+   "result40_parameter_cell": "H27",
+   "g_c": 0.7,
+   "kappa": 0.025,
+   "gamma_phi": 0.015,
+   "sigma": 0.15,
+   "seed": 405,
+   "support_class": "D",
+   "branch": "v6",
+   "out_of_range_axes": [
+    "kappa",
+    "gamma_phi"
+   ],
+   "note": "internal worst case in Result 40 (selected by the ID rule, not by performance)"
+  }
+ ]
+}

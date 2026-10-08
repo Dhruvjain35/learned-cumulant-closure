@@ -1,0 +1,38 @@
+PORTABLE V7 CLEAN-ENVIRONMENT TEST (2026-10-07; installation test, not science)
+Package copied OUTSIDE the repository to a temp directory; fresh venv from portable_v7/requirements-external.txt only:
+numpy     2.4.6
+qutip     5.3.0
+scipy     1.17.1
+scikit-learn / joblib installed: 0
+
+--- run_selfcheck.py
+passed: True {'python': '3.12.13', 'platform': 'macOS-26.4-arm64-arm-64bit', 'numpy': '2.4.6', 'scipy': '1.17.1', 'qutip': '5.3.0'}
+  SHA256SUMS PASS 0 mismatched files []
+  FIX-V4 disorder draw (seed 50) PASS max |diff| 0.0e+00
+  FIX-V6 disorder draw (seed 50) PASS max |diff| 0.0e+00
+  static network outputs PASS max abs diff 0.0e+00
+  FIX-V4 exact burst peak PASS 1.41078296 vs 1.41078296
+  FIX-V4 plain burst peak PASS 1.81968196 vs 1.81968196
+  FIX-V4 V7 (v4) PASS branch v4, peak 1.41194187 vs 1.41194187, max |n(t) diff| 0.0e+00
+  FIX-V6 exact burst peak PASS 1.62438509 vs 1.62438509
+  FIX-V6 plain burst peak PASS 2.07518793 vs 2.07518793
+  FIX-V6 V7 (v6) PASS branch v6, peak 1.62865150 vs 1.62865150, max |n(t) diff| 0.0e+00
+  no scikit-learn / joblib imported PASS []
+
+--- installation test panel: Result 40 cell H02, published seed 301 (Result 40 log: exact 2.92661, plain +0.3037, V7 -0.0010)
+STEP 2: panel test_panel_H02.json (1 cells), M = 5
+  T-H02 (H02, class B, v4) seed 301: exact n_peak 2.92661 | plain +0.3037 | V7 -0.0010 | V7 physical True | 27s
+
+V7 closer to exact than plain in 1/1 cells; wall time 27s; scikit-learn/joblib imported: no
+
+--- installation test panel: M=2 fixture cells (draw 50) + julia/exact_panel.jl (QuantumOptics.jl) comparison
+STEP 2: panel test_panel_fixture.json (2 cells), M = 2
+  FIX-V4 (, class , v4) seed 50: exact n_peak 1.41078 | plain +0.2898 | V7 +0.0008 | V7 physical True | 3s
+  FIX-V6 (, class , v6) seed 50: exact n_peak 1.62439 | plain +0.2775 | V7 +0.0026 | V7 physical True | 4s
+
+V7 closer to exact than plain in 2/2 cells; wall time 7s; scikit-learn/joblib imported: no
+FIX-V4: exact python 1.410783 julia 1.410784 (rel diff -9.6e-07) | plain vs julia +0.2898 | V7 vs julia +0.0008
+FIX-V6: exact python 1.624385 julia 1.624386 (rel diff -5.5e-07) | plain vs julia +0.2775 | V7 vs julia +0.0026
+
+No reserved panel cell (seeds 400-405) was run.
+Re-run on the final committed package (after README/sums update): run_selfcheck.py SELF-CHECK PASS in the same clean environment.

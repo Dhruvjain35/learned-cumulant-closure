@@ -987,3 +987,16 @@ Script `src/evaluation/heldout_parameter_burst.py`; log `results/heldout_param_b
 After P3 completes, and only if cheap: a closure-only rerun of the Result 37 disordered M = 12 cell (seed 50,
 σ = 0.15, both regimes) to t = 40, to measure the first physicality-violation time against the burst time.
 Exploratory, reported separately.
+
+---
+
+## Registration — External V7 reproduction panel (2026-10-07)
+
+Protocol, panel and criterion: `docs/EXTERNAL_V7_REPRODUCTION_PROTOCOL.md` and
+`portable_v7/external_panel.json`, committed before any outside run.
+- **Seed ledger:** 400–405 are reserved for the outside collaborator's run, one per panel cell (X1–X6), and
+  are not to be used by the authors for any purpose.
+- **Panel cells:** the Result 40 parameter points H01, H09, H14, H13, H25 and H27, selected by the stated ID
+  rule.
+- **Frozen artifacts:** the frozen models are those of P3 (sha256 `be2dde48…`, `0599643e…`), exported without
+  change to `portable_v7/` (commit `deee321`; `make portable-test` shows bit-identical equivalence).
