@@ -3,7 +3,7 @@
 # the Julia reproduction is standalone.
 PY ?= python
 
-.PHONY: help test gates burst mechanism fourth-order replicate portable-export portable-test
+.PHONY: help test gates burst mechanism fourth-order replicate portable-export portable-test figures
 
 help:
 	@echo "make test          # import smoke test (fast, no simulation)"
@@ -14,6 +14,7 @@ help:
 	@echo "make replicate     # Julia cross-platform reproduction (needs Julia; see docs/REPLICATION_QUICKSTART.md)"
 	@echo "make portable-export # re-export frozen V7 to portable_v7/ (NPZ+JSON; byte-identical on rerun)"
 	@echo "make portable-test   # portable V7 vs frozen pickles: features, networks, kappa3, full rollouts (~1-2 min)"
+	@echo "make figures        # render the 5 main manuscript figures from committed results (no simulation)"
 	@echo ""
 	@echo "run any module:    $(PY) run.py src/<subpackage>/<module>.py"
 
@@ -37,3 +38,6 @@ portable-export:
 	$(PY) run.py src/tools/export_portable_v7.py
 portable-test:
 	$(PY) run.py tests/test_portable_v7.py
+# Render-only: reads committed results/ artifacts, recomputes no science. Output: figures/fig1..fig5 (.pdf, .png).
+figures:
+	$(PY) run.py scripts/build_manuscript_figures.py
