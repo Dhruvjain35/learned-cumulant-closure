@@ -1,0 +1,25 @@
+RESULT 25 REGRESSION (M = 4, seeds 37/38/39; current code vs committed results/mechanism.log)
+
+MECHANISM seeds=[37, 38, 39]; cells POCKET M4, CONTROL M4; NC_ref=16
+[POCKET M4] gate0<1e-6 OK; branch=v6; err_plain~0.289 err_v7~0.008
+  family  |  E_share  D_share  frac_lost(abl)  V7mag  V7sign   (ranked by D_f, top 8)
+   Aaz     |   1.00    0.67          +0.81   1.02   +1.0 CRIT×1
+   a+z     |   0.00    0.33          +0.25    nan   +nan CRIT×1
+   +-z     |   0.00    0.00          -0.00    nan   +nan
+   zzz     |   0.00    0.00          -0.00    nan   +nan
+   aa+     |   0.00    0.00          +0.00    nan   +nan
+   aa-     |   0.00    0.00          +0.00    nan   +nan
+   aaz     |   0.00    0.00          +0.00    nan   +nan
+   aaa     |   0.00    0.00          +0.00    nan   +nan
+[CONTROL M4] gate0<1e-6 OK; branch=v4; err_plain~0.295 err_v7~0.002
+  family  |  E_share  D_share  frac_lost(abl)  V7mag  V7sign   (ranked by D_f, top 8)
+   Aaz     |   1.00    0.65          +0.84   1.00   +1.0
+   a+z     |   0.00    0.35          +0.28    nan   +nan
+   zzz     |   0.00    0.00          +0.00    nan   +nan
+   +-z     |   0.00    0.00          -0.00    nan   +nan
+   aa+     |   0.00    0.00          +0.00    nan   +nan
+   aa-     |   0.00    0.00          +0.00    nan   +nan
+   aaz     |   0.00    0.00          +0.00    nan   +nan
+   aaa     |   0.00    0.00          +0.00    nan   +nan
+
+line-by-line identical to the committed log (all 21 lines): True

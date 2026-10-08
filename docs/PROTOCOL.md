@@ -1000,3 +1000,114 @@ Protocol, panel and criterion: `docs/EXTERNAL_V7_REPRODUCTION_PROTOCOL.md` and
   rule.
 - **Frozen artifacts:** the frozen models are those of P3 (sha256 `be2dde48…`, `0599643e…`), exported without
   change to `portable_v7/` (commit `deee321`; `make portable-test` shows bit-identical equivalence).
+
+---
+
+## Pre-registration — Publication finalization P5: prospective M = 5 confirmation of the Result 25 mechanism
+
+Registered 2026-10-07, BEFORE any M = 5 mechanism quantity exists. The only M = 5 computation run so far was a
+cost probe on draw 50 (not a campaign seed). It timed an exact moment trajectory (24 s) and one V7 rollout
+(2.5 s); no D_f, E_f, share or ablation was computed or printed. V4/V6/V7 stay frozen: sha256 `be2dde48…98f81`
+and `0599643e…b800b86`, router κ ≤ 0.045 and γφ ≤ 0.05.
+
+### Why
+
+Result 25 (M = 4, seeds 37–39) is exploratory for its two-channel interpretation:
+- its written criterion (the direct score E_f) turned out to be structurally single-family;
+- the D_f + ablation adjudication and the two-family threshold were set after the run;
+- its M = 5 confirmation was never run;
+- its protocol timing is not verifiable (FINDINGS "Dated notes" D2–D3).
+
+This is a NEW confirmation study motivated by that exploratory result, with metric, decision rule and seeds
+fixed now.
+
+### Structural facts established before registering (engine coefficients only; no dynamics)
+
+- **S1.** The 15 charge-carrying families have exact κ3 ≡ 0 for this initial state, since total excitation
+  number is conserved (Result 39).
+- **S2.** Of the four neutral families, only `Aaz` = (a†, a, σᶻ) and `a+z` = (a, σ⁺, σᶻ) couple to the tracked
+  equations.
+  - `+-z` and `zzz` have Σ|T3 coefficients| ≈ 1e-13: projection residue, i.e. zero.
+  - At M = 5: `a+z` 37.6, `Aaz` 3.13 (both regimes).
+  - The same holds at M = 4.
+- **Consequence.** D_f is nonzero only for Aaz and a+z. Their combined D share is ≈ 1 by construction, and
+  "a+z ranks second" is automatic.
+  - Result 25's "two families carry ~100%" is therefore a structural property of the model, not an empirical
+    finding.
+  - The empirical content is (i) how the influence **splits** between the two and (ii) whether removing each
+    one **harms** V7.
+  - The criteria below test only those two things. Combined share and rank 2 are reported, not used as
+    criteria. This replaces the default thresholds that would have passed automatically.
+
+### Frozen definitions (exactly Result 25's code: `src/analysis/mechanism.py`, unchanged)
+
+- **Families:** `canonical_sig(k)[0]` over the engine's order-3 keys (19 at M = 5).
+- **Burst window W:** times where the exact flux κ⟨a†a⟩ ≥ 0.5 × its maximum.
+- **Exact κ3:** ⟨k⟩_exact − v3_factorized(m2_exact), from QuTiP mesolve at Nc = 16. Gate: |κ3(t = 0)| < 1e-6.
+- **D_f:** mean over t ∈ W of ‖T3 · κ3_exact masked to f‖₂. Per-seed share: D_f / Σ_g D_g. Result 25's
+  aggregate share (seed-mean D_f, normalized) is also reported.
+- **E_f** (secondary structural diagnostic only): mean over t ∈ W of |Σᵢ Im(T3[row ⟨aσ⁺ᵢ⟩] · κ3_exact masked to
+  f)|.
+- **Ablation:** zero family f's κ3 on the frozen V7 output in closed loop (`AblatedClosure`). Then
+  - err = |F_peak − F_exact| / F_exact;
+  - loss_f = (err_ablated − err_V7) / (err_plain − err_V7);
+  - an unstable ablated rollout gives loss_f = +∞ ("critical"; removing f breaks V7).
+- **Settings:** closure engines at Nc = 12, Fsafe = 6, RK45 rtol 1e-4 / atol 1e-6; t ≤ 40, 200 points. T3
+  (κ4 = 0) is not computed: it never entered Result 25's decision, and it is capped at M ≤ 4.
+- **Regression gate (passed):** the current code reproduces the committed Result 25 table **line for line**
+  (21/21 lines; `results/mechanism_m4_regression.log`).
+
+### Cells and seeds
+
+- POCKET (g_c, κ, γφ) = (0.70, 0.03, 0.02), routed to V6; CONTROL (0.70, 0.15, 0.02), routed to V4.
+- M = 5, σ = 0.15, γ↓ = 0.02, fully inverted initial state.
+- **Seeds 500–505**, the same six draws in both regimes (paired): 12 cells. 500–505 appear nowhere else in
+  the repository; they are not 400–405 (reserved for the external V7 run).
+- N is fixed and does not change after any output.
+
+### Criteria (per regime; six draws each)
+
+- **C1, dominance of Aaz:** median per-seed D_share(Aaz) > 0.50, **and** D_share(Aaz) > D_share(a+z) in ≥ 5/6
+  draws.
+- **C2, a+z non-negligible:** median per-seed D_share(a+z) ≥ 0.15, **and** D_share(a+z) ≥ 0.15 in ≥ 4/6 draws.
+- **C3, Aaz load-bearing:** median loss_Aaz ≥ 0.50, **and** loss_Aaz > 0 (+∞ counts) in ≥ 5/6 draws.
+- **C4, a+z load-bearing:** median loss_a+z ≥ 0.15, **and** loss_a+z > 0 (+∞ counts) in ≥ 4/6 draws.
+
+Why these thresholds:
+- They are set below the exploratory M = 4 values (D shares 0.65–0.67 / 0.33–0.35; losses 0.81–0.84 /
+  0.25–0.28), so that a qualitatively similar mechanism at M = 5 passes.
+- They are not automatic. Given S1–S2, C1 fails if the split moves past 50/50; C2 fails if a+z drops below 15%
+  of the influence; C3 and C4 fail if removing a family does not degrade V7.
+
+### Decision (exactly one; both regimes required, pooled is secondary)
+
+- **CONFIRMED:** C1, C2, C3 and C4 hold in both regimes.
+- **PARTIALLY CONFIRMED:** C1 and C3 hold in both regimes, but C2 or C4 fails in at least one.
+- **NOT CONFIRMED:** otherwise.
+
+### Secondary (reported, never decisive)
+
+- E_f shares (expected single-family, as at M = 4).
+- V7's teacher-forced reconstruction of each family's κ3: magnitude ratio and sign.
+- Ranks and combined share (structural).
+- Pooled 12-cell medians.
+- A structural check that the share outside {Aaz, a+z} is ≈ 0 in every cell.
+- V7 closed-loop stability and physicality.
+- Raw per-seed values for everything.
+
+### Failure handling (fixed now)
+
+- **Exception (technical failure):** the log is kept, and the SAME cell is rerun once unchanged. If it fails
+  again it stays in the table as a technical failure that counts against confirmation. It is never replaced by
+  another seed.
+- **V7 closed-loop rollout unstable:** that cell's ablation losses are undefined. They count as not positive and
+  as missing from the medians, which is against confirmation.
+- **Ablated rollout unstable:** loss = +∞ (critical), as in Result 25.
+- A physical blow-up is a result, not an exclusion.
+
+### Outputs
+
+`src/analysis/mechanism_m5.py --campaign` → `results/mechanism_m5.log`, `results/mechanism_m5.npz` (slim:
+per-cell scalars plus Aaz and a+z κ3 trajectories, exact and V7), and `results/mechanism_m5_fig.png`
+(diagnostic). The result is written up as the next numbered FINDINGS result. Result 25 itself is not
+rewritten.
