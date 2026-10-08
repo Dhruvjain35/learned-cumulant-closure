@@ -1,6 +1,6 @@
 {
  "package": "portable frozen V7 (learned third-cumulant closure); export only, no retraining",
- "source_repo_commit": "f0685cb70a6f5a07b0c2a6a998267374d7807bb3",
+ "source_repo_commit": "3d86aa393e1d1344abb87be70d61cca0c21ed560",
  "source_tree_dirty_at_export": false,
  "source_pickles": {
   "results/lc_v3dens.pkl": "be2dde48d47be006d97b7aa09c89f7a13e91dc2800fb6dc5cd6ea151fe798f81",
@@ -59,7 +59,7 @@
  },
  "feature_spec_sha256": "fb8ed18e693f8fa5ac380ad84fed50fd7cde3476620e82c8d0867bb7631ced12",
  "router_sha256": "43b8f181cb7fcfe376651bfe8ff9bdc5ffafafb1acda98a71030b1364a19ed66",
- "export_script_sha256": "769be154d6c8252c875d2a44e5edc66b4f2882f1ef7887679092387a40d2f274",
+ "export_script_sha256": "4e03bc03a55f177c251aa4d19d1bc20723a78fa957d143c365a7994e925413e9",
  "export_environment": {
   "python": "3.12.13",
   "numpy": "2.4.6",
