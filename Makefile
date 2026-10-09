@@ -3,7 +3,7 @@
 # the Julia reproduction is standalone.
 PY ?= python
 
-.PHONY: help test gates burst mechanism fourth-order replicate portable-export portable-test figures paper-generate paper supplement result40 result40-smoke result42 result42-regression release-preview arxiv-preview
+.PHONY: help test gates burst mechanism fourth-order replicate portable-export portable-test figures paper supplement manuscript-check result40 result40-smoke result42 result42-regression release-preview arxiv-preview
 
 help:
 	@echo "make test          # import smoke test (fast, no simulation)"
@@ -17,7 +17,7 @@ help:
 	@echo "make figures        # render the 5 main manuscript figures from committed results (no simulation)"
 	@echo "make paper          # compile the PRA REVTeX manuscript paper/main.pdf (render only; needs tectonic)"
 	@echo "make supplement     # render SM tables from committed results and compile paper/supplement.pdf"
-	@echo "make paper-generate # regenerate paper/generated/{abstract,body}.tex from docs/MANUSCRIPT_DRAFT.md"
+	@echo "make manuscript-check # numbers, audited claims, citations, locked wording and style of the manuscript"
 	@echo "make result40       # re-run Result 40 (held-out parameters, M=5, ~30 min); rewrites results/heldout_param_*"
 	@echo "make result42       # re-run Result 42 (M=5 mechanism, ~15 min); rewrites results/mechanism_m5*"
 	@echo "make release-preview# stage the planned public release under release/v1.0.0-preview (local only)"
@@ -52,14 +52,17 @@ figures:
 # PRA submission source (paper/). Render only: no scientific computation. TeX engine: tectonic (fetches TeX packages
 # on first use); any REVTeX 4.2 installation with pdflatex+bibtex also works (see paper/README.md).
 TECTONIC ?= tectonic
-paper-generate:
-	python3 paper/tools/md_to_revtex.py
 paper:
 	python3 paper/tools/check_bib.py
 	cd paper && $(TECTONIC) -X compile --keep-logs main.tex
 supplement:
 	$(PY) run.py paper/tools/build_supplement_tables.py
 	cd paper && $(TECTONIC) -X compile --keep-logs supplement.tex
+# Prose-integrity check of the manuscript source against the pre-polish text (numbers, the 74 audited claims, cite
+# keys, locked wording, placeholders, AI disclosure, banned phrases, em dashes) and of the compiled logs/PDFs.
+manuscript-check:
+	python3 paper/tools/check_bib.py
+	python3 paper/tools/check_manuscript.py
 # Re-run the pre-registered campaigns (science; deterministic). They write to results/ -- afterwards
 # `git diff --stat results/` shows whether the committed artifacts were reproduced exactly.
 result40-smoke:
