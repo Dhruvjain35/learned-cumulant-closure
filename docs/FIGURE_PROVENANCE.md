@@ -10,7 +10,8 @@ are asserted, so a changed or truncated artifact fails the build and cannot sile
 make figures            # = python run.py scripts/build_manuscript_figures.py   (~5 s)
 ```
 
-Output: `figures/fig{1..5}_*.pdf` (vector, Type 42 embedded fonts, no timestamps) and `.png` (200 dpi).
+Output: `figures/fig{1..5}_*.pdf` (vector, Type 42 embedded fonts, no timestamps), `.eps` (production format for
+colour-online figures; same plotted data) and `.png` (200 dpi preview).
 A rebuild from a deleted `figures/` directory is byte-identical in all ten files (checked 2026-10-07).
 Shared style: `src/figures/pubstyle.py`.
 
@@ -21,8 +22,9 @@ Shared style: `src/figures/pubstyle.py`.
   - second order: orange, dashed, square
   - κ4 = 0: aqua, dash-dot, triangle
   - κ5 = 0: yellow, dotted, diamond
-- Regime is shown by fill: low loss (κ = 0.03) filled, normal loss (κ = 0.15) hollow.
-- Mechanism families use neutral ink: Aaz filled, a+z hollow.
+- Regime is shown by fill: low loss (κ = 0.03) dark-filled, normal loss (κ = 0.15) light-filled (a pale tint of the
+  same color with a dark edge; restyled 2026-10-09 to avoid open symbols per APS figure guidance).
+- Mechanism families use neutral ink: Aaz dark-filled, a+z light-filled.
 - Unstable or runaway outcomes are a categorical × in a shaded band. They are never drawn as a bar or a number.
 - No p-values appear anywhere.
 - The palette was checked with the dataviz validator: every check passes. Aqua and yellow fall below 3:1 contrast, so every series also carries a marker, a line style and a label, and the figures read in grayscale.
@@ -70,3 +72,20 @@ Shared style: `src/figures/pubstyle.py`.
 | `assets/img/ladder.png` | not reused in main text | supplement (Result 20 NRMSE ladder, different metric) |
 
 The earlier figures stay in the repository unchanged. They are referenced by the README and the findings log, and none were regenerated or overwritten.
+
+## PRA restyle (2026-10-09)
+
+Typography and markers only:
+- every text ≥ 9 pt, i.e. capitals about 2.1 mm in STIX;
+- panel letters 11 pt;
+- no open symbols;
+- larger markers;
+- no transparency;
+- EPS output added.
+
+Printed scale in the REVTeX manuscript (width `\textwidth` = 510 pt, height capped at 0.85 `\textheight`) is at least
+1.01, so all figure text prints at ≥ 9 pt.
+
+Data identity before and after the restyle is verified by `scripts/figure_signature.py`. The comparison log is
+`results/figure_style_regression.log`: every panel's plotted arrays are exactly equal. Captions changed only in the
+words that name the marker encoding ("hollow" → "light-filled", "Blue rings" → "Light-blue circles").

@@ -9,11 +9,17 @@ One encoding per METHOD, used in every figure:
   kappa5 = 0 (4th)     categorical slot 4 (yellow), dotted,   diamond
 The four-slot palette passes the dataviz validator (light surface; worst adjacent CVD dE 9.1, normal-vision 22.9).
 Aqua and yellow sit below 3:1 contrast, so every series also carries its own marker, line style and a direct label
-or legend entry -- identity is never carried by color alone. Regimes are encoded by fill: low loss (POCKET) filled,
-normal loss (CONTROL) hollow. Mechanism families use neutral ink: Aaz filled, a+z hollow.
+or legend entry -- identity is never carried by color alone. Regimes are encoded by fill: low loss (POCKET) dark-filled,
+normal loss (CONTROL) light-filled (a pale tint of the same color with a dark edge; no open symbols, per APS figure
+guidance). Mechanism families use neutral ink: Aaz dark-filled, a+z light-filled.
+
+PRA typography (2026-10-09): every text >= FS_MIN = 9 pt at final size, i.e. capitals ~2.1 mm in STIX (APS asks
+for >= 2 mm); panel letters 11 pt. Figures are 7 in wide (two-column width) and printed at that width.
 """
+import os
 import matplotlib
 matplotlib.use("Agg")
+os.environ.setdefault("SOURCE_DATE_EPOCH", "0")   # deterministic EPS/PDF timestamps
 import matplotlib.pyplot as plt
 
 INK = "#0b0b0b"
@@ -32,14 +38,28 @@ METHOD = {
 REGIME = {"POCKET": dict(label="low loss (κ = 0.03)", filled=True),
           "CONTROL": dict(label="normal loss (κ = 0.15)", filled=False)}
 DOUBLE = 7.0      # in, double-column width
+FS_MIN = 9.0      # pt; capital height ~2.1 mm in STIX (APS: >= 2 mm)
+FS_PANEL = 11.0
+MS = 34           # scatter marker area (pt^2): ~2 mm diameter
+
+
+def fs(x):
+    """Font size floor for PRA reproduction size."""
+    return max(float(x), FS_MIN)
+
+
+def light(color, f=0.62):
+    """Pale tint of a color (mix with white): the 'light-filled' fill used instead of open symbols."""
+    c = matplotlib.colors.to_rgb(color)
+    return tuple(1 - f * (1 - v) for v in (c[0], c[1], c[2]))
 SINGLE = 3.4
 
 
 def apply():
     plt.rcParams.update({
         "font.family": "STIXGeneral", "mathtext.fontset": "stix",
-        "font.size": 8.5, "axes.titlesize": 9, "axes.labelsize": 8.5,
-        "xtick.labelsize": 7.5, "ytick.labelsize": 7.5, "legend.fontsize": 7.2,
+        "font.size": 9.5, "axes.titlesize": 9.5, "axes.labelsize": 9.5,
+        "xtick.labelsize": 9, "ytick.labelsize": 9, "legend.fontsize": 9,
         "axes.edgecolor": INK2, "axes.labelcolor": INK, "xtick.color": INK2, "ytick.color": INK2,
         "text.color": INK, "axes.linewidth": 0.6, "xtick.major.width": 0.6, "ytick.major.width": 0.6,
         "axes.spines.top": False, "axes.spines.right": False, "axes.grid": False,
@@ -50,22 +70,22 @@ def apply():
 
 
 def mk(method, regime=None, **kw):
-    """Scatter kwargs for a method, filled or hollow by regime."""
+    """Scatter kwargs for a method, dark- or light-filled by regime."""
     m = METHOD[method]
     filled = True if regime is None else REGIME[regime]["filled"]
-    d = dict(marker=m["marker"], edgecolors=m["color"], linewidths=0.9,
-             facecolors=(m["color"] if filled else SURFACE), zorder=3)
+    d = dict(marker=m["marker"], edgecolors=m["color"], linewidths=1.1,
+             facecolors=(m["color"] if filled else light(m["color"])), zorder=3)
     d.update(kw)
     return d
 
 
 def panel(ax, letter, x=-0.14, y=1.04):
-    ax.text(x, y, f"({letter})", transform=ax.transAxes, fontsize=10, fontweight="bold", va="bottom", ha="left")
+    ax.text(x, y, f"({letter})", transform=ax.transAxes, fontsize=FS_PANEL, fontweight="bold", va="bottom", ha="left")
 
 
 def save(fig, stem, outdir="figures"):
-    import os
     os.makedirs(outdir, exist_ok=True)
     fig.savefig(os.path.join(outdir, stem + ".pdf"), bbox_inches="tight", metadata={"CreationDate": None, "ModDate": None})
+    fig.savefig(os.path.join(outdir, stem + ".eps"), bbox_inches="tight")
     fig.savefig(os.path.join(outdir, stem + ".png"), dpi=200, bbox_inches="tight")
     plt.close(fig)

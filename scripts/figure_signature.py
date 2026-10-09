@@ -1,0 +1,137 @@
+"""
+Figure data-identity harness (render-only). Builds the five main figures in memory WITHOUT saving them and records,
+per figure and panel, every plotted coordinate (Line2D data, scatter offsets, error-bar segments, data
+rectangles), every text that contains a digit (annotations, table cells), and the axis limits.
+
+    python run.py scripts/figure_signature.py dump <out.json>      # record a signature
+    python run.py scripts/figure_signature.py compare <old.json> <new.json> <log>
+
+Used to show that a restyle changes styling only: the multisets of plotted coordinates must be identical.
+Schematic panels (no data axes) contribute only their numeric texts.
+"""
+import json
+import re
+import sys
+from collections import Counter
+
+import numpy as np
+import matplotlib
+matplotlib.use("Agg")
+from matplotlib.patches import Rectangle
+from matplotlib.collections import LineCollection, PathCollection
+
+SOURCES = {
+    "fig1_problem_method": {"d": "portable_v7/router.json; src/evaluation/training_support.py; results/heldout_param_cells.json"},
+    "fig2_accuracy_parameter_transfer": {"a": "results/baseline_burst_trace_M3_pocket_draw50.npz",
+                                         "b": "results/burst_pred_exact.npz",
+                                         "c": "results/heldout_param_burst.npz",
+                                         "d": "results/heldout_param_burst.npz (stats)"},
+    "fig3_size_transfer_envelope": {"a": "results/v8_accuracy_ladder.log; v8_accuracy_M16.log; v8_disordered_m12.log",
+                                    "b": "results/v8_accuracy_ladder.log; v8_disordered_m12.log",
+                                    "c": "results/positivity_audit.npz; v8_step0_sigma0.npz; m12_violation_timing.log",
+                                    "d": "results/v8_peak_vs_violation.log; m12_violation_timing.log"},
+    "fig4_mechanism": {"a": "results/mechanism_m5.npz (family labels)", "b": "results/mechanism_m5.npz",
+                       "c": "results/mechanism.log; results/mechanism_m5.npz", "d": "results/mechanism_m5.npz"},
+    "fig5_truncations_runtime": {"a": "results/t4_eval.npz; results/pilot_eval.log",
+                                 "b": "results/runtime_baseline_comparison.csv",
+                                 "c": "results/baseline_burst_trace_M3_pocket_draw50.npz"},
+}
+
+
+def _r(x):
+    return float(repr(float(x))) if np.isfinite(x) else str(x)
+
+
+def signature(fig):
+    panels = []
+    for ax in fig.axes:
+        pts = []
+        for ln in ax.lines:
+            for x, y in np.asarray(ln.get_xydata(), dtype=float):
+                pts.append((_r(x), _r(y)))
+        for c in ax.collections:
+            if isinstance(c, LineCollection):
+                for seg in c.get_segments():
+                    for x, y in seg:
+                        pts.append((_r(x), _r(y)))
+            elif isinstance(c, PathCollection):
+                for x, y in np.asarray(c.get_offsets(), dtype=float):
+                    pts.append((_r(x), _r(y)))
+        rects = [(_r(p.get_x()), _r(p.get_y()), _r(p.get_width()), _r(p.get_height()))
+                 for p in ax.patches if type(p) is Rectangle and p.get_transform() == ax.transData]
+        texts = [t.get_text() for t in ax.texts if re.search(r"\d", t.get_text())]
+        for tb in getattr(ax, "tables", []):
+            texts += [c.get_text().get_text() for c in tb.get_celld().values()]
+        texts = [re.sub(r"\s+", " ", t).strip() for t in texts if re.search(r"\d", t)]
+        lab = [t.get_text() for t in ax.texts if re.fullmatch(r"\([a-e]\)", t.get_text())]
+        panels.append(dict(label=lab[0] if lab else "", has_data=bool(pts),
+                           points=sorted(Counter(pts).items(), key=lambda kv: (str(kv[0][0]), str(kv[0][1]))),
+                           rects=sorted(rects, key=str), numeric_texts=sorted(texts),
+                           xlim=[_r(v) for v in ax.get_xlim()], ylim=[_r(v) for v in ax.get_ylim()],
+                           xscale=ax.get_xscale(), yscale=ax.get_yscale()))
+    return panels
+
+
+def dump(out):
+    import pubstyle as S
+    rec = {}
+
+    def fake_save(fig, stem, outdir="figures"):
+        rec[stem] = signature(fig)
+        matplotlib.pyplot.close(fig)
+    S.save = fake_save
+    import importlib.util
+    spec = importlib.util.spec_from_file_location("bmf", "scripts/build_manuscript_figures.py")
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    mod.S.save = fake_save
+    for f in (mod.fig1, mod.fig2, mod.fig3, mod.fig4, mod.fig5):
+        f()
+    json.dump(rec, open(out, "w"), indent=0, default=str)
+    print(f"signature: {len(rec)} figures -> {out}")
+
+
+def compare(a_path, b_path, log):
+    A, B = json.load(open(a_path)), json.load(open(b_path))
+    lines = ["FIGURE STYLE REGRESSION: plotted data before vs after the PRA restyle",
+             "Equality is exact (Python float repr of every plotted coordinate, as multisets per panel).",
+             "Generated by scripts/figure_signature.py; render-only.", ""]
+    ok = True
+    for stem in A:
+        pa = [p for p in A[stem]]
+        pb = [p for p in B[stem]]
+        # match panels by label; unlabeled axes (colorbars etc.) by order
+        for i, p in enumerate(pa):
+            q = next((x for x in pb if x["label"] == p["label"] and p["label"]), pb[i] if i < len(pb) else None)
+            lab = p["label"] or f"axes{i}"
+            src = SOURCES.get(stem, {}).get(lab.strip("()"), "schematic / no data" if not p["has_data"] else "?")
+            if q is None:
+                ok = False
+                lines.append(f"{stem:36s} {lab:5s} MISSING PANEL after restyle")
+                continue
+            eq_pts = p["points"] == q["points"]
+            eq_rect = p["rects"] == q["rects"]
+            eq_txt = p["numeric_texts"] == q["numeric_texts"]
+            eq_lim = (p["xlim"] == q["xlim"] and p["ylim"] == q["ylim"] and p["xscale"] == q["xscale"]
+                      and p["yscale"] == q["yscale"])
+            n = sum(c for _, c in p["points"])
+            status = "EQUAL" if (eq_pts and eq_rect and eq_txt) else "DIFFERENT"
+            ok &= status == "EQUAL"
+            lines.append(f"{stem:36s} {lab:5s} points={n:5d} arrays={'equal' if eq_pts else 'DIFFER'}"
+                         f" rects={'equal' if eq_rect else 'DIFFER'} numeric-text={'equal' if eq_txt else 'DIFFER'}"
+                         f" limits={'equal' if eq_lim else 'changed'}  source: {src}  -> {status}")
+            if not eq_txt:
+                lines.append(f"    texts before: {p['numeric_texts']}\n    texts after:  {q['numeric_texts']}")
+            if not eq_lim:
+                lines.append(f"    limits before: x{p['xlim']} y{p['ylim']}  after: x{q['xlim']} y{q['ylim']}")
+    lines += ["", "VERDICT: " + ("ALL PLOTTED DATA IDENTICAL (styling only)" if ok else "DATA DIFFERS -- see above")]
+    open(log, "w").write("\n".join(lines) + "\n")
+    print("\n".join(lines[-1:]))
+    return 0 if ok else 1
+
+
+if __name__ == "__main__":
+    if sys.argv[1] == "dump":
+        dump(sys.argv[2])
+    else:
+        sys.exit(compare(sys.argv[2], sys.argv[3], sys.argv[4]))
