@@ -1,6 +1,185 @@
-% references.bib — all entries verified against primary sources (arXiv abstract pages, CrossRef DOI metadata,
-% publisher pages) during the citation lock. See docs/CITATION_AUDIT.md for the source used per entry.
-% No TO VERIFY fields remain. docs/UNVERIFIED_REFERENCES.md records that none were unverifiable.
+% references.bib — every entry verified against a primary source during the literature/novelty audit of
+% 2026-10-09: CrossRef DOI metadata (publisher record) for every DOI, the arXiv API for preprints, and the full
+% text for every paper whose content a manuscript sentence relies on. See docs/CITATION_AUDIT.md (per-entry source
+% and per-sentence support) and docs/LITERATURE_NOVELTY_AUDIT.md (positioning). Keys are stable: existing keys
+% were kept even where the year changed on publication (zhang2025robust is now PRX Quantum 2026).
+% Grouped by role; within a group, chronological.
+
+% ---------------------------------------------------------------- foundations: model, superradiance, open systems
+@article{dicke1954coherence,
+  title   = {Coherence in Spontaneous Radiation Processes},
+  author  = {Dicke, R. H.},
+  journal = {Physical Review},
+  volume  = {93},
+  number  = {1},
+  pages   = {99--110},
+  year    = {1954},
+  doi     = {10.1103/PhysRev.93.99}
+}
+
+@article{tavis1968exact,
+  title   = {Exact Solution for an {$N$}-Molecule---Radiation-Field Hamiltonian},
+  author  = {Tavis, Michael and Cummings, Frederick W.},
+  journal = {Physical Review},
+  volume  = {170},
+  number  = {2},
+  pages   = {379--384},
+  year    = {1968},
+  doi     = {10.1103/PhysRev.170.379}
+}
+
+@article{lindblad1976generators,
+  title   = {On the generators of quantum dynamical semigroups},
+  author  = {Lindblad, G.},
+  journal = {Communications in Mathematical Physics},
+  volume  = {48},
+  number  = {2},
+  pages   = {119--130},
+  year    = {1976},
+  doi     = {10.1007/BF01608499}
+}
+
+@article{gorini1976completely,
+  title   = {Completely positive dynamical semigroups of {$N$}-level systems},
+  author  = {Gorini, Vittorio and Kossakowski, Andrzej and Sudarshan, E. C. G.},
+  journal = {Journal of Mathematical Physics},
+  volume  = {17},
+  number  = {5},
+  pages   = {821--825},
+  year    = {1976},
+  doi     = {10.1063/1.522979}
+}
+
+@article{gross1982superradiance,
+  title   = {Superradiance: An essay on the theory of collective spontaneous emission},
+  author  = {Gross, M. and Haroche, S.},
+  journal = {Physics Reports},
+  volume  = {93},
+  number  = {5},
+  pages   = {301--396},
+  year    = {1982},
+  doi     = {10.1016/0370-1573(82)90102-8}
+}
+
+@article{stitely2023quantum,
+  title   = {Quantum Fluctuation Dynamics of Dispersive Superradiant Pulses in a Hybrid Light-Matter System},
+  author  = {Stitely, Kevin C. and Finger, Fabian and Rosa-Medina, Rodrigo and Ferri, Francesco and Donner, Tobias and Esslinger, Tilman and Parkins, Scott and Krauskopf, Bernd},
+  journal = {Physical Review Letters},
+  volume  = {131},
+  pages   = {143604},
+  year    = {2023},
+  doi     = {10.1103/PhysRevLett.131.143604},
+  note    = {arXiv:2302.08078}
+}
+
+% ---------------------------------------------------------------- disorder / inhomogeneous ensembles
+@article{debnath2019collective,
+  title   = {Collective dynamics of inhomogeneously broadened emitters coupled to an optical cavity with narrow linewidth},
+  author  = {Debnath, Kamanasish and Zhang, Yuan and M{\o}lmer, Klaus},
+  journal = {Physical Review A},
+  volume  = {100},
+  pages   = {053821},
+  year    = {2019},
+  doi     = {10.1103/PhysRevA.100.053821},
+  note    = {arXiv:1904.04877}
+}
+
+@article{zens2019critical,
+  title   = {Critical phenomena and nonlinear dynamics in a spin ensemble strongly coupled to a cavity. {II}. {Semiclassical}-to-quantum boundary},
+  author  = {Zens, Matthias and Krimer, Dmitry O. and Rotter, Stefan},
+  journal = {Physical Review A},
+  volume  = {100},
+  pages   = {013856},
+  year    = {2019},
+  doi     = {10.1103/PhysRevA.100.013856},
+  note    = {arXiv:1903.06893}
+}
+
+@article{bychek2021superradiant,
+  title   = {Superradiant lasing in inhomogeneously broadened ensembles with spatially varying coupling},
+  author  = {Bychek, Anna and Hotter, Christoph and Plankensteiner, David and Ritsch, Helmut},
+  journal = {Open Research Europe},
+  volume  = {1},
+  pages   = {73},
+  year    = {2021},
+  doi     = {10.12688/openreseurope.13781.2},
+  note    = {arXiv:2105.11023}
+}
+
+@article{zeb2022analytical,
+  title   = {Analytical solution of the disordered {Tavis-Cummings} model and its {Fano} resonances},
+  author  = {Zeb, M. Ahsan},
+  journal = {Physical Review A},
+  volume  = {106},
+  pages   = {063720},
+  year    = {2022},
+  doi     = {10.1103/PhysRevA.106.063720},
+  note    = {arXiv:2208.11990}
+}
+
+@article{zhang2025robust,
+  title   = {Robust Superradiance and Spontaneous Spin Ordering in Disordered Waveguide Quantum Electrodynamics},
+  author  = {Zhang, Xin H. H. and Malz, Daniel and Rabl, Peter},
+  journal = {PRX Quantum},
+  volume  = {7},
+  pages   = {033034},
+  year    = {2026},
+  doi     = {10.1103/97jv-13r6},
+  note    = {arXiv:2510.13671; key kept from the preprint citation}
+}
+
+@misc{hanamura2026inhomogeneous,
+  title        = {Inhomogeneous Light-Matter Coupling as a Resource for Noiseless Quantum Memories},
+  author       = {Hanamura, Fumiya and Bao, Sicheng and Yoo, Jie Lerk and Auff{\`e}ves, Alexia and Touzard, Steven},
+  year         = {2026},
+  howpublished = {arXiv:2605.26783},
+  note         = {preprint (v4, 2026-08-24); no journal reference as of 2026-10-09; supplement only (Result 23 context)}
+}
+
+% ---------------------------------------------------------------- cumulant / cluster expansions
+@article{kubo1962generalized,
+  title   = {Generalized Cumulant Expansion Method},
+  author  = {Kubo, Ryogo},
+  journal = {Journal of the Physical Society of Japan},
+  volume  = {17},
+  number  = {7},
+  pages   = {1100--1120},
+  year    = {1962},
+  doi     = {10.1143/JPSJ.17.1100}
+}
+
+@article{kira2008cluster,
+  title   = {Cluster-expansion representation in quantum optics},
+  author  = {Kira, M. and Koch, S. W.},
+  journal = {Physical Review A},
+  volume  = {78},
+  pages   = {022102},
+  year    = {2008},
+  doi     = {10.1103/PhysRevA.78.022102}
+}
+
+@article{henschel2010cavity,
+  title   = {Cavity {QED} with an ultracold ensemble on a chip: Prospects for strong magnetic coupling at finite temperatures},
+  author  = {Henschel, Kathrin and Majer, Johannes and Schmiedmayer, J{\"o}rg and Ritsch, Helmut},
+  journal = {Physical Review A},
+  volume  = {82},
+  pages   = {033810},
+  year    = {2010},
+  doi     = {10.1103/PhysRevA.82.033810},
+  note    = {arXiv:1007.0116}
+}
+
+@article{sanchezbarquilla2020cumulant,
+  title   = {Cumulant expansion for the treatment of light--matter interactions in arbitrary material structures},
+  author  = {S{\'a}nchez-Barquilla, M. and Silva, R. E. F. and Feist, J.},
+  journal = {The Journal of Chemical Physics},
+  volume  = {152},
+  number  = {3},
+  pages   = {034108},
+  year    = {2020},
+  doi     = {10.1063/1.5138937},
+  note    = {arXiv:1911.07037}
+}
 
 @article{plankensteiner2022quantumcumulants,
   title   = {{QuantumCumulants.jl}: A {Julia} framework for generalized mean-field equations in open quantum systems},
@@ -10,6 +189,29 @@
   pages   = {617},
   year    = {2022},
   doi     = {10.22331/q-2022-01-04-617}
+}
+
+@article{fowlerwright2023determining,
+  title   = {Determining the validity of cumulant expansions for central spin models},
+  author  = {Fowler-Wright, Piper and Arnard{\'o}ttir, Krist{\'i}n B. and Kirton, Peter and Lovett, Brendon W. and Keeling, Jonathan},
+  journal = {Physical Review Research},
+  volume  = {5},
+  pages   = {033148},
+  year    = {2023},
+  doi     = {10.1103/PhysRevResearch.5.033148},
+  note    = {arXiv:2303.04410}
+}
+
+@article{holzinger2025symmetry,
+  title   = {Symmetry-based efficient simulation of higher-order coherences in quantum many-body superradiance},
+  author  = {Holzinger, Raphael and Rubies-Bigorda, Oriol and Yelin, Susanne F. and Ritsch, Helmut},
+  journal = {Physical Review Research},
+  volume  = {7},
+  number  = {3},
+  pages   = {033203},
+  year    = {2025},
+  doi     = {10.1103/zs9x-9x6f},
+  note    = {arXiv:2409.02790}
 }
 
 @article{fasser2025benchmarking,
@@ -25,84 +227,127 @@
 
 @article{freter2025dynamical,
   title   = {Theory of dynamical superradiance in organic materials},
-  author  = {Freter, Lukas and Fowler-Wright, Piper and Cuerda, Javier and Lovett, Brendon W. and Keeling, Jonathan and Törmä, Päivi},
+  author  = {Freter, Lukas and Fowler-Wright, Piper and Cuerda, Javier and Lovett, Brendon W. and Keeling, Jonathan and T{\"o}rm{\"a}, P{\"a}ivi},
   journal = {Nanophotonics},
   volume  = {14},
-  pages   = {5323},
+  number  = {27},
+  pages   = {5323--5336},
   year    = {2025},
   doi     = {10.1515/nanoph-2025-0427},
   note    = {arXiv:2509.03067}
 }
 
-@article{egenlauf2026capturing,
-  title   = {Capturing reduced-order quantum many-body dynamics out of equilibrium via neural ordinary differential equations},
-  author  = {Egenlauf, Patrick and Březinová, Iva and Andergassen, Sabine and Klopotek, Miriam},
-  journal = {Machine Learning: Science and Technology},
-  volume  = {7},
-  pages   = {025062},
-  year    = {2026},
-  doi     = {10.1088/2632-2153/ae57f8},
-  note    = {arXiv:2512.13913}
-}
-
-@misc{hanamura2026inhomogeneous,
-  title        = {Inhomogeneous Light-Matter Coupling as a Resource for Noiseless Quantum Memories},
-  author       = {Hanamura, Fumiya and Bao, Sicheng and Yoo, Jie Lerk and Auffèves, Alexia and Touzard, Steven},
-  year         = {2026},
-  howpublished = {arXiv:2605.26783},
-  note         = {preprint; no journal reference at time of citation}
-}
-
-@article{bychek2021superradiant,
-  title   = {Superradiant lasing in inhomogeneously broadened ensembles with spatially varying coupling},
-  author  = {Bychek, Anna and Hotter, Christoph and Plankensteiner, David and Ritsch, Helmut},
-  journal = {Open Research Europe},
-  volume  = {1},
-  pages   = {73},
-  year    = {2021},
-  doi     = {10.12688/openreseurope.13781.2},
-  note    = {arXiv:2105.11023}
-}
-
-@article{fowlerwright2023determining,
-  title   = {Determining the validity of cumulant expansions for central spin models},
-  author  = {Fowler-Wright, Piper and Arnardóttir, Kristín B. and Kirton, Peter and Lovett, Brendon W. and Keeling, Jonathan},
-  journal = {Physical Review Research},
-  volume  = {5},
-  pages   = {033148},
-  year    = {2023},
-  doi     = {10.1103/PhysRevResearch.5.033148},
-  note    = {arXiv:2303.04410}
-}
-
-@misc{zhang2025robust,
-  title        = {Robust Superradiance and Spontaneous Spin Ordering in Disordered Waveguide Quantum Electrodynamics},
-  author       = {Zhang, Xin H. H. and Malz, Daniel and Rabl, Peter},
+@misc{kerber2025cumulant,
+  title        = {The Cumulant Expansion Approach: The Good, The Bad and The Ugly},
+  author       = {Kerber, Johannes and Ritsch, Helmut and Ostermann, Laurin},
   year         = {2025},
-  howpublished = {arXiv:2510.13671},
-  note         = {preprint; no journal reference at time of citation}
+  howpublished = {arXiv:2511.20115},
+  note         = {preprint (v2, 2026-09-04); no journal reference as of 2026-10-09}
 }
 
-@article{zeb2022analytical,
-  title   = {Analytical solution of the disordered {Tavis-Cummings} model and its {Fano} resonances},
-  author  = {Zeb, M. Ahsan},
+% ---------------------------------------------------------------- reference methods and software
+@article{dalibard1992wave,
+  title   = {Wave-function approach to dissipative processes in quantum optics},
+  author  = {Dalibard, Jean and Castin, Yvan and M{\o}lmer, Klaus},
+  journal = {Physical Review Letters},
+  volume  = {68},
+  number  = {5},
+  pages   = {580--583},
+  year    = {1992},
+  doi     = {10.1103/PhysRevLett.68.580}
+}
+
+@article{daley2014quantum,
+  title   = {Quantum trajectories and open many-body quantum systems},
+  author  = {Daley, Andrew J.},
+  journal = {Advances in Physics},
+  volume  = {63},
+  number  = {2},
+  pages   = {77--149},
+  year    = {2014},
+  doi     = {10.1080/00018732.2014.933502}
+}
+
+@article{verstraete2004matrix,
+  title   = {Matrix Product Density Operators: Simulation of Finite-Temperature and Dissipative Systems},
+  author  = {Verstraete, F. and Garc{\'i}a-Ripoll, J. J. and Cirac, J. I.},
+  journal = {Physical Review Letters},
+  volume  = {93},
+  pages   = {207204},
+  year    = {2004},
+  doi     = {10.1103/PhysRevLett.93.207204}
+}
+
+@article{zwolak2004mixed,
+  title   = {Mixed-State Dynamics in One-Dimensional Quantum Lattice Systems: A Time-Dependent Superoperator Renormalization Algorithm},
+  author  = {Zwolak, Michael and Vidal, Guifr{\'e}},
+  journal = {Physical Review Letters},
+  volume  = {93},
+  pages   = {207205},
+  year    = {2004},
+  doi     = {10.1103/PhysRevLett.93.207205}
+}
+
+@article{kramer2018quantumoptics,
+  title   = {{QuantumOptics.jl}: A {Julia} framework for simulating open quantum systems},
+  author  = {Kr{\"a}mer, Sebastian and Plankensteiner, David and Ostermann, Laurin and Ritsch, Helmut},
+  journal = {Computer Physics Communications},
+  volume  = {227},
+  pages   = {109--116},
+  year    = {2018},
+  doi     = {10.1016/j.cpc.2018.02.004}
+}
+
+@article{hauschild2018tenpy,
+  title   = {Efficient numerical simulations with Tensor Networks: Tensor Network {Python} ({TeNPy})},
+  author  = {Hauschild, Johannes and Pollmann, Frank},
+  journal = {SciPost Physics Lecture Notes},
+  pages   = {5},
+  year    = {2018},
+  doi     = {10.21468/SciPostPhysLectNotes.5}
+}
+
+@article{shammah2018open,
+  title   = {Open quantum systems with local and collective incoherent processes: Efficient numerical simulations using permutational invariance},
+  author  = {Shammah, Nathan and Ahmed, Shahnawaz and Lambert, Neill and De Liberato, Simone and Nori, Franco},
   journal = {Physical Review A},
-  volume  = {106},
-  pages   = {063720},
-  year    = {2022},
-  doi     = {10.1103/PhysRevA.106.063720},
-  note    = {arXiv:2208.11990}
+  volume  = {98},
+  pages   = {063815},
+  year    = {2018},
+  doi     = {10.1103/PhysRevA.98.063815}
 }
 
-@article{verstraelen2023quantum,
-  title   = {Quantum and classical correlations in open quantum-spin lattices via truncated-cumulant trajectories},
-  author  = {Verstraelen, Wouter and Huybrechts, Dolf and Roscilde, Tommaso and Wouters, Michiel},
-  journal = {PRX Quantum},
-  volume  = {4},
-  pages   = {030304},
-  year    = {2023},
-  doi     = {10.1103/PRXQuantum.4.030304},
-  note    = {arXiv:2209.13377}
+@article{lambert2026qutip,
+  title   = {{QuTiP} 5: The Quantum Toolbox in {Python}},
+  author  = {Lambert, Neill and Gigu{\`e}re, Eric and Menczel, Paul and Li, Boxi and Hopf, Patrick and Su{\'a}rez, Gerardo and Gali, Marc and Lishman, Jake and Gadhvi, Rushiraj and Agarwal, Rochisha and Galicia, Asier and Shammah, Nathan and Nation, Paul and Johansson, J. R. and Ahmed, Shahnawaz and Cross, Simon and Pitchford, Alexander and Nori, Franco},
+  journal = {Physics Reports},
+  volume  = {1153},
+  pages   = {1--62},
+  year    = {2026},
+  doi     = {10.1016/j.physrep.2025.10.001},
+  note    = {arXiv:2412.04705}
+}
+
+% ---------------------------------------------------------------- learned closures and learned reduced dynamics
+@article{ma2019model,
+  title   = {Model Reduction with Memory and the Machine Learning of Dynamical Systems},
+  author  = {Ma, Chao and Wang, Jianchun and E, Weinan},
+  journal = {Communications in Computational Physics},
+  volume  = {25},
+  number  = {4},
+  pages   = {947--962},
+  year    = {2019},
+  doi     = {10.4208/cicp.OA-2018-0269}
+}
+
+@article{duraisamy2019turbulence,
+  title   = {Turbulence Modeling in the Age of Data},
+  author  = {Duraisamy, Karthik and Iaccarino, Gianluca and Xiao, Heng},
+  journal = {Annual Review of Fluid Mechanics},
+  volume  = {51},
+  pages   = {357--377},
+  year    = {2019},
+  doi     = {10.1146/annurev-fluid-010518-040547}
 }
 
 @article{huang2022machine,
@@ -114,4 +359,36 @@
   year    = {2022},
   doi     = {10.1016/j.jcp.2022.110941},
   note    = {arXiv:2105.05690}
+}
+
+@article{burles2026machine,
+  title   = {The machine learning approach to moment closure relations for plasma: a review},
+  author  = {Burles, Samuel and Camporeale, Enrico},
+  journal = {Journal of Plasma Physics},
+  volume  = {92},
+  number  = {4},
+  pages   = {E100},
+  year    = {2026},
+  doi     = {10.1017/S0022377826102013},
+  note    = {arXiv:2511.22486}
+}
+
+@article{egenlauf2026capturing,
+  title   = {Capturing reduced-order quantum many-body dynamics out of equilibrium via neural ordinary differential equations},
+  author  = {Egenlauf, Patrick and B{\v{r}}ezinov{\'a}, Iva and Andergassen, Sabine and Klopotek, Miriam},
+  journal = {Machine Learning: Science and Technology},
+  volume  = {7},
+  number  = {2},
+  pages   = {025062},
+  year    = {2026},
+  doi     = {10.1088/2632-2153/ae57f8},
+  note    = {arXiv:2512.13913}
+}
+
+@misc{lagnese2026neural,
+  title        = {Neural network modeling of many-body super- and sub-radiant dynamics},
+  author       = {Lagnese, Gianluca and Brunner, Laurin and Rossi, Lorenzo and Chang, Darrick and Schmitt, Markus and Lenar{\v{c}}i{\v{c}}, Zala},
+  year         = {2026},
+  howpublished = {arXiv:2605.04640},
+  note         = {preprint (v1, 2026-05-06); no journal reference as of 2026-10-09}
 }
