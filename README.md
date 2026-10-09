@@ -30,7 +30,7 @@ that *didn't* survive is kept in the record.
 > closure **runs away** — its integration triggers a divergence guard. A frozen, physics-routed **learned closure
 > (V7)**, measured against exact (and, at M = 12 with disorder, quantum-trajectory) references:
 >
-> - **Small M, original cells:** ≈ **±0.7%** at M ≤ 5 (24 cells; the disorder draw is held out, the parameters
+> - **Small M, original cells:** within **0.8%** at M ≤ 5 (24 cells; the disorder draw is held out, the parameters
 >   are on or just outside the training grid).
 > - **Held-out physical parameters (pre-registered):** at M = 5, on 30 parameter points absent from training
 >   (interpolation and one- and two-axis extrapolation, both branches), V7 beats second order in **30/30**
@@ -57,7 +57,7 @@ Signed burst-peak error vs. an exact master-equation solve, in the evaluated dis
 | **2nd-order cumulant** | overshoots ≈ **+29%** | stable | no high-order engine to construct |
 | κ4 = 0 (3rd-order) | undershoots ≈ **−25% to −28%** | runaway growth (guard triggered) in the low-loss pocket | heavier than 2nd; M = 4 pocket case failed |
 | κ5 = 0 (4th-order) | overshoots, then **runaway growth** | guard triggered in all M = 3 cells (both regimes) | substantial, highly variable at M = 3 |
-| **V7 (learned)** | ≈ **±0.7%** at M ≤ 5, degrading ≈ 0.9%/emitter (≈ 8–9% at M = 16) | stable in these cells (M ≤ 5); see *Scope* for its physicality envelope | no high-order engine to construct; per-rollout time not near second order |
+| **V7 (learned)** | within **0.8%** at M ≤ 5, degrading ≈ 0.9%/emitter (≈ 8–9% at M = 16) | stable in these cells (M ≤ 5); see *Scope* for its physicality envelope | no high-order engine to construct; per-rollout time not near second order |
 
 Among the tested zero-next-cumulant truncations through fourth order, none produced a stable, accurate burst
 closure in these cells. *(Scope: rows are exact-referenced at M ≤ 5, on disorder draws held out from training,
@@ -74,7 +74,8 @@ larger-M figures are against the references listed under* Scope.)
 on the untouched disorder draws 32/33/34. The far-M column is against quantum-trajectory references with stated
 Monte-Carlo error; the others are against exact solves. V7 (right column) carries the lowest error and is stable
 in every cell of this figure. Far-M stability is draw-dependent: on an earlier draw set (26–28), V7's memoryless
-branch was unstable on one draw at M = 9 and 10. The on-figure tag "bit-identical" means V7 exactly reproduces its own
+branch was unstable on one draw at M = 9 and 10, and it failed all four development rollouts (draws 29/31); its
+cumulative far-M ledger is about 19/26 stable rollouts (Result 20). The on-figure tag "bit-identical" means V7 exactly reproduces its own
 routed frozen branch (max diff = 0.0; see `src/evaluation/eval_v7.py`), not the scalable-vs-dense
 machine-precision (≤ 5e-14) gate.*
 
@@ -112,7 +113,7 @@ cells, one machine — full method and caveats in
 
 V7 reuses the second-order engine's ≈ 3 s build and adds a learned per-step evaluation instead of constructing a
 higher-order engine, so its median **total** (≈ 4.6 s) sits close to second order (≈ 3.1 s) and roughly **4.5×**
-and **18×** below the κ4 = 0 (≈ 21 s) and κ5 = 0 (≈ 81 s) truncations. Its **per-rollout** cost (≈ 1.5 s) is ≈ 76×
+and **18×** below the κ4 = 0 (≈ 21 s) and κ5 = 0 (≈ 81 s) truncations. Its **per-rollout** cost (≈ 1.5 s) is ≈ 75×
 the second-order rollout — measured at M = 3 on one machine, so this is a build-dominated total-time advantage,
 **not** a "cheap," "fast," or "near-second-order" claim.
 

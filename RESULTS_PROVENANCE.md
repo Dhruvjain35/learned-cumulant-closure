@@ -153,3 +153,7 @@ explicit RK45 is limited by the fast-rotating charged components. C = 0 rows rep
 | Current mechanism code reproduces Result 25 line for line (M = 4, seeds 37–39) | `src/analysis/mechanism_m5.py --regression` | 37, 38, 39 | `results/mechanism_m4_regression.log` | identical to `results/mechanism.log` (21/21 lines) |
 | Aaz dominant (D share median 0.708 POCKET, 0.620 CONTROL), a+z non-negligible (0.292, 0.380); both load-bearing under ablation (CONTROL losses 0.81 / 0.31; POCKET removal destabilizes V7 in 11/12 ablations); verdict CONFIRMED | `src/analysis/mechanism_m5.py --campaign` (definitions from `src/analysis/mechanism.py`, unchanged) | 500–505, paired across regimes | `results/mechanism_m5.log`, `.npz`, `_fig.png` | C1–C4 in both regimes (PROTOCOL P5) |
 | Only Aaz and a+z can carry D_f (structural: charged κ3 ≡ 0; +−z, zzz uncoupled) | engine coefficients, recorded in PROTOCOL P5; checked per cell in the campaign log | — | `results/mechanism_m5.log` (share outside the two ≤ 6e-16) | — |
+
+**Dated note (2026-10-09).** Row 8's "≈ ±0.7%" is a per-M mean over three draws. The per-cell maximum over the 24
+cells is 0.79% (POCKET, M = 4, draw 51; `results/burst_pred_exact.npz`), and the manuscript now says "within 0.8%".
+See FINDINGS D9 and `docs/FINAL_NUMERICAL_CLAIM_AUDIT.md`.

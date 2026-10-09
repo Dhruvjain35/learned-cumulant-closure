@@ -57,7 +57,7 @@ Shared style: `src/figures/pubstyle.py`.
 - **Fig 3c.** The low-loss σ = 0.15 M = 12 cell reads 3/4: Result 30 seeds 7–9 give 2/3, and Result 41 seed 50 adds 1/1. Normal-loss σ = 0.15 was measured only at M = 12 (Result 41). Every other cell in that row reads "not measured", not "physical".
 - **Fig 4c.** Draws, statistic and scope differ between the two points: M = 4 is the aggregate over seeds 37–39 as reported in the Result 25 log, M = 5 is the median over seeds 500–505. Because of that the panel is read as "the split reproduces", not as a paired comparison. a+z is 1 − Aaz up to ~1e-15 (structural check in Result 42).
 - **Fig 4d.** Low loss: Aaz ablation is unstable in 6/6 draws, and a+z in 5/6 (one finite at +0.279). Normal loss: everything is finite, Aaz ≈ 0.81 and a+z ≈ 0.31. No infinite value is drawn as a bar.
-- **Fig 5b.** V7 rollout is ≈ 76× the second-order rollout (1.5 s vs 0.02 s). V7's total of 4.6 s is close to second order's 3.1 s because the shared engine build dominates. That is a statement about build cost, not a claim that V7 costs nothing.
+- **Fig 5b.** V7 rollout is ≈ 75× the second-order rollout (1.5 s vs 0.02 s). V7's total of 4.6 s is close to second order's 3.1 s because the shared engine build dominates. That is a statement about build cost, not a claim that V7 costs nothing.
 
 ## Comparison with the earlier figures (same data, regenerated)
 

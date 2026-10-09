@@ -1975,3 +1975,24 @@ WHAT IT DOES NOT ESTABLISH.
 - Anything beyond M = 5, the two regimes, the fully inverted initial state, Gaussian disorder and γ↓ = 0.02.
 - The original Result 25 is unchanged and remains an exploratory M = 4 analysis. This result is the separate,
   prospective test it motivated.
+
+## Dated notes (continued)
+
+**D9 (2026-10-09) — transcription corrections found by the final numerical claim audit.** No result changes;
+these are quotations of committed artifacts that were wrong or imprecise.
+- **D6's "worst signed V7 error over the 24 cells is 0.74%" is wrong.** Recomputed per cell from
+  `results/burst_pred_exact.npz`, the largest |V7 error| over the 24 Result 24 cells is **0.79%**
+  (POCKET, M = 4, draw 51). The 0.74% is the POCKET M = 3 draw-50 cell, the illustrative cell of Fig. 2a. The
+  per-M means over three draws printed in `results/burst_pred_exact.log` stay ≤ 0.7%, which is where "≈ ±0.7%"
+  came from. The correct per-cell statement is "within 0.8% (largest 0.79%)".
+- **Plain second order at σ = 0, M = 5–16 spans 28.4–31.4%** (POCKET M = 5 is 28.4%), not "29–31%" as quoted in
+  Result 36's summary line.
+- **V7 rollout / second-order rollout is ≈ 75×** (ratio of cell medians 74.6; median of per-cell ratios 75.2).
+  The "≈ 76×" in `results/runtime_baseline_comparison.md` divides the rounded display values 1.52 s / 0.020 s.
+- **The EOM identity gate's largest residual is 4.6e-14** (t = 0 rows of `results/eom_identity.log`), so
+  "≈ 1e-14" understates it; "≤ 5e-14" is the accurate bound.
+The manuscript, README, `MANUSCRIPT_EVIDENCE_MAP.md` and `FIGURE_PROVENANCE.md` were corrected on 2026-10-09
+(see `FINAL_NUMERICAL_CLAIM_AUDIT.md`). Earlier audit documents are left as written.
+- **Far-M ledger omitted from the manuscript's limitation bullet.** §9 cited Result 19 (1/3 draws unstable) and
+  Result 20's final draws (stable) but not Result 20's development draws 29/31 (memoryless branch 0/4 stable) or
+  the cumulative ledger (V4 ≈ 19/26, V6 20/20). The manuscript and README now state the full ledger.
