@@ -9,11 +9,16 @@ already near-exact -> the neural-closure idea has little to fix. If they are sub
 
 Also: a Fock-cutoff convergence check, so no conclusion rests on truncation error.
 """
+import os
+import sys
+
 import numpy as np
 import qutip as qt
 from exact_tc import build_ops, build_H, collapse_ops, draw_disorder, measure, bmf_indices
 
-PY = "/Users/dhruvjain/polariton-research/sim/golden/.venv/bin/python"
+# Interpreter for any subprocess use: configurable, defaults to the running one. (Was a hard-coded local path;
+# it is not used by the computation in this file.)
+PY = os.environ.get("LCC_PYTHON", sys.executable)
 
 
 def E(op, rho):
