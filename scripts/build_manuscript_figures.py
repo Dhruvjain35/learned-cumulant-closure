@@ -105,165 +105,130 @@ def jitter(n, w=0.18, seed=0):
 def fig1():
     from training_support import TRAIN
     from matplotlib.patches import Patch
-    fig = plt.figure(figsize=(S.DOUBLE, 6.9))
-    gs = fig.add_gridspec(2, 2, width_ratios=[1, 1], height_ratios=[1, 1.15], hspace=0.2, wspace=0.34)
+    fig = plt.figure(figsize=(S.DOUBLE + 0.4, 5.9))
+    gs = fig.add_gridspec(2, 2, width_ratios=[1, 1], height_ratios=[1, 1.12], hspace=0.32, wspace=0.3)
     # (a) model schematic
-    ax = fig.add_subplot(gs[0, 0]); ax.set_xlim(0, 1); ax.set_ylim(0, 1); ax.axis("off"); S.panel(ax, "a", x=-0.02)
-    for xm, th in ((0.17, (300, 60)), (0.83, (120, 240))):
-        ax.add_patch(Arc((xm, 0.6), 0.16, 0.5, theta1=th[0], theta2=th[1], lw=2.2, color=S.INK2))
-    xs = np.linspace(0.3, 0.7, 5)
-    ys = 0.6 + 0.06 * np.array([1, -1, 0.5, -0.6, 0.9])
+    ax = fig.add_subplot(gs[0, 0]); ax.set_xlim(0, 1); ax.set_ylim(0, 1); ax.axis("off"); S.panel(ax, "a", x=-0.02, y=1.0)
+    for xm, th in ((0.2, (300, 60)), (0.8, (120, 240))):
+        ax.add_patch(Arc((xm, 0.66), 0.14, 0.44, theta1=th[0], theta2=th[1], lw=2.2, color=S.INK2))
+    xs = np.linspace(0.32, 0.68, 5)
+    ys = 0.66 + 0.055 * np.array([1, -1, 0.5, -0.6, 0.9])
     for x, y in zip(xs, ys):
-        ax.add_patch(Circle((x, y), 0.026, fc=S.BLUE, ec=S.INK, lw=0.6))
-    ax.text(0.5, 0.97, "one cavity mode $a$ + $M$ two-level emitters\nfrequencies $\\omega_i$ with Gaussian disorder σ",
-            ha="center", va="top", fontsize=S.fs(7.2))
-    arrow(ax, 0.88, 0.6, 0.97, 0.6); ax.text(0.925, 0.65, "κ", ha="center", fontsize=S.fs(9))
-    ax.annotate("", xy=(xs[1], ys[1] - 0.12), xytext=(xs[1], ys[1] - 0.035),
+        ax.add_patch(Circle((x, y), 0.024, fc=S.BLUE, ec=S.INK, lw=0.6))
+    ax.text(0.5, 0.97, "cavity mode $a$, $M$ emitters, disorder σ", ha="center", va="top", fontsize=S.fs(9))
+    arrow(ax, 0.86, 0.66, 0.96, 0.66); ax.text(0.91, 0.70, "κ", ha="center", fontsize=S.fs(9))
+    ax.annotate("", xy=(xs[1], ys[1] - 0.12), xytext=(xs[1], ys[1] - 0.033),
                 arrowprops=dict(arrowstyle="-|>", lw=0.8, color=S.INK2))
-    ax.text(xs[1] + 0.025, ys[1] - 0.14, "γ↓", fontsize=S.fs(8.5))
-    ax.text(xs[3] - 0.01, ys[3] - 0.14, "γφ", fontsize=S.fs(8.5))
-    ax.text(0.5, 0.29, "$g_i = g_c/\\sqrt{M}$ (collective coupling fixed)\n"
-            "start: cavity vacuum, all emitters excited\n"
-            "observable: burst peak $F_{\\rm peak} = \\kappa\\,\\max_t\\langle a^\\dagger a\\rangle$",
-            ha="center", va="top", fontsize=S.fs(7.2), linespacing=1.5)
+    ax.text(xs[1] + 0.025, ys[1] - 0.15, "γ↓", fontsize=S.fs(9))
+    ax.text(xs[3] - 0.01, ys[3] - 0.15, "γφ", fontsize=S.fs(9))
+    ax.text(0.5, 0.31, "$g_i = g_c/\\sqrt{M}$\n"
+            "initial state: vacuum, all emitters excited\n"
+            "observable: $F_{\\rm peak} = \\kappa\\,\\max_t\\langle a^\\dagger a\\rangle$",
+            ha="center", va="top", fontsize=S.fs(9), linespacing=1.55)
     # (b) closure problem
-    ax = fig.add_subplot(gs[0, 1]); ax.set_xlim(0, 1); ax.set_ylim(-0.03, 1.02); ax.axis("off"); S.panel(ax, "b", x=-0.02)
-    box(ax, 0.0, 0.74, 0.46, 0.22, "tracked moments\n(orders 1 and 2)")
-    box(ax, 0.54, 0.74, 0.46, 0.22, "their exact\nequations need\norder-3 moments")
-    arrow(ax, 0.46, 0.85, 0.54, 0.85)
-    box(ax, 0.0, 0.36, 0.46, 0.28, "second order:\nset connected\nκ3 = 0 (≈ +29%\nburst overshoot)", fc="#fbeee8")
-    box(ax, 0.54, 0.36, 0.46, 0.28, "learned closure:\npredict the\nmissing connected\nκ3 in the ODE", fc="#eaf2fb")
-    arrow(ax, 0.70, 0.74, 0.30, 0.64); arrow(ax, 0.77, 0.74, 0.77, 0.64)
-    box(ax, 0.02, 0.0, 0.96, 0.24, "order-3 moment = 2nd-order\nfactorization + κ3\nsame engine; only κ3 is supplied")
-    arrow(ax, 0.23, 0.36, 0.35, 0.24); arrow(ax, 0.77, 0.36, 0.65, 0.24)
+    ax = fig.add_subplot(gs[0, 1]); ax.set_xlim(0, 1); ax.set_ylim(0, 1); ax.axis("off"); S.panel(ax, "b", x=-0.02, y=1.0)
+    box(ax, 0.0, 0.70, 0.44, 0.2, "tracked moments\n(orders 1 and 2)")
+    box(ax, 0.56, 0.70, 0.44, 0.2, "exact equations\nneed order 3")
+    arrow(ax, 0.44, 0.80, 0.56, 0.80)
+    box(ax, 0.0, 0.37, 0.44, 0.2, "second order:\nκ3 = 0 (≈ +29%)", fc="#fbeee8")
+    box(ax, 0.56, 0.37, 0.44, 0.2, "learned closure:\npredicts κ3", fc="#eaf2fb")
+    arrow(ax, 0.66, 0.70, 0.30, 0.57); arrow(ax, 0.78, 0.70, 0.78, 0.57)
+    box(ax, 0.0, 0.04, 1.0, 0.2, "order-3 moment = factorization + κ3\n(same second-order engine)")
+    arrow(ax, 0.22, 0.37, 0.34, 0.24); arrow(ax, 0.78, 0.37, 0.66, 0.24)
     # (c) architecture
-    ax = fig.add_subplot(gs[1, 0]); ax.set_xlim(0, 1); ax.set_ylim(0, 1); ax.axis("off"); S.panel(ax, "c", x=-0.02)
-    feats = ["lower moments of\nthe monomial's\nown factors", "site detunings Δ/κ",
-             "intensive context:\nn/M, ⟨σz⟩, coherence\nmagnitude", "regime: $g_c/\\kappa$, κ, γφ/κ",
-             "memory traces of\ncontext (memory-\naware branch only)"]
-    hs = [0.17, 0.09, 0.17, 0.09, 0.17]
-    y0 = 0.98
-    for t, h in zip(feats, hs):
+    ax = fig.add_subplot(gs[1, 0]); ax.set_xlim(0, 1); ax.set_ylim(0, 1); ax.axis("off"); S.panel(ax, "c", x=-0.02, y=1.0)
+    feats = ["own-factor moments", "detunings Δ/κ", "intensive context", "regime ratios", "memory traces*"]
+    h, gap, y0 = 0.12, 0.055, 0.9
+    for t in feats:
         y0 -= h
-        box(ax, 0.0, y0, 0.50, h, t, fc="#f7f6f2")
-        arrow(ax, 0.50, y0 + h / 2, 0.58, 0.55)
-        y0 -= 0.03
-    box(ax, 0.58, 0.40, 0.25, 0.30, "one shared\nMLP per\ncumulant\ntype", fc="#eaf2fb")
-    arrow(ax, 0.83, 0.55, 0.87, 0.55)
-    box(ax, 0.87, 0.47, 0.13, 0.16, "κ3")
-    ax.text(0.79, 0.34, "2×128 ReLU;\noutput clipped\nto training\nrange; same\nnetwork for\nevery site\nand every M",
-            ha="center", va="top", fontsize=S.fs(6.3), color=S.INK2)
+        box(ax, 0.0, y0, 0.5, h, t, fc="#f7f6f2")
+        arrow(ax, 0.5, y0 + h / 2, 0.58, 0.5)
+        y0 -= gap
+    box(ax, 0.58, 0.38, 0.29, 0.24, "shared MLP\n2×128 ReLU", fc="#eaf2fb")
+    arrow(ax, 0.87, 0.5, 0.9, 0.5)
+    box(ax, 0.9, 0.42, 0.1, 0.16, "κ3")
+    ax.text(0.0, 0.0, "*memory-aware branch only", ha="left", va="bottom", fontsize=S.fs(9), color=S.INK2)
     # (d) router + training support in the (kappa, gamma_phi) plane
-    ax = fig.add_subplot(gs[1, 1]); S.panel(ax, "d", x=-0.2)
+    ax = fig.add_subplot(gs[1, 1]); S.panel(ax, "d", x=-0.2, y=1.0)
     router = json.load(open("portable_v7/router.json"))
     kmax, gmax = router["kappa_max"], router["gamma_phi_max"]
     ax.add_patch(Rectangle((0.018, 0.0), kmax - 0.018, gmax, fc="#eaf2fb", ec=S.BLUE, lw=0.9, zorder=0))
     kg = sorted({(t[1], t[2]) for t in TRAIN})
-    ax.scatter([k for k, g in kg], [g for k, g in kg], marker="o", s=26, c=S.INK2, zorder=3)
+    ax.scatter([k for k, g in kg], [g for k, g in kg], marker="o", s=22, c=S.INK2, zorder=3)
     cells = json.load(open("results/heldout_param_cells.json"))["cells"]
     ax.scatter([c["kappa"] for c in cells], [c["gamma_phi"] for c in cells], marker="o", s=S.MS, facecolors=S.light(S.BLUE),
                edgecolors=S.BLUE, linewidths=0.9, zorder=4)
-    ax.scatter([0.03, 0.15], [0.02, 0.02], marker="*", s=110, c=S.INK, zorder=5)
+    ax.scatter([0.03, 0.15], [0.02, 0.02], marker="*", s=120, c=S.INK, zorder=5)
     ax.set_xscale("log"); ax.set_xlim(0.018, 0.5); ax.set_ylim(0, 0.13)
     ax.set_xticks([0.02, 0.05, 0.1, 0.2, 0.5]); ax.set_xticklabels(["0.02", "0.05", "0.1", "0.2", "0.5"])
     ax.xaxis.set_minor_formatter(plt.NullFormatter())
     ax.set_xlabel("cavity loss κ"); ax.set_ylabel("pure dephasing γφ")
-    ax.set_title("fixed router, decided once at t = 0", fontsize=S.fs(7.8))
-    ax.legend(handles=[Patch(fc="#eaf2fb", ec=S.BLUE, label="memory-aware branch region"),
-                       Patch(fc="white", ec=S.INK2, label="memoryless branch elsewhere"),
-                       Line2D([], [], ls="", marker="o", mfc=S.INK2, mec=S.INK2, ms=5, label="training (κ, γφ)"),
-                       Line2D([], [], ls="", marker="o", mfc=S.light(S.BLUE), mec=S.BLUE, ms=6, label="held-out cells (Result 40)"),
-                       Line2D([], [], ls="", marker="*", color=S.INK, ms=9, label="low / normal loss headline cells")],
-              loc="upper center", bbox_to_anchor=(0.45, -0.17), ncol=1, fontsize=S.fs(6.3), handletextpad=0.4)
+    ax.legend(handles=[Patch(fc="#eaf2fb", ec=S.BLUE, label="memory-aware region"),
+                       Line2D([], [], ls="", marker="o", mfc=S.INK2, mec=S.INK2, ms=5, label="training"),
+                       Line2D([], [], ls="", marker="o", mfc=S.light(S.BLUE), mec=S.BLUE, ms=6, label="held-out (Result 40)"),
+                       Line2D([], [], ls="", marker="*", color=S.INK, ms=9, label="headline cells")],
+              loc="upper center", bbox_to_anchor=(0.45, -0.24), ncol=2, fontsize=S.fs(9), handletextpad=0.4,
+              columnspacing=1.0)
     S.save(fig, "fig1_problem_method")
 
 
 # ------------------------------------------------------------------ Figure 2: accuracy and parameter transfer
 def fig2():
-    fig = plt.figure(figsize=(S.DOUBLE, 6.6))
-    gs = fig.add_gridspec(2, 2, hspace=0.62, wspace=0.34)
+    # Three data panels in one row. The summary by support class is Table I of the manuscript, not a figure inset.
+    fig = plt.figure(figsize=(S.DOUBLE, 3.25))
+    gs = fig.add_gridspec(1, 3, wspace=0.42, width_ratios=[1.05, 1, 1])
     # (a) representative trace (canonical cell: M=3 low loss draw 50, Results 24/27)
     d = np.load(R + "baseline_burst_trace_M3_pocket_draw50.npz", allow_pickle=True)
-    ax = fig.add_subplot(gs[0, 0]); S.panel(ax, "a")
+    ax = fig.add_subplot(gs[0, 0]); S.panel(ax, "a", x=-0.3)
     for key, tk, nk in (("exact", "ts_exact", "n_exact"), ("plain", "ts_plain", "n_plain"), ("v7", "ts_v7", "n_v7")):
         m = S.METHOD[key]
         ax.plot(d[tk], d[nk], color=m["color"], ls=m["ls"], lw=1.6 if key != "exact" else 2.2,
                 label=m["label"], zorder=3 if key == "v7" else 2)
-    ax.set_xlim(0, 15); ax.set_xlabel("time t"); ax.set_ylabel("cavity photon number ⟨a†a⟩")
-    ax.set_title("one evaluated cell: M = 3, low loss, draw 50", fontsize=S.fs(8))
-    ax.legend(loc="upper center", bbox_to_anchor=(0.5, -0.24), ncol=2, columnspacing=1.0, handlelength=1.8)
+    ax.set_xlim(0, 15); ax.set_xlabel("time t"); ax.set_ylabel("⟨a†a⟩")
     # (b) original exact M<=5 benchmark
     bp = burst_pred()
-    ax = fig.add_subplot(gs[0, 1]); S.panel(ax, "b")
+    ax = fig.add_subplot(gs[0, 1]); S.panel(ax, "b", x=-0.3)
     for meth in ("plain", "v7"):
         for reg in REGS:
             off = -0.09 if reg == "POCKET" else 0.09
             for M in (2, 3, 4, 5):
                 vals = [abs(bp[(reg, M, s)][meth]) for s in (50, 51, 52)]
                 ax.scatter(np.full(3, M + off), vals, s=S.MS, **S.mk(meth, reg))
-    ax.set_yscale("log"); ax.set_ylim(5e-5, 1); ax.set_xticks([2, 3, 4, 5])
-    ax.set_xlabel("emitters M (in training)"); ax.set_ylabel("|burst-peak error|")
-    ax.set_title("original exact cells: held-out disorder draws only", fontsize=S.fs(8))
-    ax.text(5.35, 0.29, "second order", color=S.ORANGE, fontsize=S.fs(7), va="center")
-    ax.text(5.35, 0.004, "V7", color=S.BLUE, fontsize=S.fs(7), va="center")
-    ax.set_xlim(1.6, 6.0)
-    ax.legend(handles=[Line2D([], [], ls="", marker="o", mfc=S.INK2, mec=S.INK2, label="low loss (dark fill)"),
-                       Line2D([], [], ls="", marker="o", mfc=S.light(S.INK2), mec=S.INK2, label="normal loss (light fill)")],
-              loc="upper center", bbox_to_anchor=(0.42, 0.74), ncol=2, columnspacing=0.8, fontsize=S.fs(6.6))
+    ax.set_yscale("log"); ax.set_ylim(5e-5, 1); ax.set_xticks([2, 3, 4, 5]); ax.set_xlim(1.6, 5.5)
+    ax.set_xlabel("emitters M"); ax.set_ylabel("|burst-peak error|")
     # (c) Result 40 -- all 30 cells
     hp = np.load(R + "heldout_param_burst.npz", allow_pickle=True)
-    rows, stats = hp["rows"], hp["stats"].item()
-    ax = fig.add_subplot(gs[1, 0]); S.panel(ax, "c")
-    classes = [("B", "interpolation"), ("C", "one-axis\nextrapolation"), ("D", "two-axis\nextrapolation")]
+    rows = hp["rows"]
+    ax = fig.add_subplot(gs[0, 2]); S.panel(ax, "c", x=-0.3)
+    classes = [("B", "interp."), ("C", "1-axis"), ("D", "2-axis")]
     for i, (cls, _) in enumerate(classes):
         rs = [r for r in rows if r["cls"] == cls]
         j = jitter(len(rs), 0.13)
         for meth, dx in (("plain", -0.18), ("v7", 0.18)):
             vals = np.array([r[meth]["abs"] for r in rs])
-            ax.scatter(i + dx + j * 0.6, vals, s=26, **S.mk(meth, None))
+            ax.scatter(i + dx + j * 0.6, vals, s=22, **S.mk(meth, None))
             med, q1, q3 = np.median(vals), np.percentile(vals, 25), np.percentile(vals, 75)
             ax.plot([i + dx - 0.13, i + dx + 0.13], [med, med], color=S.INK, lw=1.4, zorder=4)
             ax.plot([i + dx, i + dx], [q1, q3], color=S.INK, lw=0.8, zorder=4)
     ax.set_yscale("log"); ax.set_ylim(5e-5, 1); ax.set_xticks(range(3)); ax.set_xticklabels([c[1] for c in classes])
     ax.set_xlim(-0.6, 2.6)
-    ax.set_ylabel("|burst-peak error|")
-    ax.set_title("30 parameter points absent from training, M = 5", fontsize=S.fs(8))
-    ax.legend(handles=[Line2D([], [], ls="", marker="s", mfc=S.ORANGE, mec=S.ORANGE, label="second order"),
-                       Line2D([], [], ls="", marker="o", mfc=S.BLUE, mec=S.BLUE, label="learned closure (V7)"),
-                       Line2D([], [], color=S.INK, lw=1.4, label="median (bar: IQR)")],
-              loc="upper center", bbox_to_anchor=(0.5, -0.3), ncol=3, fontsize=S.fs(6.4), columnspacing=0.8)
-    # (d) summary table (from committed stats)
-    ax = fig.add_subplot(gs[1, 1]); ax.axis("off"); S.panel(ax, "d", x=-0.02)
-    hdr = ["support class", "N", "V7\nmedian", "V7 IQR", "2nd-order\nmedian"]
-    body = []
-    for cls, name in (("B", "interpolation"), ("C", "one-axis extrap."), ("D", "two-axis extrap.")):
-        s = stats[cls]
-        body.append([name, str(s["n"]), f"{100 * s['v7_abs']['median']:.2f}%",
-                     f"{100 * s['v7_abs']['q25']:.2f}–{100 * s['v7_abs']['q75']:.2f}%",
-                     f"{100 * s['plain_abs']['median']:.1f}%"])
-    a = stats["all"]
-    worst = max(r["v7"]["abs"] for r in rows)
-    body.append(["all 30", str(a["n"]), f"{100 * a['v7_abs']['median']:.2f}%", "", f"{100 * a['plain_abs']['median']:.1f}%"])
-    tb = ax.table(cellText=body, colLabels=hdr, cellLoc="center", colLoc="center",
-                  colWidths=[0.31, 0.07, 0.16, 0.26, 0.20], bbox=[-0.06, 0.34, 1.12, 0.66])
-    tb.auto_set_font_size(False); tb.set_fontsize(S.FS_MIN)
-    for (r, c), cell in tb.get_celld().items():
-        cell.set_edgecolor("#d8d7d2"); cell.set_linewidth(0.5)
-        if r == 0:
-            cell.set_text_props(fontweight="bold")
-    wins = sum(r["win"] for r in rows)
-    ax.text(0.5, 0.31, f"V7 closer to exact in {wins}/30 cells; worst V7 error\n{100 * worst:.2f}%;"
-            " V7 physical in all 30 cells. Classes are\ndefined in raw physical parameters; in the model's\n"
-            "ratio-to-κ inputs only 7 of 30 lie outside the\ntrained ranges.",
-            ha="center", va="top", fontsize=S.fs(6.9), transform=ax.transAxes)
+    ax.set_xlabel("support class"); ax.set_ylabel("|burst-peak error|")
+    fig.legend(handles=[Line2D([], [], color=S.INK, lw=2.2, label="exact reference"),
+                        Line2D([], [], color=S.ORANGE, ls="--", marker="s", ms=5, label="second order"),
+                        Line2D([], [], color=S.BLUE, marker="o", ms=5, label="learned closure (V7)"),
+                        Line2D([], [], ls="", marker="o", mfc=S.INK2, mec=S.INK2, label="low loss"),
+                        Line2D([], [], ls="", marker="o", mfc=S.light(S.INK2), mec=S.INK2, label="normal loss"),
+                        Line2D([], [], color=S.INK, lw=1.4, label="median, IQR")],
+               loc="upper center", bbox_to_anchor=(0.5, 0.0), ncol=6, fontsize=S.fs(9), handlelength=1.6,
+               columnspacing=1.0, handletextpad=0.4)
     S.save(fig, "fig2_accuracy_parameter_transfer")
 
 
 # ------------------------------------------------------------------ Figure 3: size transfer and validity envelope
 def fig3():
     lad, dm = piqs_ladder(), disordered_m12()
-    fig = plt.figure(figsize=(S.DOUBLE, 7.2))
-    gs = fig.add_gridspec(2, 2, hspace=0.8, wspace=0.62, width_ratios=[1.1, 1])
+    fig = plt.figure(figsize=(S.DOUBLE, 6.7))
+    gs = fig.add_gridspec(2, 2, hspace=0.62, wspace=0.62, width_ratios=[1.1, 1])
     # (a) signed error vs M (zero-disorder exact permutation-invariant ladder), measured points only
     ax = fig.add_subplot(gs[0, 0]); S.panel(ax, "a", x=-0.2)
     Ms = [5, 8, 10, 12, 16]
@@ -373,8 +338,8 @@ def fig4():
     mm = np.load(R + "mechanism_m5.npz", allow_pickle=True)
     cells = list(mm["cells"])
     m4 = mech_m4()
-    fig = plt.figure(figsize=(S.DOUBLE, 7.8))
-    gs = fig.add_gridspec(2, 2, hspace=0.62, wspace=0.62)
+    fig = plt.figure(figsize=(S.DOUBLE, 7.2))
+    gs = fig.add_gridspec(2, 2, hspace=0.55, wspace=0.62)
     # (a) structural pathway -- counts derived from the committed family list
     labs = list(cells[0]["share_all"].keys())
     Q = {"A": 1, "a": -1, "+": 1, "-": -1, "z": 0}

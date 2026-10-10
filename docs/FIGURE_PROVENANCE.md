@@ -38,7 +38,7 @@ Shared style: `src/figures/pubstyle.py`.
 | 2 | a | M = 3 low-loss draw 50 trace: exact / second order / V7 | `results/baseline_burst_trace_M3_pocket_draw50.npz` | 24, 27 | illustrative cell |
 | 2 | b | burst error, M = 2–5, draws 50–52, both regimes | `results/burst_pred_exact.npz` | 24 | held-out disorder draws; parameters on the training grid |
 | 2 | c | 30 held-out parameter cells by support class, raw points + median/IQR | `results/heldout_param_burst.npz` (`rows`) | 40 | prospective (P3) |
-| 2 | d | per-class summary table | `results/heldout_param_burst.npz` (`stats`, `rows`); 7/30 ratio-coordinate caveat from `results/heldout_feature_support.log` | 40 | prospective |
+| 2 | (d) | removed 2026-10-10; the per-class summary is Table I of the manuscript | `results/heldout_param_burst.npz` (`stats`, `rows`); 7/30 ratio-coordinate caveat from `results/heldout_feature_support.log` | 40 | prospective |
 | 3 | a | signed error vs M = 5, 8, 10, 12, 16, σ = 0, both regimes; disordered M = 12 overlay | `results/v8_accuracy_ladder.log`, `results/v8_accuracy_M16.log`, `results/v8_disordered_m12.log` | 34, 35, 36, 37 | exploratory size transfer |
 | 3 | b | M = 12: σ = 0 permutation-invariant exact vs σ = 0.15 trajectories | `results/v8_accuracy_ladder.log`, `results/v8_disordered_m12.log` | 36, 37 | one disordered draw |
 | 3 | c | V7 full-trajectory physicality, regime × M, physical / tested | `results/positivity_audit.npz` (low loss σ = 0.15, seeds 7–9), `results/v8_step0_sigma0.npz` (σ = 0 rows), `results/m12_violation_timing.log` (σ = 0.15 M = 12, seed 50, both regimes) | 30, 34, 41 | 41 exploratory |
@@ -53,8 +53,8 @@ Shared style: `src/figures/pubstyle.py`.
 
 ## Notes and checks
 
-- **Fig 2b.** The original M ≤ 5 benchmark sits on training-grid parameters. It holds out disorder realisations, not parameters. Parameter transfer is shown only in 2c/2d.
-- **Fig 2c/2d.** Support classes are defined in raw physical parameters. In the model's ratio-to-κ inputs, only 7 of 30 cells lie outside the trained ranges. The figure does not call these cells fully out of distribution.
+- **Fig 2b.** The original M ≤ 5 benchmark sits on training-grid parameters. It holds out disorder realisations, not parameters. Parameter transfer is shown only in 2c (summary: Table I).
+- **Fig 2c and Table I.** Support classes are defined in raw physical parameters. In the model's ratio-to-κ inputs, only 7 of 30 cells lie outside the trained ranges. The figure does not call these cells fully out of distribution.
 - **Fig 3a.** Only measured points are plotted, M ≤ 16. There is no fit line, no extrapolation and no crossover estimate.
 - **Fig 3c.** The low-loss σ = 0.15 M = 12 cell reads 3/4: Result 30 seeds 7–9 give 2/3, and Result 41 seed 50 adds 1/1. Normal-loss σ = 0.15 was measured only at M = 12 (Result 41). Every other cell in that row reads "not measured", not "physical".
 - **Fig 4c.** Draws, statistic and scope differ between the two points: M = 4 is the aggregate over seeds 37–39 as reported in the Result 25 log, M = 5 is the median over seeds 500–505. Because of that the panel is read as "the split reproduces", not as a paired comparison. a+z is 1 − Aaz up to ~1e-15 (structural check in Result 42).
