@@ -3,7 +3,7 @@
 # the Julia reproduction is standalone.
 PY ?= python
 
-.PHONY: help test gates burst mechanism fourth-order replicate portable-export portable-test figures paper supplement manuscript-check result40 result40-smoke result42 result42-regression release-preview arxiv-preview
+.PHONY: help test gates burst mechanism fourth-order replicate portable-export portable-test figures readme-figures demo-data demo result40 result40-smoke result42 result42-regression
 
 help:
 	@echo "make test          # import smoke test (fast, no simulation)"
@@ -15,13 +15,11 @@ help:
 	@echo "make portable-export # re-export frozen V7 to portable_v7/ (NPZ+JSON; byte-identical on rerun)"
 	@echo "make portable-test   # portable V7 vs frozen pickles: features, networks, kappa3, full rollouts (~1-2 min)"
 	@echo "make figures        # render the 5 main manuscript figures from committed results (no simulation)"
-	@echo "make paper          # compile the PRA REVTeX manuscript paper/main.pdf (render only; needs tectonic)"
-	@echo "make supplement     # render SM tables from committed results and compile paper/supplement.pdf"
-	@echo "make manuscript-check # numbers, audited claims, citations, locked wording and style of the manuscript"
-	@echo "make result40       # re-run Result 40 (held-out parameters, M=5, ~30 min); rewrites results/heldout_param_*"
+	@echo "make readme-figures # render the README figures (light + dark) from committed results"
+	@echo "make demo-data      # re-run the 30 held-out cells for the demo and check them against the record (~6 min, 8 cores)"
+	@echo "make demo           # serve demo/ at http://127.0.0.1:8000"
+	@echo "make result40       # re-run Result 40 (held-out parameters, M=5, ~50 min); rewrites results/heldout_param_*"
 	@echo "make result42       # re-run Result 42 (M=5 mechanism, ~15 min); rewrites results/mechanism_m5*"
-	@echo "make release-preview# stage the planned public release under release/v1.0.0-preview (local only)"
-	@echo "make arxiv-preview  # assemble and test-compile an arXiv source bundle under release/arxiv-preview"
 	@echo ""
 	@echo "run any module:    $(PY) run.py src/<subpackage>/<module>.py"
 
@@ -49,20 +47,13 @@ portable-test:
 # Render-only: reads committed results/ artifacts, recomputes no science. Output: figures/fig1..fig5 (.pdf, .png).
 figures:
 	$(PY) run.py scripts/build_manuscript_figures.py
-# PRA submission source (paper/). Render only: no scientific computation. TeX engine: tectonic (fetches TeX packages
-# on first use); any REVTeX 4.2 installation with pdflatex+bibtex also works (see paper/README.md).
-TECTONIC ?= tectonic
-paper:
-	python3 paper/tools/check_bib.py
-	cd paper && $(TECTONIC) -X compile --keep-logs main.tex
-supplement:
-	$(PY) run.py paper/tools/build_supplement_tables.py
-	cd paper && $(TECTONIC) -X compile --keep-logs supplement.tex
-# Prose-integrity check of the manuscript source against the pre-polish text (numbers, the 74 audited claims, cite
-# keys, locked wording, placeholders, AI disclosure, banned phrases, em dashes) and of the compiled logs/PDFs.
-manuscript-check:
-	python3 paper/tools/check_bib.py
-	python3 paper/tools/check_manuscript.py
+readme-figures:
+	$(PY) run.py scripts/make_readme_figures.py
+demo-data:
+	$(PY) run.py scripts/export_demo_static.py
+	$(PY) run.py scripts/export_demo_data.py --workers 8
+demo:
+	cd demo && $(PY) -m http.server 8000 --bind 127.0.0.1
 # Re-run the pre-registered campaigns (science; deterministic). They write to results/ -- afterwards
 # `git diff --stat results/` shows whether the committed artifacts were reproduced exactly.
 result40-smoke:
@@ -75,8 +66,3 @@ result42-regression:
 result42:
 	@echo "Re-running Result 42 (~15 min). Overwrites results/mechanism_m5*; compare with git diff afterwards."
 	$(PY) run.py src/analysis/mechanism_m5.py --campaign
-# Release packaging previews (local only: nothing is published, tagged or archived)
-release-preview:
-	python3 scripts/make_release_preview.py
-arxiv-preview:
-	python3 scripts/make_arxiv_preview.py

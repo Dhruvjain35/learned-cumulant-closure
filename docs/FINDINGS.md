@@ -1104,7 +1104,7 @@ REPORTED AS A LIMITATION, NOT ROUNDED AWAY: at t = 160 the V7 photon number dips
 min n = -6.6e-3 (M=3) and -2.9e-3 (M=5). Well under a percent of typical photon number, but unphysical, and it
 appears only at the longest horizon. Artifacts: results/horizon_tests.npz.
 
-METHOD BUG FIXED IN THE SAME COMMIT (5ecc8b2), worth knowing before extending any horizon in this repo: the
+METHOD BUG FIXED IN THE SAME COMMIT (9b7510c), worth knowing before extending any horizon in this repo: the
 first version patched pilot_eval.TMAX and local_run.NT, but run_v6 takes its own tmax/nt arguments defaulting to
 40.0/200, so the V6 branch silently re-ran over the standard window while only the plain baseline extended. The
 extended-horizon V7 rows were meaningless and surfaced as a nan error column rather than a wrong number.
@@ -1567,7 +1567,7 @@ rather than single draws. Not run. Noted so the gap is explicit rather than impl
 ## Result 39 — Common-carrier (rotating-frame) audit: the exact benchmark is carrier-invariant to 1e-13;
 ## the closures are too, but only after a tolerance diagnostic, and the derivation's "exactly zero" was wrong
 
-Pre-registered in PROTOCOL.md ("Publication finalization P2", commit 78e9a38) before any shifted run. V4, V6
+Pre-registered in PROTOCOL.md ("Publication finalization P2", commit 7ca366b) before any shifted run. V4, V6
 and the V7 router untouched; nothing retrained, re-tuned or rerouted. Script
 src/validation/check_carrier_invariance.py; log results/carrier_invariance.log; data
 results/carrier_invariance.npz. Post-hoc companion (NOT pre-registered, decides nothing in the verdict):
@@ -1670,7 +1670,7 @@ WHAT THIS LICENSES, AND WHAT IT DOES NOT.
 
 # Dated notes (2026-10-07)
 
-Added during the publication claim audit (`docs/PUBLICATION_CLAIM_AUDIT.md`, commit `60f6479`). They correct
+Added during the publication claim audit (`docs/PUBLICATION_CLAIM_AUDIT.md`, commit `051a715`). They correct
 or qualify earlier text **without rewriting it**: every result above stands as originally recorded, and each
 note says what later evidence or provenance checks change about how it may be cited.
 
@@ -1737,7 +1737,7 @@ are unaffected; only that inference is corrected.
 ## Result 40 — Held-out-parameter burst-peak evaluation at M = 5: frozen V7 transfers to 30 unseen parameter
 ## points, interpolation and extrapolation alike (pre-registered verdict: STRONG TRANSFER)
 
-Pre-registered in PROTOCOL.md ("Publication finalization P3", commit `34178e7`) before any cell was simulated.
+Pre-registered in PROTOCOL.md ("Publication finalization P3", commit `bf5e15c`) before any cell was simulated.
 V4/V6 hashes asserted equal to the frozen artifacts; router, features, clipping and training data untouched.
 Script `src/evaluation/heldout_parameter_burst.py`; log `results/heldout_param_burst.log`; data
 `results/heldout_param_burst.npz`; cell table `results/heldout_param_cells.json`. `make gates` passed and an
@@ -1885,7 +1885,7 @@ CONSEQUENCE.
 
 ## Result 42 — Prospective M = 5 confirmation of the Result 25 mechanism: CONFIRMED in both regimes (pre-registered)
 
-Pre-registered in PROTOCOL.md ("Publication finalization P5", commit `7f67a97`, pushed before any M = 5
+Pre-registered in PROTOCOL.md ("Publication finalization P5", commit `ea3bcfb`, pushed before any M = 5
 mechanism quantity existed). Script `src/analysis/mechanism_m5.py --campaign`. Outputs:
 `results/mechanism_m5.log`, `results/mechanism_m5.npz`, `results/mechanism_m5_fig.png` (diagnostic). Frozen V7
 (sha256 `be2dde48…`, `0599643e…`).
@@ -1897,7 +1897,7 @@ The current code reproduced the committed Result 25 table line for line at M = 4
 RUN RECORD.
 - The first launch (2026-10-08 01:39Z) raised a TypeError in output bookkeeping (a duplicate dict key) for the
   first cell, before any line was printed or any file was written. No M = 5 mechanism value was produced.
-- The line was fixed in `fcb09cf` (bookkeeping only, committed and pushed), the pipeline was smoke-tested end
+- The line was fixed in `3f056d9` (bookkeeping only, committed and pushed), the pipeline was smoke-tested end
   to end at M = 3 on seed 37 in a scratch copy, and the identical campaign was rerun in full: 864 s, no
   technical failure.
 

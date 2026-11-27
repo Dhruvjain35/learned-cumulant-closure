@@ -11,22 +11,22 @@ cutoff Nc = 16. Truncation engines (κ4=0, κ5=0): Nc = 10, Fsafe = 6. All disor
 
 | # | Claim (as stated in the section) | Script | Parameters | Disorder draw(s) | Output file(s) | Commit |
 |---|---|---|---|---|---|---|
-| 1 | 2nd-order overshoots by ≈ +0.28 to +0.30, roughly M-flat over M=2–5, both regimes | `src/evaluation/burst_pred.py` | M=2,3,4,5; POCKET+CONTROL | 50, 51, 52 | `results/burst_pred_exact.log`, `results/burst_pred_exact.npz` | `edfc9e1` |
-| 2 | κ4=0 (3rd) undershoots by ≈ −0.25 to −0.28 | `src/evaluation/burst_t3.py`; `src/baselines/t4_eval.py` | M=2,3,4 (t3); M=3 (grid); POCKET+CONTROL | 50 (t3); 50,51,52 (grid) | `results/burst_t3.log`, `results/t4_eval.log` | `137a85d`, `323cb45` |
-| 3 | κ4=0 (3rd) shows runaway growth triggering the guard in the low-loss pocket at M=4 | `src/evaluation/burst_t3.py` | M=4; POCKET | 50 | `results/burst_t3.log` (POCKET M=4 → UNSTABLE/failed) | `137a85d` |
-| 4 | κ5=0 (4th) overshoots the rise, then reproducible runaway growth triggering the divergence guard; matched across four solvers (LSODA rtol 1e-5 & 1e-8, Radau, BDF), guard time t ≈ 9.65 | `src/baselines/t4_diag.py` | M=3; POCKET | 50 | `results/t4_diag.log` | `98b045d` |
-| 5 | κ5=0 (4th) triggers the guard in all six evaluated M=3 cells | `src/baselines/t4_eval.py` | M=3; POCKET+CONTROL | 50, 51, 52 | `results/t4_eval.log`, `results/t4_eval.npz` | `323cb45` |
-| 6 | κ5=0 engine assembly gate: constructed derivatives match the exact generator to ≈ 1e-14; κ5=0 closure reproduces κ4=0 coefficients at order 4 | `src/baselines/t4_truncation.py` (`__main__`) | M=3; κ=0.03, γφ=0.02, σ=0.15 | 5 (gate cell) | `results/t4_gate.log` | `130cf44` |
-| 7 | κ5=0 construction cost substantial and highly variable at M=3 (build 72–1068 s; 348 tracked moments; failed rollouts up to ~1056 s) | `src/baselines/t4_eval.py` | M=3; POCKET+CONTROL | 50, 51, 52 | `results/t4_eval.log` | `323cb45` |
-| 8 | V7 reproduces the burst peak to ≈ ±0.7% in the exact-validated cases | `src/evaluation/burst_pred.py`; `src/baselines/t4_eval.py` | M=2–5 (burst_pred); M=3 (grid); POCKET+CONTROL | 50, 51, 52 | `results/burst_pred_exact.log`, `results/t4_eval.log` | `edfc9e1`, `323cb45` |
-| 9 | Baseline burst-trace figure (exact / 2nd / κ4=0 / κ5=0-to-guard / V7) | export: `scripts/export_baseline_burst_trace.py` (frozen models, deterministic); plot: `scripts/plot_baseline_burst_trace.py` (reads saved data only) | M=3; POCKET | 50 | `results/baseline_burst_trace_M3_pocket_draw50.{npz,png,pdf}` | `130cf44` |
+| 1 | 2nd-order overshoots by ≈ +0.28 to +0.30, roughly M-flat over M=2–5, both regimes | `src/evaluation/burst_pred.py` | M=2,3,4,5; POCKET+CONTROL | 50, 51, 52 | `results/burst_pred_exact.log`, `results/burst_pred_exact.npz` | `1ce7cb7` |
+| 2 | κ4=0 (3rd) undershoots by ≈ −0.25 to −0.28 | `src/evaluation/burst_t3.py`; `src/baselines/t4_eval.py` | M=2,3,4 (t3); M=3 (grid); POCKET+CONTROL | 50 (t3); 50,51,52 (grid) | `results/burst_t3.log`, `results/t4_eval.log` | `12cd87e`, `93d316e` |
+| 3 | κ4=0 (3rd) shows runaway growth triggering the guard in the low-loss pocket at M=4 | `src/evaluation/burst_t3.py` | M=4; POCKET | 50 | `results/burst_t3.log` (POCKET M=4 → UNSTABLE/failed) | `12cd87e` |
+| 4 | κ5=0 (4th) overshoots the rise, then reproducible runaway growth triggering the divergence guard; matched across four solvers (LSODA rtol 1e-5 & 1e-8, Radau, BDF), guard time t ≈ 9.65 | `src/baselines/t4_diag.py` | M=3; POCKET | 50 | `results/t4_diag.log` | `02cc4d4` |
+| 5 | κ5=0 (4th) triggers the guard in all six evaluated M=3 cells | `src/baselines/t4_eval.py` | M=3; POCKET+CONTROL | 50, 51, 52 | `results/t4_eval.log`, `results/t4_eval.npz` | `93d316e` |
+| 6 | κ5=0 engine assembly gate: constructed derivatives match the exact generator to ≈ 1e-14; κ5=0 closure reproduces κ4=0 coefficients at order 4 | `src/baselines/t4_truncation.py` (`__main__`) | M=3; κ=0.03, γφ=0.02, σ=0.15 | 5 (gate cell) | `results/t4_gate.log` | `25ec3bf` |
+| 7 | κ5=0 construction cost substantial and highly variable at M=3 (build 72–1068 s; 348 tracked moments; failed rollouts up to ~1056 s) | `src/baselines/t4_eval.py` | M=3; POCKET+CONTROL | 50, 51, 52 | `results/t4_eval.log` | `93d316e` |
+| 8 | V7 reproduces the burst peak to ≈ ±0.7% in the exact-validated cases | `src/evaluation/burst_pred.py`; `src/baselines/t4_eval.py` | M=2–5 (burst_pred); M=3 (grid); POCKET+CONTROL | 50, 51, 52 | `results/burst_pred_exact.log`, `results/t4_eval.log` | `1ce7cb7`, `93d316e` |
+| 9 | Baseline burst-trace figure (exact / 2nd / κ4=0 / κ5=0-to-guard / V7) | export: `scripts/export_baseline_burst_trace.py` (frozen models, deterministic); plot: `scripts/plot_baseline_burst_trace.py` (reads saved data only) | M=3; POCKET | 50 | `results/baseline_burst_trace_M3_pocket_draw50.{npz,png,pdf}` | `25ec3bf` |
 
 Notes:
 - Rows 1, 4, 5, 7, 8 are the load-bearing quantitative claims; each maps to a committed log.
 - The κ5=0 guard-trigger time is integrator-dependent: the multi-solver stability test (`t4_diag.log`) reports
   t ≈ 9.65; the single-solver trajectory export used for the figure reports t ≈ 9.25 (LSODA with `max_step=0.5`).
   Both trigger the guard; the runaway is consistent across these settings, not tied to one integrator.
-- `130cf44` = the packaging-pass commit that adds `results/t4_gate.log` and the burst-trace artifacts
+- `25ec3bf` = the packaging-pass commit that adds `results/t4_gate.log` and the burst-trace artifacts
   (filled in after commit; see `git log --oneline -- results/t4_gate.log`).
 
 ## External reproduction of row 1
@@ -38,7 +38,7 @@ repository. An outside collaborator ran `replicate_cumulant.jl` — an independe
 
 | Claim | Artifacts | Verified on receipt |
 |---|---|---|
-| 2nd-order overshoots the burst peak by ≈ +0.28 to +0.30, M-flat, both regimes | `external_validation/{REPLICATION_SIGNOFF.md, replication_cumulant.csv, replication_run.log, replicate_cumulant_as_run.jl}` | parameter-file SHA256 byte-identical to `results/replication_params.json`; as-run script equals `replicate_cumulant.jl` at `b309fe8` plus three print-only lines; fail-closed IC guards logged as passed in all six cells; returned exact peaks match the Python reference to < 4e-4 |
+| 2nd-order overshoots the burst peak by ≈ +0.28 to +0.30, M-flat, both regimes | `external_validation/{REPLICATION_SIGNOFF.md, replication_cumulant.csv, replication_run.log, replicate_cumulant_as_run.jl}` | parameter-file SHA256 byte-identical to `results/replication_params.json`; as-run script equals `replicate_cumulant.jl` at `53c2390` plus three print-only lines; fail-closed IC guards logged as passed in all six cells; returned exact peaks match the Python reference to < 4e-4 |
 
 ## References above the 2^M wall (Results 34-37)
 
@@ -63,7 +63,7 @@ This is a cross-platform reproduction, not an independent replication. See
 
 ## Common-carrier (rotating-frame) audit (Result 39)
 
-Pre-registration: `docs/PROTOCOL.md` "Publication finalization P2", committed alone as `78e9a38` before any
+Pre-registration: `docs/PROTOCOL.md` "Publication finalization P2", committed alone as `7ca366b` before any
 shifted run. Results commit: the commit that adds `results/carrier_invariance.log`
 (`git log --oneline -- results/carrier_invariance.log`).
 
@@ -100,7 +100,7 @@ explicit RK45 is limited by the fast-rotating charged components. C = 0 rows rep
 
 ## Held-out-parameter evaluation (Result 40) and M = 12 violation timing (Result 41)
 
-- **Pre-registration:** PROTOCOL "Publication finalization P3", commit `34178e7`, committed before any run.
+- **Pre-registration:** PROTOCOL "Publication finalization P3", commit `bf5e15c`, committed before any run.
 - **Results commit:** the commit that adds `results/heldout_param_burst.log`
   (`git log --oneline -- results/heldout_param_burst.log`).
 - **Frozen models:** sha256 asserted by the script before any solve.
@@ -120,8 +120,8 @@ explicit RK45 is limited by the fast-rotating charged components. C = 0 rows rep
 
 ## Portable frozen-V7 package and external reproduction protocol (2026-10-07)
 
-- **Export:** `src/tools/export_portable_v7.py`, run at source commit `f0685cb` (defining sources clean);
-  committed in `deee321`. Re-export is byte-identical.
+- **Export:** `src/tools/export_portable_v7.py`, run at source commit `efce12e` (defining sources clean);
+  committed in `113fa43`. Re-export is byte-identical.
 - **Source pickles** (sha256): `lc_v3dens.pkl` `be2dde48d47be006d97b7aa09c89f7a13e91dc2800fb6dc5cd6ea151fe798f81`;
   `lc_v6.pkl` `0599643ef05f355f7549e38325261246f0f848fdc71d906f9f0f82b88b800b86`.
 - **Portable files** (sha256):
@@ -139,9 +139,9 @@ explicit RK45 is limited by the fast-rotating charged components. C = 0 rows rep
 
 ## Prospective M = 5 mechanism confirmation (Result 42)
 
-- **Pre-registration:** PROTOCOL "Publication finalization P5", commit `7f67a97`, pushed before any M = 5
+- **Pre-registration:** PROTOCOL "Publication finalization P5", commit `ea3bcfb`, pushed before any M = 5
   mechanism quantity existed.
-- **Bookkeeping fix:** `fcb09cf`. The first launch crashed before producing output; the campaign was rerun in
+- **Bookkeeping fix:** `3f056d9`. The first launch crashed before producing output; the campaign was rerun in
   full.
 - **Results commit:** the commit adding `results/mechanism_m5.log`.
 - **Frozen models:** sha256 `be2dde48…98f81`, `0599643e…b800b86`.

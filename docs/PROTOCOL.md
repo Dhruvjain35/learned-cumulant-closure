@@ -819,8 +819,8 @@ written before that date predates its results. The original development history 
 It does **not** show it for the four sections marked above. Their text first appears together with their
 computations, so for publication they are treated as non-preregistered. The 2x2 decision tree was committed
 after its runs were launched but before the verdict. Memory-criterion Step 0's text and result share one
-commit. Sections registered in this repository after the import (V8 Step 0, `cdca2e3`; the positivity-architecture
-option, `45690c0`; P2, `78e9a38`) carry their own timestamps. Commit-level table: `docs/HISTORY_PROVENANCE.md`.
+commit. Sections registered in this repository after the import (V8 Step 0, `ebc4dfd`; the positivity-architecture
+option, `790cb7f`; P2, `7ca366b`) carry their own timestamps. Commit-level table: `docs/HISTORY_PROVENANCE.md`.
 
 The mechanism analysis also departed from its section above in three ways (metric, an unregistered threshold,
 the M = 5 confirmation not run). See FINDINGS, "Dated notes" D3.
@@ -999,7 +999,7 @@ Protocol, panel and criterion: `docs/EXTERNAL_V7_REPRODUCTION_PROTOCOL.md` and
 - **Panel cells:** the Result 40 parameter points H01, H09, H14, H13, H25 and H27, selected by the stated ID
   rule.
 - **Frozen artifacts:** the frozen models are those of P3 (sha256 `be2dde48…`, `0599643e…`), exported without
-  change to `portable_v7/` (commit `deee321`; `make portable-test` shows bit-identical equivalence).
+  change to `portable_v7/` (commit `113fa43`; `make portable-test` shows bit-identical equivalence).
 
 ---
 

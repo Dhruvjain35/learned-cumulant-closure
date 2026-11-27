@@ -9,12 +9,12 @@ commit-message trailers, is disclosed below; nothing has been rewritten since, i
 
 **1. This repository** (`github.com/Dhruvjain35/learned-cumulant-closure`).
 - The GitHub repository was created 2026-07-05 17:39 UTC.
-- Its first 191 commits, `1cae32d` through `5fc4d8b`, were created by an import script on 2026-07-05
+- Its first 191 commits, `d7ce9cb` through `eef8138`, were created by an import script on 2026-07-05
   between 12:35:30 and 12:35:42 CDT. The import replayed already-finished work file by file. Its commit
   timestamps record when the import ran, not when the work was done.
 - Everything after the import (from 2026-07-05 14:05 CDT onward) was committed as the work happened. This
   covers Results 28–39 and every later edit.
-- **One history rewrite has occurred, and it is disclosed here.** On 2026-07-05, before commit `d01687f`
+- **One history rewrite has occurred, and it is disclosed here.** On 2026-07-05, before commit `bf53166`
   (17:45 CDT, "Re-map RESULTS_PROVENANCE commit hashes after history rewrite (trailer removal changed all
   commit hashes)"), the public history was rewritten to strip commit-message trailers. It was then
   force-pushed, and RESULTS_PROVENANCE was updated to the new hashes.
@@ -57,14 +57,14 @@ this one.
 | Memory criterion, Step 0 | private `5a3cef3` 07-04 14:07 | same commit `5a3cef3` | no | analysis of existing data; not prospectively verifiable |
 | Memory criterion, Step 1 (R22) | private `5a3cef3` 07-04 14:07; wording lock `460d324` 14:27 | private `2f48029` 14:19 (rebuilt run), `7c03e6d` 16:17 (verdict) | yes | pre-registered, timestamp-corroborated (private) |
 | **Burst vs M (R24)** | private `315912f` 07-09 19:34:47; public import 07-05 12:35 | private `674f3e8` 07-09 19:34:46; public import 07-05 12:35 | **no** | **protocol documented, prospective timing not verifiable; treated as non-preregistered** |
-| **Mechanism (R25)** | private `315912f` 07-09 19:34:47; public `e692d11` 07-05 12:35:35 | private `f7c0097` 07-09 19:34:46; public `f3af19b` 07-05 12:35:34 | **no** | **as R24; also deviated from its written protocol (below)** |
+| **Mechanism (R25)** | private `315912f` 07-09 19:34:47; public `667d215` 07-05 12:35:35 | private `f7c0097` 07-09 19:34:46; public `52c3dd7` 07-05 12:35:34 | **no** | **as R24; also deviated from its written protocol (below)** |
 | **Disorder sweep (R26)** | private `315912f` 07-09 19:34:47 | private `50863a3` 07-09 19:34:47 | **no** | **as R24** |
 | **Fourth-order fairness test (R27)** | private `315912f` 07-09 19:34:47 | private `30f5524` 07-09 19:34:47 | **no** | **as R24** |
 | Post-freeze audits (R28–R32) | — | public 2026-08-09 | n/a | exploratory audits of the frozen model |
-| Zero-disorder reference, Step 0 (R34) | public `cdca2e3` 2026-09-15 18:24 | public `05e378b` 09-15 19:23 | yes | pre-registered, timestamp-corroborated (public) |
+| Zero-disorder reference, Step 0 (R34) | public `ebc4dfd` 2026-09-15 18:24 | public `6a05297` 09-15 19:23 | yes | pre-registered, timestamp-corroborated (public) |
 | σ-sensitivity, M = 16 ladder, disordered M = 12, disordered ladder (R35–R38) | — (no separate pre-registration) | public 09-15 to 09-17 | n/a | exploratory follow-ups |
-| Common-carrier audit (R39) | public `78e9a38` 2026-10-05 00:14 | public `ccc7414` 2026-10-05 | yes | pre-registered, timestamp-corroborated (public); its Part A companion is post-hoc and labeled so |
-| Positivity-architecture option ("V8 Step 1") | public `45690c0` 2026-09-18 | — | n/a | registered option, **not started**; hard stop 2026-12-31 |
+| Common-carrier audit (R39) | public `7ca366b` 2026-10-05 00:14 | public `051a715` 2026-10-05 | yes | pre-registered, timestamp-corroborated (public); its Part A companion is post-hoc and labeled so |
+| Positivity-architecture option ("V8 Step 1") | public `790cb7f` 2026-09-18 | — | n/a | registered option, **not started**; hard stop 2026-12-31 |
 
 ### Results 24–27 in detail
 

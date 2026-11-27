@@ -16,5 +16,5 @@ sympy>=1.12        # only for scripts/verify_linearization_symbolic.py (theory-a
 # OPTIONAL, not installed in the pinned environment and NOT in requirements-lock.txt.
 # Needed only to re-run the tensor-network baseline (src/baselines/mps_lindblad.py). Its committed
 # results in results/mps_gate.npz were produced in an environment that had it; a clean install from
-# requirements-lock.txt cannot regenerate them. See docs/DATA_AVAILABILITY.md.
+# requirements-lock.txt cannot regenerate them.
 # physics-tenpy>=1.0

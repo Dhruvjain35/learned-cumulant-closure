@@ -163,7 +163,7 @@ def main():
     t0 = time.time()
     L = []
     say = lambda s="": (print(s, flush=True), L.append(s))
-    say("COMMON-CARRIER INVARIANCE AUDIT (PROTOCOL.md P2, registered 2026-10-05, commit 78e9a38)")
+    say("COMMON-CARRIER INVARIANCE AUDIT (PROTOCOL.md P2, registered 2026-10-05, commit 7ca366b)")
     say(f"draw {DRAW}, sigma {SIGMA}, gdown {GDOWN}; shifts C = {SHIFTS}; exact Nc={NC_REF}, closures Nc={NC} "
         f"Fsafe={FSAFE}; mesolve {MESOLVE_OPTS}")
     ref = np.load("results/burst_pred_exact.npz", allow_pickle=True)["data"].item()

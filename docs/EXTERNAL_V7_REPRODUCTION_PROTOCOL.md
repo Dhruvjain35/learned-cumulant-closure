@@ -1,7 +1,7 @@
 # External reproduction protocol: frozen V7 on fresh disorder draws
 
 Registered 2026-10-07, before any outside run and before the authors have simulated any panel cell with its
-reserved seed. The package is `portable_v7/` (export commit `deee321`; the protocol commit is the one adding
+reserved seed. The package is `portable_v7/` (export commit `113fa43`; the protocol commit is the one adding
 this file).
 
 ## Objective

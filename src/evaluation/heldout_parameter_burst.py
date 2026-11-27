@@ -1,6 +1,6 @@
 """
 Held-out-parameter burst-peak evaluation at M = 5 (PROTOCOL.md, "Publication finalization P3", pre-registered
-in commit 34178e7 before any run). Frozen V7, plain second order, exact mesolve; 30 cells off the training grid.
+in commit bf5e15c before any run). Frozen V7, plain second order, exact mesolve; 30 cells off the training grid.
 
 Guards (fail loudly, before any solve):
   - frozen model sha256 must match the pre-registered values;
@@ -164,7 +164,7 @@ def main():
 
     L = []
     say = lambda s="": (print(s, flush=True), L.append(s))
-    say("HELD-OUT-PARAMETER BURST-PEAK EVALUATION, M = 5 (PROTOCOL P3, pre-registered 34178e7)")
+    say("HELD-OUT-PARAMETER BURST-PEAK EVALUATION, M = 5 (PROTOCOL P3, pre-registered bf5e15c)")
     say(f"guards passed: model hashes, {len(cells)} classifications recomputed, seeds {min(seeds)}-{max(seeds)} fresh")
     say(f"{'id':4s} {'g_c':>5s} {'kappa':>6s} {'gphi':>6s} {'sigma':>5s} {'seed':>4s} {'cls':>3s} {'br':>3s} | "
         f"{'exact n_pk':>10s} {'t_pk':>5s} | {'plain err':>9s} | {'V7 err':>8s} {'dt7':>5s} {'stab':>4s} "
