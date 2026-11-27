@@ -2,9 +2,9 @@
 
 Rewritten 2026-10-09 after the literature/novelty audit. Full positioning, the closest-five ranking, the
 novelty matrix and the reviewer challenges are in
-[`LITERATURE_NOVELTY_AUDIT.md`](LITERATURE_NOVELTY_AUDIT.md). The search record is in
-[`LITERATURE_SEARCH_LOG.md`](LITERATURE_SEARCH_LOG.md), and sentence-level support in
-[`CITATION_AUDIT.md`](CITATION_AUDIT.md). Every key below is in [`../references.bib`](../references.bib).
+`LITERATURE_NOVELTY_AUDIT.md` (not in the public release). The search record is in
+`LITERATURE_SEARCH_LOG.md` (not in the public release), and sentence-level support in
+`CITATION_AUDIT.md` (not in the public release). Every key below is in [`../references.bib`](../references.bib).
 
 For each key paper this records:
 - what it establishes;

@@ -87,7 +87,7 @@ this one.
 - **Result 25 additionally deviated from its own written protocol** in three respects: the adjudicating
   metric, a decision threshold that appears only in code, and a confirmation run at M = 5 that was never
   done. These are recorded in `docs/FINDINGS.md` (correction note under Result 25) and in
-  `docs/PUBLICATION_CLAIM_AUDIT.md` (P2).
+  `PUBLICATION_CLAIM_AUDIT.md` (not in the public release) (P2).
 
 ## Archival plan (not executed)
 

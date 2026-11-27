@@ -55,7 +55,7 @@ Added when the V8 line built references at sizes the rows above could not reach.
 
 This is a cross-platform reproduction, not an independent replication. See
 `external_validation/PROVENANCE.md` for the full receipt-side audit and
-`docs/EXTERNAL_VALIDATION_STATUS.md` for what wording it licenses.
+`EXTERNAL_VALIDATION_STATUS.md` (not in the public release) for what wording it licenses.
 - No memory measurements exist in the repository; no runtime is claimed for V7 *in this baselines/necessity
   section* (see the section and the poster do-not-use list). V7 runtime is characterized separately in the
   frozen benchmark `results/runtime_baseline_comparison.md`, which reports a build-dominated total-time
@@ -156,4 +156,4 @@ explicit RK45 is limited by the fast-rotating charged components. C = 0 rows rep
 
 **Dated note (2026-10-09).** Row 8's "≈ ±0.7%" is a per-M mean over three draws. The per-cell maximum over the 24
 cells is 0.79% (POCKET, M = 4, draw 51; `results/burst_pred_exact.npz`), and the manuscript now says "within 0.8%".
-See FINDINGS D9 and `docs/FINAL_NUMERICAL_CLAIM_AUDIT.md`.
+See FINDINGS D9 and `FINAL_NUMERICAL_CLAIM_AUDIT.md` (not in the public release).

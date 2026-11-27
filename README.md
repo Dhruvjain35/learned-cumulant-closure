@@ -27,6 +27,16 @@ probability, the cavity mode with the photon number, and the outgoing beam with 
 
 </div>
 
+<table>
+<tr>
+<td align="center" width="25%"><h3>30 / 30</h3><sub>unseen systems where it beats<br>the standard method</sub></td>
+<td align="center" width="25%"><h3>0.47%</h3><sub>median burst-peak error<br>(worst 1.46%)</sub></td>
+<td align="center" width="25%"><h3>≈30%</h3><sub>error of the standard 2nd-order<br>closure on the same systems</sub></td>
+<td align="center" width="25%"><h3>W &lt; 0</h3><sub>at the burst peak the light is<br>non-classical (exact Wigner function)</sub></td>
+</tr>
+</table>
+
+
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="assets/img/hero-dark.png">
   <img src="assets/img/hero.png" alt="Photons in the cavity over time for one held-out system. The exact answer and the learned closure overlap. The 2nd-order closure overshoots the burst peak by 28%, the 3rd-order closure undershoots it by 28%, and the 4th-order closure diverges.">
@@ -182,9 +192,10 @@ The network was trained on systems of up to five atoms. Past that, the reference
   package for that run (NumPy, SciPy and QuTiP only, no pickles).
 - **Negatives kept.** A parameter-only routing rule, an atom-count scaling story and a disorder-dependence story were
   each tested and rejected. They stay in [`docs/FINDINGS.md`](docs/FINDINGS.md) (Results 22–24 and 26).
-- **Checked automatically.** The CI workflow installs from scratch, runs the import smoke test, re-derives the model conventions
-  against closed-form limits, checks the second-order equations against an exactness identity, and verifies the
-  portable model against the frozen originals.
+- **Checks you can run.** `make test gates portable-test` runs the import smoke test, re-derives the model
+  conventions against closed-form limits, checks the second-order equations against an exactness identity, and
+  verifies the portable model against the frozen originals bit for bit. The same checks are wired into the CI
+  workflow in `.github/workflows/ci.yml`.
 - **Every number traced.** Each reported number maps to a script and an output file in
   [`RESULTS_PROVENANCE.md`](RESULTS_PROVENANCE.md).
 
@@ -280,3 +291,8 @@ commits in this history, so the order of protocols and results can be checked di
 
 Cite via [`CITATION.cff`](CITATION.cff) (GitHub's "Cite this repository" button). Physics and methods references
 are in [`references.bib`](references.bib). The code is MIT licensed; see [`LICENSE`](LICENSE).
+
+## Author
+
+Dhruv Jain ([dhruvj.vercel.app](https://dhruvj.vercel.app)). The second-order baseline was re-run in a
+separate Julia codebase by a researcher at Notre Dame's Center for Research Computing.

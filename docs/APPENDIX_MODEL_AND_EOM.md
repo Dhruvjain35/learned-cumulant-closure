@@ -168,7 +168,7 @@ Not established by any of the above:
   disordered Tavis–Cummings model," having checked the dephasing convention for a sign or factor-of-two
   error specifically. That review covers the **formulation only**, explicitly not the closure results and
   explicitly not quantitative applicability at every coupling; its full scope is recorded in
-  [`EXTERNAL_VALIDATION_STATUS.md`](EXTERNAL_VALIDATION_STATUS.md).
+  `EXTERNAL_VALIDATION_STATUS.md` (not in the public release).
 - The Result 23 linearization, which uses `γ⊥` and the inverted-state bright-mode eigenvalues, still
   awaits an independent theory review. The gates above verify the `γ⊥` input to it, not the
   linearization itself.

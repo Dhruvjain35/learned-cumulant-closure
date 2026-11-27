@@ -1670,7 +1670,7 @@ WHAT THIS LICENSES, AND WHAT IT DOES NOT.
 
 # Dated notes (2026-10-07)
 
-Added during the publication claim audit (`docs/PUBLICATION_CLAIM_AUDIT.md`, commit `051a715`). They correct
+Added during the publication claim audit (`PUBLICATION_CLAIM_AUDIT.md` (not in the public release), commit `051a715`). They correct
 or qualify earlier text **without rewriting it**: every result above stands as originally recorded, and each
 note says what later evidence or provenance checks change about how it may be cited.
 

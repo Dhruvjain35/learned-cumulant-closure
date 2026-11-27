@@ -2,8 +2,8 @@
 
 > **Replication package (start here):**
 > - [`REPLICATION_QUICKSTART.md`](REPLICATION_QUICKSTART.md) — install, one command to run, expected output, pass/fail criteria.
-> - [`REPLICATION_SIGNOFF.md`](REPLICATION_SIGNOFF.md) — fill-in table to record environment, results, and verdict.
-> - [`REPLICATION_AUDIT.md`](REPLICATION_AUDIT.md) — line-by-line model/convention audit, assumptions, mismatch risks, questions to check.
+> - `REPLICATION_SIGNOFF.md` (not in the public release) — fill-in table to record environment, results, and verdict.
+> - `REPLICATION_AUDIT.md` (not in the public release) — line-by-line model/convention audit, assumptions, mismatch risks, questions to check.
 > - [`replicate_cumulant.jl`](../replicate_cumulant.jl) — the reproduction script (Julia). Execution-verified against the pinned manifests; reproduced cross-platform by an outside collaborator on 2026-08-30 (`external_validation/`).
 > - [`results/replication_params.json`](../results/replication_params.json) — exact parameters incl. disorder draws.
 >
