@@ -5,7 +5,7 @@
 **The standard approximation misses this burst of light by about 30%.<br>
 A small, physics-constrained neural network gets it within 1.5%, on 30 systems it never saw.**
 
-[**Live demo**](https://dhruvjain35.github.io/superradiance-closure/) &nbsp;|&nbsp;
+[**Live demo**](https://dhruvjain35.github.io/learned-cumulant-closure/) &nbsp;|&nbsp;
 [The result](#the-result) &nbsp;|&nbsp;
 [How it works](#how-it-works) &nbsp;|&nbsp;
 [Inside the burst](#inside-the-burst) &nbsp;|&nbsp;
@@ -75,7 +75,7 @@ about 4.6 s, against 21 s for third order and 81 s for fourth (3 atoms, one mach
 4th-order closure, which still fails. Each time step costs more than plain second order, so this isn't a free
 speedup; the full benchmark is in [`results/runtime_baseline_comparison.md`](results/runtime_baseline_comparison.md).
 
-**Try any of the 30 systems in the [live demo](https://dhruvjain35.github.io/superradiance-closure/).** Its
+**Try any of the 30 systems in the [live demo](https://dhruvjain35.github.io/learned-cumulant-closure/).** Its
 trajectories are re-run from the frozen models by `scripts/export_demo_data.py`, which checks all 60 burst-peak errors
 against the committed record. They match exactly.
 
