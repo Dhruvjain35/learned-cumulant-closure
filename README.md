@@ -134,9 +134,10 @@ averages. Rebuilt by `make 3d-figures`.
 
 ## How it works
 
-<div align="center">
-<img src="figures/fig1_problem_method.png" width="88%" alt="Model and method: a cavity with M emitters; second order sets kappa3 to zero while the learned closure predicts it; a shared MLP takes own-factor moments, detunings, intensive context, regime ratios and memory traces.">
-</div>
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/img/method-dark.png">
+  <img src="assets/img/method.png" alt="Method: track first- and second-order moments; the equations need third-order moments whose connected part kappa3 the standard closure sets to zero; the learned closure predicts kappa3 with a shared network per moment type from local moments, detunings, system averages and the regime, with a frozen router choosing a memory or memoryless branch.">
+</picture>
 
 1. **Track the cheap moments.** The engine follows first- and second-order moments of the cavity field and every
    atom. That's 141 equations at five atoms, where the exact state already has 512 dimensions.
@@ -148,13 +149,14 @@ averages. Rebuilt by `make 3d-figures`.
    (relabelling the atoms relabels the output) and Hermiticity-preserving. A frozen router sends the low-loss regime
    to a branch with short memory traces and everything else to a memoryless branch.
 
-<div align="center">
-<img src="assets/img/mechanism.png" width="92%" alt="Mechanism: which kappa3 channels carry the correction, the dominant channel through the burst for exact vs V7 vs third order vs plain, and closed-loop ablation."/>
-</div>
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/img/mechanism3d-dark.png">
+  <img src="assets/img/mechanism3d.png" alt="Left: the connected third-order correlation of the dominant channel for each of five atoms through the burst, exact versus the learned closure's prediction, with the standard closure's zero. Right: the share of the correction carried by each of the two channels across twelve fresh draws.">
+</picture>
 
-<sub>(a) The two channels that carry the correction. (b) The dominant channel's κ₃ through the burst: exact and the
-learned closure overlie, 3rd order mis-estimates it, and 2nd order sits at zero. (c) Removing either channel degrades
-or destabilizes the closure.</sub>
+<sub>From the pre-registered five-atom mechanism test (Result 42, <code>results/mechanism_m5.npz</code>):
+the learned closure reproduces the hidden term atom by atom, and the two channels it acts on carry the
+whole correction. Rebuilt by <code>make method-figures</code>.</sub>
 
 ## Bigger systems, and where it breaks
 

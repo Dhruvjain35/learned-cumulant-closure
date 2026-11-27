@@ -3,7 +3,7 @@
 # the Julia reproduction is standalone.
 PY ?= python
 
-.PHONY: help test gates burst mechanism fourth-order replicate portable-export portable-test figures readme-figures quantum-figures 3d-figures render demo-data demo publish-demo result40 result40-smoke result42 result42-regression
+.PHONY: help test gates burst mechanism fourth-order replicate portable-export portable-test figures readme-figures quantum-figures 3d-figures method-figures render demo-data demo publish-demo result40 result40-smoke result42 result42-regression
 
 help:
 	@echo "make test          # import smoke test (fast, no simulation)"
@@ -19,6 +19,7 @@ help:
 	@echo "make demo-data      # re-run the 30 held-out cells for the demo and check them against the record (~6 min, 8 cores)"
 	@echo "make quantum-figures # exact P(n,t) and Wigner functions for held-out cell H11 (~10 s)"
 	@echo "make 3d-figures      # 3D views: Wigner function through time, photon/atom landscapes, held-out parameter space"
+	@echo "make method-figures  # the method diagram and the 3D mechanism figure"
 	@echo "make render          # render the cavity animation from the exact solution (~1 min)"
 	@echo "make demo           # serve demo/ at http://127.0.0.1:8000"
 	@echo "make publish-demo   # push demo/ to the gh-pages branch (GitHub Pages)"
@@ -61,6 +62,8 @@ quantum-figures:
 	$(PY) run.py scripts/make_quantum_figures.py
 3d-figures:
 	$(PY) run.py scripts/make_3d_figures.py
+method-figures:
+	$(PY) run.py scripts/make_method_figures.py
 render:
 	$(PY) run.py scripts/render_cavity.py
 demo:
