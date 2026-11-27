@@ -75,6 +75,14 @@ about 4.6 s, against 21 s for third order and 81 s for fourth (3 atoms, one mach
 4th-order closure, which still fails. Each time step costs more than plain second order, so this isn't a free
 speedup; the full benchmark is in [`results/runtime_baseline_comparison.md`](results/runtime_baseline_comparison.md).
 
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/img/paramspace-dark.png">
+  <img src="assets/img/paramspace.png" alt="The 30 held-out systems plotted in 3D by cavity loss, dephasing and coupling, coloured by the learned closure's error and sized by disorder strength, with the training grid in grey.">
+</picture>
+
+The same 30 systems in parameter space. They sit around and beyond the training grid in all three directions,
+and the error stays under 1.5% across the whole cloud.
+
 **Try any of the 30 systems in the [live demo](https://dhruvjain35.github.io/learned-cumulant-closure/).** Its
 trajectories are re-run from the frozen models by `scripts/export_demo_data.py`, which checks all 60 burst-peak errors
 against the committed record. They match exactly.
@@ -96,6 +104,23 @@ is never negative there. **At the burst peak it is: W(0,0) = −0.09**, so the f
 Before and after the peak it stays positive. (The cavity state here is a mixture of photon-number states, because the start state has a definite
 number of excitations and every process in the model conserves or lowers it; that's why the pictures are rings.) Computed with QuTiP by
 `make quantum-figures`.
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/img/wigner-time-dark.png">
+  <img src="assets/img/wigner-time.png" alt="The cavity's Wigner function along p = 0 as a 3D surface over time and field quadrature; an orange negative region appears at the burst peak.">
+</picture>
+
+The same Wigner function as one continuous surface through time (a slice at p = 0). The vacuum peak at t = 0
+spreads into rings as photons build up, dips below zero at the burst peak, and relaxes afterwards.
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/img/landscape-dark.png">
+  <img src="assets/img/landscape.png" alt="Left: probability of n photons in the cavity over time as 3D ridges. Right: each atom's excitation over time as 3D ribbons ordered by detuning.">
+</picture>
+
+Left: the photon-number distribution as ridges, one per photon number. Right: each atom's own excitation, ordered
+by how far its frequency sits from the cavity's. This per-atom detail is what the closures compress into a few
+averages. Rebuilt by `make 3d-figures`.
 
 ## How it works
 
@@ -207,6 +232,7 @@ make figures         # rebuild the paper figures from committed results (no simu
 make readme-figures  # rebuild the figures on this page
 make demo-data       # re-run the demo's 30 systems and check them against the record (~6 min on 8 cores)
 make quantum-figures # exact photon distributions and Wigner functions (~10 s)
+make 3d-figures      # the 3D figures (~20 s)
 make render          # render the cavity animation from the exact solution (~1 min)
 make demo            # serve the demo at http://127.0.0.1:8000
 ```
