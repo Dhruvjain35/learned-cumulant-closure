@@ -3,7 +3,7 @@
 # the Julia reproduction is standalone.
 PY ?= python
 
-.PHONY: help test gates burst mechanism fourth-order replicate portable-export portable-test figures readme-figures demo-data demo result40 result40-smoke result42 result42-regression
+.PHONY: help test gates burst mechanism fourth-order replicate portable-export portable-test figures readme-figures quantum-figures render demo-data demo publish-demo result40 result40-smoke result42 result42-regression
 
 help:
 	@echo "make test          # import smoke test (fast, no simulation)"
@@ -17,7 +17,10 @@ help:
 	@echo "make figures        # render the 5 main manuscript figures from committed results (no simulation)"
 	@echo "make readme-figures # render the README figures (light + dark) from committed results"
 	@echo "make demo-data      # re-run the 30 held-out cells for the demo and check them against the record (~6 min, 8 cores)"
+	@echo "make quantum-figures # exact P(n,t) and Wigner functions for held-out cell H11 (~10 s)"
+	@echo "make render          # render the cavity animation from the exact solution (~1 min)"
 	@echo "make demo           # serve demo/ at http://127.0.0.1:8000"
+	@echo "make publish-demo   # push demo/ to the gh-pages branch (GitHub Pages)"
 	@echo "make result40       # re-run Result 40 (held-out parameters, M=5, ~50 min); rewrites results/heldout_param_*"
 	@echo "make result42       # re-run Result 42 (M=5 mechanism, ~15 min); rewrites results/mechanism_m5*"
 	@echo ""
@@ -52,8 +55,15 @@ readme-figures:
 demo-data:
 	$(PY) run.py scripts/export_demo_static.py
 	$(PY) run.py scripts/export_demo_data.py --workers 8
+quantum-figures:
+	$(PY) run.py scripts/export_quantum_states.py
+	$(PY) run.py scripts/make_quantum_figures.py
+render:
+	$(PY) run.py scripts/render_cavity.py
 demo:
 	cd demo && $(PY) -m http.server 8000 --bind 127.0.0.1
+publish-demo:
+	git push -f origin $$(git subtree split --prefix demo HEAD):refs/heads/gh-pages
 # Re-run the pre-registered campaigns (science; deterministic). They write to results/ -- afterwards
 # `git diff --stat results/` shows whether the committed artifacts were reproduced exactly.
 result40-smoke:

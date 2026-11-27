@@ -68,6 +68,9 @@
   .lg .val { font: 500 20px/1.25 var(--mono); }
   .lg.exact .val { color: var(--exact); } .lg.v7 .val { color: var(--v7); } .lg.plain .val { color: var(--plain); }
   .lg.t3 .val { color: var(--t3); } .lg.t4 .val { color: var(--t4); }
+  .scene { position: relative; border-bottom: 1px solid var(--line); background: #06080c; }
+  .scene canvas { display: block; width: 100%; height: auto; }
+  .scene .cap { font-size: 13px; color: var(--dim); padding: 10px 18px 12px; border-top: 1px solid var(--line); background: var(--panel); }
   .note { font-size: 13px; color: var(--dim); padding: 12px 18px; border-top: 1px solid var(--line); }
 
   .axis text { fill: var(--dim); font: 400 12px var(--mono); }
@@ -149,6 +152,7 @@
         <div><div class="title">Photons in the cavity over time</div><div class="meta" id="sc-meta"></div></div>
         <div class="controls"><button type="button" id="sc-play">Replay</button><input type="range" id="sc-t" min="0" max="1000" value="1000" aria-label="Time"></div>
       </div>
+      <div class="scene"><canvas id="sc-scene" width="1520" height="400" aria-label="Rendered cavity: atoms glow with their exact excitation, the cavity with its photon number"></canvas><div class="cap">Rendered from the exact solution: each atom glows with its own excitation, the cavity with its photon number, and the beam carries the light leaking out.</div></div>
       <div class="chart-body">
         <svg id="sc-svg" viewBox="0 0 760 420" role="img" aria-label="Burst trajectories: exact, learned closure, and 2nd, 3rd and 4th order closures"></svg>
         <div class="legend" id="sc-legend"></div>
@@ -244,6 +248,7 @@
 
     function render(spec) {
       st = spec; svg.innerHTML = "";
+      st.onTime = spec.onTime;
       const x = t => m.l + t / spec.T * iw, y = v => m.t + ih - (v - spec.y0) / (spec.y1 - spec.y0) * ih;
       st.x = x; st.y = y;
       const defs = el("defs", {}, svg);
@@ -295,6 +300,7 @@
         if (v !== null) { h.setAttribute("cx", st.x(T)); h.setAttribute("cy", st.y(Math.max(st.y0, Math.min(st.y1, v)))); }
       }
       slider.value = Math.round(f * 1000);
+      if (st.onTime) st.onTime(T);
     }
 
     function play() {
@@ -310,6 +316,74 @@
     return { render, play, set };
   }
 
+
+  // Cavity scene on a canvas, driven by the exact solution (per-atom excitation and photon number).
+  function Scene(cv, D) {
+    const ctx = cv.getContext("2d"), Wd = cv.width, Hd = cv.height;
+    const bc = document.createElement("canvas"); bc.width = Wd; bc.height = Hd; const bctx = bc.getContext("2d");
+    const y0 = Hd * 0.54, xL = Wd * 0.08, xR = Wd * 0.70, q = 9, half = Hd * 0.28;
+    const nmax = Math.max(...D.n), M = D.p_exc.length;
+    const slots = [1, 2, 4, 6, 7].slice(0, M), jit = [0.3, -0.45, 0.15, -0.2, 0.4];
+    const at = (arr, t) => interp(D.t, arr, Math.max(0, Math.min(t, D.t[D.t.length - 1])));
+    const glow = (x, y, r, rgb, a) => {
+      if (a <= 0.002) return;
+      const g = ctx.createRadialGradient(x, y, 0, x, y, r);
+      g.addColorStop(0, `rgba(${rgb},${Math.min(1, a)})`); g.addColorStop(0.35, `rgba(${rgb},${Math.min(1, a) * 0.45})`); g.addColorStop(1, `rgba(${rgb},0)`);
+      ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, y, r, 0, 7); ctx.fill();
+    };
+    function mirror(x, dir) {
+      const g = ctx.createLinearGradient(0, y0 - half, 0, y0 + half);
+      g.addColorStop(0, "#5d6878"); g.addColorStop(0.3, "#c9d2de"); g.addColorStop(0.55, "#8592a4"); g.addColorStop(1, "#3c4552");
+      ctx.strokeStyle = g; ctx.lineWidth = Wd * 0.014; ctx.lineCap = "round";
+      ctx.beginPath();
+      for (let k = 0; k <= 40; k++) { const yy = y0 - half + 2 * half * k / 40, xx = x + dir * (0.55 / Hd) * (yy - y0) ** 2; k ? ctx.lineTo(xx, yy) : ctx.moveTo(xx, yy); }
+      ctx.stroke();
+    }
+    function draw(t) {
+      const A = at(D.n, t) / nmax;
+      ctx.globalCompositeOperation = "source-over";
+      ctx.fillStyle = "#06080c"; ctx.fillRect(0, 0, Wd, Hd);
+      ctx.globalCompositeOperation = "lighter";
+      // standing-wave mode: one glow per antinode
+      for (let j = 0; j < q; j++) {
+        const x = xL + (xR - xL) * (j + 0.5) / q;
+        ctx.save(); ctx.translate(x, y0); ctx.scale(1, 1.35);
+        glow(0, 0, Hd * 0.2, "80,185,255", 0.9 * A); ctx.restore();
+      }
+      // beam: brightness along it is the output flux from when that light left the mirror
+      const xo = xR + Wd * 0.02;
+      bctx.globalCompositeOperation = "source-over"; bctx.clearRect(0, 0, Wd, Hd);
+      const hg = bctx.createLinearGradient(xo, 0, Wd, 0);
+      for (let k = 0; k <= 24; k++) {
+        const d = k / 24, b = at(D.n, t - 2.2 * d) / nmax * (t - 2.2 * d > 0) * Math.exp(-1.2 * d);
+        hg.addColorStop(d, `rgba(100,200,255,${(0.75 * b).toFixed(3)})`);
+      }
+      bctx.fillStyle = hg; bctx.fillRect(xo, 0, Wd - xo, Hd);
+      bctx.globalCompositeOperation = "destination-in";
+      const vg = bctx.createLinearGradient(0, y0 - Hd * 0.2, 0, y0 + Hd * 0.2);
+      vg.addColorStop(0, "rgba(0,0,0,0)"); vg.addColorStop(0.5, "rgba(0,0,0,1)"); vg.addColorStop(1, "rgba(0,0,0,0)");
+      bctx.fillStyle = vg; bctx.fillRect(0, 0, Wd, Hd);
+      ctx.drawImage(bc, 0, 0);
+      // atoms: amber glow with their own excitation, then the sphere itself
+      const pos = slots.map((s, i) => [xL + (xR - xL) * s / q, y0 + jit[i] * Hd * 0.09]);
+      pos.forEach(([x, y], i) => { const p = at(D.p_exc[i], t); glow(x, y, Hd * 0.2, "255,170,60", 0.85 * p); glow(x, y, Hd * 0.06, "255,210,140", 0.9 * p); });
+      ctx.globalCompositeOperation = "source-over";
+      pos.forEach(([x, y], i) => {
+        const p = at(D.p_exc[i], t), r = Hd * 0.035;
+        const c0 = [Math.round(130 + 125 * p), Math.round(140 + 50 * p), Math.round(170 - 110 * p)];
+        const g = ctx.createRadialGradient(x - r * 0.35, y - r * 0.4, r * 0.1, x, y, r);
+        g.addColorStop(0, "#ffffff"); g.addColorStop(0.25, `rgb(${c0})`); g.addColorStop(1, `rgb(${c0.map(v => Math.round(v * 0.35))})`);
+        ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, y, r, 0, 7); ctx.fill();
+      });
+      mirror(xL - Wd * 0.012, 1); mirror(xR + Wd * 0.012, -1);
+      ctx.fillStyle = "#a1a1a1"; ctx.font = `500 ${Hd * 0.055}px Geist Mono, monospace`;
+      ctx.fillText(`t = ${t.toFixed(2)}`, Wd * 0.02, Hd * 0.1);
+      ctx.textAlign = "right"; ctx.fillStyle = "#7cc4ff";
+      ctx.fillText(`${at(D.n, t).toFixed(2)} photons`, Wd * 0.98, Hd * 0.1); ctx.textAlign = "left";
+    }
+    return { draw };
+  }
+
   // Start an animation the first time a chart scrolls into view.
   function onView(node, fn) {
     if (!("IntersectionObserver" in window)) return fn();
@@ -319,12 +393,13 @@
 
   const $ = id => document.getElementById(id);
 
-  fetch("data/showcase.json").then(r => r.json()).then(sc => {
+  Promise.all([fetch("data/showcase.json").then(r => r.json()), fetch("data/scene_showcase.json").then(r => r.json()).catch(() => null)]).then(([sc, sd]) => {
     const c = Chart($("sc-svg"), $("sc-t"), $("sc-play"), $("sc-legend"));
+    const scene = sd ? Scene($("sc-scene"), sd) : null;
     const M = sc.methods;
     const order = ["exact", "v7", "plain", "t3", "t4"];
     const label = k => k === "exact" ? M.exact.npeak.toFixed(2) + " photons" : k === "t4" ? pct(M.t4.err, 0) + ", then blows up" : pct(M[k].err);
-    c.render({ T: 12, xs: 2, y0: -0.2, y1: 4.9, yt: [0, 1, 2, 3, 4],
+    c.render({ T: 12, xs: 2, y0: -0.2, y1: 4.9, yt: [0, 1, 2, 3, 4], onTime: t => scene && scene.draw(t),
                series: order.map(k => ({ key: k, t: M[k].t, n: M[k].n, label: label(k) })) });
     c.set(1);
     $("sc-meta").textContent = `${sc.M} atoms, g = ${sc.g_c}, κ = ${sc.kappa}, γφ = ${sc.gamma_phi}, disorder σ = ${sc.sigma}`;

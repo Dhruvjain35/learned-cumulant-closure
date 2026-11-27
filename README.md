@@ -8,14 +8,22 @@ A small, physics-constrained neural network gets it within 1.5%, on 30 systems i
 [**Live demo**](https://dhruvjain35.github.io/superradiance-closure/) &nbsp;|&nbsp;
 [The result](#the-result) &nbsp;|&nbsp;
 [How it works](#how-it-works) &nbsp;|&nbsp;
+[Inside the burst](#inside-the-burst) &nbsp;|&nbsp;
 [Where it breaks](#bigger-systems-and-where-it-breaks) &nbsp;|&nbsp;
 [Run it](#run-it)
 
-[![CI](https://github.com/Dhruvjain35/superradiance-closure/actions/workflows/ci.yml/badge.svg)](https://github.com/Dhruvjain35/superradiance-closure/actions/workflows/ci.yml)
-&nbsp;![Python](https://img.shields.io/badge/python-3.12-3776AB?logo=python&logoColor=white)
+![Python](https://img.shields.io/badge/python-3.12-3776AB?logo=python&logoColor=white)
 &nbsp;![Julia](https://img.shields.io/badge/julia-≥1.9-9558B2?logo=julia&logoColor=white)
 &nbsp;![Reference](https://img.shields.io/badge/reference-exact_QuTiP-1f77b4)
 &nbsp;![License](https://img.shields.io/badge/license-MIT-blue)
+
+<br>
+
+<img src="assets/img/cavity.gif" width="100%" alt="Rendered cavity: five atoms start bright amber (excited), light builds up in the standing-wave cavity mode, a pulse leaves through the output mirror, and the atoms fade. Every brightness is taken from the exact quantum solution.">
+
+<sub>Rendered from the exact quantum solution for held-out system H11: each atom glows with its own excitation
+probability, the cavity mode with the photon number, and the outgoing beam with the leaked light
+(<code>make render</code>). The geometry is illustrative.</sub>
 
 </div>
 
@@ -70,6 +78,24 @@ speedup; the full benchmark is in [`results/runtime_baseline_comparison.md`](res
 **Try any of the 30 systems in the [live demo](https://dhruvjain35.github.io/superradiance-closure/).** Its
 trajectories are re-run from the frozen models by `scripts/export_demo_data.py`, which checks all 60 burst-peak errors
 against the committed record. They match exactly.
+
+## Inside the burst
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/img/inside-burst-dark.png">
+  <img src="assets/img/inside-burst.png" alt="Top: exact photon-number distribution of the cavity over time for held-out system H11, with the exact mean, the 2nd-order closure and the learned closure overlaid. Bottom: Wigner functions of the cavity light at t = 1.6, at the burst peak t = 3.5, and at t = 7.0; at the peak the Wigner function is negative at the origin.">
+</picture>
+
+The closures only track averages, so here is what they are averaging. The top panel is the exact probability of
+finding *n* photons in the cavity at each moment. During the burst the light is spread over several photon
+numbers at once rather than sitting at the mean. The learned closure's mean (dotted blue) rides the exact
+mean (white); the 2nd-order closure's (dashed orange) overshoots it on every swing.
+
+The bottom row is the Wigner function of the cavity light, a phase-space picture of a quantum state. Classical light
+is never negative there. **At the burst peak it is: W(0,0) = −0.09**, so the flash is genuinely non-classical light.
+Before and after the peak it stays positive. (The cavity state here is a mixture of photon-number states, because the start state has a definite
+number of excitations and every process in the model conserves or lowers it; that's why the pictures are rings.) Computed with QuTiP by
+`make quantum-figures`.
 
 ## How it works
 
@@ -131,7 +157,7 @@ The network was trained on systems of up to five atoms. Past that, the reference
   package for that run (NumPy, SciPy and QuTiP only, no pickles).
 - **Negatives kept.** A parameter-only routing rule, an atom-count scaling story and a disorder-dependence story were
   each tested and rejected. They stay in [`docs/FINDINGS.md`](docs/FINDINGS.md) (Results 22–24 and 26).
-- **Checked on every commit.** CI installs from scratch, runs the import smoke test, re-derives the model conventions
+- **Checked automatically.** The CI workflow installs from scratch, runs the import smoke test, re-derives the model conventions
   against closed-form limits, checks the second-order equations against an exactness identity, and verifies the
   portable model against the frozen originals.
 - **Every number traced.** Each reported number maps to a script and an output file in
@@ -180,6 +206,8 @@ make result40        # re-run the 30-system held-out campaign (~50 min on one co
 make figures         # rebuild the paper figures from committed results (no simulation)
 make readme-figures  # rebuild the figures on this page
 make demo-data       # re-run the demo's 30 systems and check them against the record (~6 min on 8 cores)
+make quantum-figures # exact photon distributions and Wigner functions (~10 s)
+make render          # render the cavity animation from the exact solution (~1 min)
 make demo            # serve the demo at http://127.0.0.1:8000
 ```
 
@@ -208,8 +236,8 @@ src/
 ├── figures/       figure scripts
 └── tools/         export of exact replication parameters and of the portable model
 portable_v7/       the frozen model as plain arrays, plus a NumPy package that runs it
-demo/              the live demo (static; deployed to GitHub Pages)
-scripts/           runtime benchmark, figure builders, demo data export
+demo/              the live demo (static; published to GitHub Pages with `make publish-demo`)
+scripts/           runtime benchmark, figure builders, the cavity renderer, demo data export
 results/           frozen model pickles, logs and the small result files behind every figure
 figures/           the five main figures (PDF, PNG, EPS)
 docs/              FINDINGS (every result, including rejected ones), PROTOCOL, replication guides
