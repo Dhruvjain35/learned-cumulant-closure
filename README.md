@@ -245,10 +245,10 @@ docs/              FINDINGS (every result, including rejected ones), PROTOCOL, r
 
 ## Status
 
-The manuscript is in preparation for *Physical Review A*. This repository is the public release of the code and
-results. The development history, the paper source and the outside collaborator's returned files stay in a private
-repository until the paper is out, so the commit hashes cited in `docs/` and `RESULTS_PROVENANCE.md` refer to that
-history.
+The manuscript is in preparation for *Physical Review A*. This repository is the full development history, from
+the first commit in July 2026, with the paper source, private planning notes and the outside collaborator's
+returned files removed from every commit. The commit hashes cited in `docs/` and `RESULTS_PROVENANCE.md` point to
+commits in this history, so the order of protocols and results can be checked directly.
 
 ## Cite and license
 
