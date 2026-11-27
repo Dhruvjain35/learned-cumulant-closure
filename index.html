@@ -1,0 +1,398 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Learned Cumulant Closure: predicting a superradiant burst</title>
+<meta name="description" content="A physics-constrained neural closure that predicts the superradiant burst peak of a disordered, open cavity within 1.5% on 30 unseen systems, where the standard second-order approximation is off by about 30%.">
+<meta property="og:title" content="Learned Cumulant Closure">
+<meta property="og:description" content="The standard approximation misses this burst of light by about 30%. The learned closure lands within 1.5% on 30 systems it never saw.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap">
+<style>
+  :root {
+    --bg: #0a0a0a; --panel: #111111; --line: #262626; --soft: #1a1a1a;
+    --fg: #ededed; --dim: #a1a1a1;
+    --exact: #ededed; --v7: #3b82f6; --plain: #f97316; --t3: #a78bfa; --t4: #f43f5e;
+    --sans: "Geist", -apple-system, "Helvetica Neue", Arial, sans-serif;
+    --mono: "Geist Mono", ui-monospace, Menlo, monospace;
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: var(--bg); color: var(--fg); font: 400 16px/1.6 var(--sans); -webkit-font-smoothing: antialiased; }
+  a { color: var(--fg); text-decoration: underline; text-decoration-color: #555; text-underline-offset: 3px; }
+  a:hover { text-decoration-color: var(--fg); }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+  header.top { border-bottom: 1px solid var(--line); }
+  header.top .wrap { display: flex; align-items: center; justify-content: space-between; height: 56px; }
+  .brand { font-weight: 600; letter-spacing: -.01em; }
+  .top nav { display: flex; gap: 20px; font-size: 14px; color: var(--dim); }
+  .top nav a { color: var(--dim); text-decoration: none; }
+  .top nav a:hover { color: var(--fg); }
+
+  .hero { padding: 72px 0 28px; }
+  .eyebrow { font: 500 13px/1 var(--mono); color: var(--dim); letter-spacing: .02em; margin-bottom: 20px; }
+  h1 { font-size: clamp(32px, 5.2vw, 56px); line-height: 1.06; letter-spacing: -.035em; font-weight: 600; margin: 0 0 24px; max-width: 17em; }
+  h1 .o { color: var(--plain); } h1 .b { color: var(--v7); }
+  .lede { font-size: 18px; color: var(--dim); max-width: 44em; margin: 0; }
+  .lede strong { color: var(--fg); font-weight: 500; }
+
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); border: 1px solid var(--line); border-radius: 8px; margin: 40px 0 0; }
+  .stat { padding: 20px 22px; border-left: 1px solid var(--line); }
+  .stat:first-child { border-left: 0; }
+  .stat .v { font: 500 30px/1.1 var(--mono); letter-spacing: -.02em; }
+  .stat .k { font-size: 13.5px; color: var(--dim); margin-top: 8px; line-height: 1.4; }
+
+  section { padding: 64px 0 8px; }
+  h2 { font-size: 26px; letter-spacing: -.02em; font-weight: 600; margin: 0 0 10px; }
+  .sub { color: var(--dim); margin: 0 0 24px; max-width: 46em; }
+
+  .card { border: 1px solid var(--line); border-radius: 8px; background: var(--panel); }
+  .chart-head { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 14px 18px; border-bottom: 1px solid var(--line); flex-wrap: wrap; }
+  .chart-head .title { font-weight: 500; }
+  .chart-head .meta { font: 400 13px/1.4 var(--mono); color: var(--dim); }
+  .controls { display: flex; gap: 10px; align-items: center; }
+  button { font: 500 14px/1 var(--sans); color: var(--fg); background: var(--soft); border: 1px solid var(--line); border-radius: 6px; padding: 9px 14px; cursor: pointer; }
+  button:hover { border-color: #3a3a3a; }
+  button:focus-visible, input:focus-visible, .tile:focus-visible { outline: 2px solid var(--v7); outline-offset: 2px; }
+  input[type=range] { width: 160px; accent-color: var(--fg); }
+  .chart-body { display: grid; grid-template-columns: minmax(0, 1fr) 260px; }
+  .chart-body > *, .stats > *, .steps > *, .row > * { min-width: 0; }
+  .chart-body svg { display: block; width: 100%; height: auto; }
+  .legend { border-left: 1px solid var(--line); padding: 18px; display: flex; flex-direction: column; gap: 14px; }
+  .lg { display: grid; grid-template-columns: 26px 1fr; gap: 10px; align-items: start; }
+  .lg svg { margin-top: 7px; }
+  .lg .name { font-size: 14px; color: var(--dim); line-height: 1.3; }
+  .lg .val { font: 500 20px/1.25 var(--mono); }
+  .lg.exact .val { color: var(--exact); } .lg.v7 .val { color: var(--v7); } .lg.plain .val { color: var(--plain); }
+  .lg.t3 .val { color: var(--t3); } .lg.t4 .val { color: var(--t4); }
+  .note { font-size: 13px; color: var(--dim); padding: 12px 18px; border-top: 1px solid var(--line); }
+
+  .axis text { fill: var(--dim); font: 400 12px var(--mono); }
+  .axis line, .axis path { stroke: var(--line); }
+  .gridline { stroke: #1d1d1d; }
+  .axlabel { fill: var(--dim); font: 400 12.5px var(--sans); }
+
+  .tiles { display: grid; grid-template-columns: repeat(10, 1fr); gap: 6px; padding: 16px 18px 18px; border-top: 1px solid var(--line); }
+  .tile { border: 1px solid var(--line); border-radius: 6px; background: var(--bg); padding: 8px 8px 7px; cursor: pointer; text-align: left; color: var(--fg); }
+  .tile .id { font: 400 11px/1 var(--mono); color: var(--dim); }
+  .tile .e { font: 500 14px/1.2 var(--mono); color: var(--v7); margin-top: 6px; }
+  .tile[aria-pressed="true"] { border-color: var(--v7); background: #0f1a2e; }
+  .tiles-cap { display: flex; justify-content: space-between; gap: 12px; font-size: 13px; color: var(--dim); padding: 0 18px 16px; flex-wrap: wrap; }
+
+  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border: 1px solid var(--line); border-radius: 8px; }
+  .step { padding: 22px; border-left: 1px solid var(--line); }
+  .step:first-child { border-left: 0; }
+  .step .n { font: 500 13px var(--mono); color: var(--dim); }
+  .step h3 { font-size: 17px; font-weight: 600; margin: 10px 0 8px; letter-spacing: -.01em; }
+  .step p { color: var(--dim); margin: 0; font-size: 15px; }
+
+  .list { border: 1px solid var(--line); border-radius: 8px; }
+  .row { display: grid; grid-template-columns: 220px 1fr; gap: 24px; padding: 16px 20px; border-top: 1px solid var(--line); }
+  .row:first-child { border-top: 0; }
+  .row .k { font-weight: 500; }
+  .row .d { color: var(--dim); }
+
+  footer { border-top: 1px solid var(--line); margin-top: 72px; padding: 28px 0 48px; color: var(--dim); font-size: 14px; }
+  footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+  code { font: 400 .92em var(--mono); background: var(--soft); border: 1px solid var(--line); border-radius: 4px; padding: 1px 5px; }
+
+  @media (max-width: 860px) {
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .stat:nth-child(3) { border-left: 0; }
+    .stat:nth-child(n+3) { border-top: 1px solid var(--line); }
+    .chart-body { grid-template-columns: minmax(0, 1fr); }
+    .legend { border-left: 0; border-top: 1px solid var(--line); display: grid; grid-template-columns: 1fr 1fr; }
+    .tiles { grid-template-columns: repeat(6, 1fr); }
+    .steps { grid-template-columns: 1fr; }
+    .step { border-left: 0; border-top: 1px solid var(--line); }
+    .step:first-child { border-top: 0; }
+    .row { grid-template-columns: 1fr; gap: 4px; }
+    .hero { padding-top: 48px; }
+  }
+  @media (max-width: 600px) { .top nav a:not(:last-child) { display: none; } }
+  @media (max-width: 480px) {
+    .wrap { padding: 0 16px; }
+    .chart-head .controls { width: 100%; }
+    .controls input[type=range] { flex: 1; }
+    .lede { font-size: 16.5px; }
+    .tiles { grid-template-columns: repeat(5, 1fr); }
+  }
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">Learned Cumulant Closure</div>
+  <nav><a href="#explore">Explore</a><a href="#scale">Scaling</a><a href="#how">How it works</a><a href="https://github.com/Dhruvjain35/superradiance-closure">GitHub</a></nav>
+</div></header>
+
+<main class="wrap">
+  <div class="hero">
+    <div class="eyebrow">QUANTUM OPTICS × MACHINE LEARNING</div>
+    <h1>The standard approximation misses this burst of light by <span class="o">30%</span>. The learned closure lands within <span class="b">1.5%</span> on 30 systems it never saw.</h1>
+    <p class="lede">Put a few excited atoms in a mirrored cavity and they synchronize, dumping their energy in one bright flash called <strong>superradiance</strong>. Simulating it exactly costs exponentially more with every atom, so physicists truncate the equations. The standard truncation overshoots the flash by about 30%, and the next two orders don't fix it: one undershoots and the other blows up. This project trains a small, physics-constrained neural network to supply exactly the term the truncation throws away.</p>
+    <div class="stats">
+      <div class="stat"><div class="v">30/30</div><div class="k">unseen test systems where it beats the standard method</div></div>
+      <div class="stat"><div class="v">0.47%</div><div class="k">median burst-peak error on those 30 (worst 1.46%)</div></div>
+      <div class="stat"><div class="v">≈30%</div><div class="k">error of the standard 2nd-order method on the same systems</div></div>
+      <div class="stat"><div class="v">18×</div><div class="k">faster end to end than the 4th-order closure, which still fails</div></div>
+    </div>
+  </div>
+
+  <section id="showcase" style="padding-top:48px">
+    <h2>One system, every method</h2>
+    <p class="sub">Three atoms with random frequency offsets, low cavity loss. The thick line is the exact quantum answer. Each closure starts from the same state and runs forward in time.</p>
+    <div class="card">
+      <div class="chart-head">
+        <div><div class="title">Photons in the cavity over time</div><div class="meta" id="sc-meta"></div></div>
+        <div class="controls"><button type="button" id="sc-play">Replay</button><input type="range" id="sc-t" min="0" max="1000" value="1000" aria-label="Time"></div>
+      </div>
+      <div class="chart-body">
+        <svg id="sc-svg" viewBox="0 0 760 420" role="img" aria-label="Burst trajectories: exact, learned closure, and 2nd, 3rd and 4th order closures"></svg>
+        <div class="legend" id="sc-legend"></div>
+      </div>
+      <div class="note">The learned closure is frozen: it never saw this disorder draw. Values are the burst-peak error against the exact solve. Source: <code>results/baseline_burst_trace_M3_pocket_draw50.npz</code>.</div>
+    </div>
+  </section>
+
+  <section id="explore">
+    <h2>30 systems it was never trained on</h2>
+    <p class="sub">Before running a single one, the test was written down: 30 new combinations of coupling, cavity loss, dephasing and disorder, five atoms each, none of them on the training grid: 12 between training points, 12 beyond the training range on one parameter, 6 beyond it on two. Pick any of them.</p>
+    <div class="card">
+      <div class="chart-head">
+        <div><div class="title" id="ex-title">Photons in the cavity over time</div><div class="meta" id="ex-meta"></div></div>
+        <div class="controls"><button type="button" id="ex-play">Replay</button><input type="range" id="ex-t" min="0" max="1000" value="1000" aria-label="Time"></div>
+      </div>
+      <div class="chart-body">
+        <svg id="ex-svg" viewBox="0 0 760 420" role="img" aria-label="Burst trajectories for the selected held-out system"></svg>
+        <div class="legend" id="ex-legend"></div>
+      </div>
+      <div class="tiles" id="tiles" role="group" aria-label="Held-out systems"></div>
+      <div class="tiles-cap"><span>Each tile: the learned closure's burst-peak error. The standard method is 28.5–33.1% off on every one.</span><span id="ex-src">Loading…</span></div>
+    </div>
+  </section>
+
+  <section id="scale">
+    <h2>What happens with more atoms</h2>
+    <p class="sub">The network was trained on systems of up to five atoms. Past that, the exact answer gets very expensive, so these checks use symmetry-reduced exact solves (no disorder) and quantum-trajectory simulations (with disorder). Its error grows about 0.8–0.9 points per atom, to 8–9% at sixteen. That's still about three times better than the standard method, but it's no longer the near-exact match it is at five.</p>
+    <div class="card">
+      <div class="chart-body" style="grid-template-columns:1fr">
+        <svg id="sc2-svg" viewBox="0 0 1000 380" role="img" aria-label="Burst-peak error against number of atoms for the learned closure and the second-order method"></svg>
+      </div>
+      <div class="note">Filled: exact reference without disorder. Hollow: quantum trajectories with disorder (about 1% Monte-Carlo error). Sources: <code>results/v8_*.log</code>.</div>
+    </div>
+  </section>
+
+  <section id="how">
+    <h2>How it works</h2>
+    <p class="sub">The method keeps the cheap equations and learns only what they leave out.</p>
+    <div class="steps">
+      <div class="step"><div class="n">01</div><h3>Track the cheap moments</h3><p>Follow averages and pair correlations of the cavity field and every atom. At five atoms that's 141 equations. The exact quantum state already has 512 dimensions, and it doubles with every atom you add.</p></div>
+      <div class="step"><div class="n">02</div><h3>Find what's missing</h3><p>Those equations need three-body correlations. The standard closure sets their connected part (κ₃) to zero. Tracing the error shows it's two specific channels: photon number × inversion, and field × polarization × inversion.</p></div>
+      <div class="step"><div class="n">03</div><h3>Learn only that term</h3><p>A shared 2×128 network predicts κ₃ from local moments, detunings and a few system-wide averages. It's built to respect atom-swap symmetry and Hermiticity, and a memory-aware branch handles the low-loss regime.</p></div>
+    </div>
+  </section>
+
+  <section id="rigor">
+    <h2>Why you can trust the numbers</h2>
+    <div class="list">
+      <div class="row"><div class="k">Written down first</div><div class="d">The 30-system test, its pass/fail bands and its random seeds were committed before any system ran. The models were frozen with SHA-256 hashes before final testing.</div></div>
+      <div class="row"><div class="k">Reproduced outside</div><div class="d">The baseline result (the 2nd-order overshoot) was re-run in a separate Julia codebase (QuantumCumulants.jl) by a researcher at Notre Dame's Center for Research Computing. The exact peaks matched to within 4×10⁻⁴, and the overshoot came out the same. The learned closure itself hasn't been run outside yet.</div></div>
+      <div class="row"><div class="k">Negatives kept</div><div class="d">Three hypotheses that didn't survive testing (a routing rule, an atom-count scaling story, a disorder story) are reported as failures, not deleted.</div></div>
+      <div class="row"><div class="k">Limits measured</div><div class="d">In the low-loss regime, long runs can drift outside physical bounds from about ten atoms, even when the burst peak is still right. It hasn't been tested on other starting states or other disorder shapes.</div></div>
+      <div class="row"><div class="k">Every number traced</div><div class="d">Each figure on this page is rebuilt from files in the repository, and each result maps to a script and an output file.</div></div>
+    </div>
+  </section>
+</main>
+
+<footer><div class="wrap">
+  <span>Dhruv Jain, 2026. Code under the MIT license.</span>
+  <span><a href="https://github.com/Dhruvjain35/superradiance-closure">Source, data and reproduction on GitHub</a></span>
+</div></footer>
+
+<script>
+(() => {
+  const NS = "http://www.w3.org/2000/svg";
+  const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  const STY = {
+    exact: { color: "--exact", w: 6, dash: null, op: .92, name: "Exact quantum answer" },
+    v7:    { color: "--v7", w: 2.6, dash: null, op: 1, name: "Learned closure" },
+    plain: { color: "--plain", w: 2.4, dash: "8 5", op: 1, name: "2nd-order closure (standard)" },
+    t3:    { color: "--t3", w: 2.4, dash: "2 5", op: 1, name: "3rd-order closure" },
+    t4:    { color: "--t4", w: 2.4, dash: "10 4 2 4", op: 1, name: "4th-order closure" },
+  };
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const el = (tag, attrs = {}, parent) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (parent) parent.appendChild(e); return e; };
+  const pct = (e, d = 1) => (e >= 0 ? "+" : "−") + Math.abs(100 * e).toFixed(d) + "%";
+
+  function interp(t, n, x) {
+    if (x > t[t.length - 1]) return null;
+    let i = 1; while (i < t.length && t[i] < x) i++;
+    if (i >= t.length) return n[n.length - 1];
+    const f = (x - t[i - 1]) / (t[i] - t[i - 1]);
+    return n[i - 1] + f * (n[i] - n[i - 1]);
+  }
+
+  // A burst chart: series drawn in full, revealed left to right by a clip rect tied to the time slider.
+  function Chart(svg, slider, button, legend) {
+    const W = 760, H = 420, m = { l: 52, r: 18, t: 20, b: 46 };
+    const iw = W - m.l - m.r, ih = H - m.t - m.b;
+    let st = null, raf = 0, frac = 1;
+    const id = svg.id + "-clip";
+
+    function render(spec) {
+      st = spec; svg.innerHTML = "";
+      const x = t => m.l + t / spec.T * iw, y = v => m.t + ih - (v - spec.y0) / (spec.y1 - spec.y0) * ih;
+      st.x = x; st.y = y;
+      const defs = el("defs", {}, svg);
+      const cp = el("clipPath", { id }, defs);
+      st.clip = el("rect", { x: m.l, y: m.t - 6, width: iw, height: ih + 6 }, cp);
+      const cpb = el("clipPath", { id: id + "b" }, defs);
+      el("rect", { x: m.l, y: m.t - 6, width: iw, height: ih + 6 }, cpb);
+      const ax = el("g", { class: "axis" }, svg);
+      for (const v of spec.yt) {
+        el("line", { x1: m.l, x2: W - m.r, y1: y(v), y2: y(v), class: "gridline" }, ax);
+        const tx = el("text", { x: m.l - 10, y: y(v) + 4, "text-anchor": "end" }, ax); tx.textContent = v;
+      }
+      for (let v = 0; v <= spec.T; v += spec.xs) {
+        const tx = el("text", { x: x(v), y: H - m.b + 22, "text-anchor": "middle" }, ax); tx.textContent = v;
+      }
+      el("line", { x1: m.l, x2: W - m.r, y1: m.t + ih, y2: m.t + ih }, ax);
+      const xl = el("text", { x: m.l + iw / 2, y: H - 6, "text-anchor": "middle", class: "axlabel" }, svg); xl.textContent = "time";
+      const yl = el("text", { x: 14, y: m.t + ih / 2, transform: `rotate(-90 14 ${m.t + ih / 2})`, "text-anchor": "middle", class: "axlabel" }, svg); yl.textContent = "photons in the cavity";
+      const g = el("g", { "clip-path": `url(#${id})` }, svg);
+      const gb = el("g", { "clip-path": `url(#${id}b)` }, g);
+      st.heads = [];
+      for (const s of spec.series) {
+        const S = STY[s.key];
+        let d = "";
+        s.t.forEach((t, i) => { if (t <= spec.T + 1e-9) d += (d ? "L" : "M") + x(t).toFixed(1) + "," + y(Math.max(spec.y0 - 5, Math.min(spec.y1 + 5, s.n[i]))).toFixed(1); });
+        const p = el("path", { d, fill: "none", stroke: css(S.color), "stroke-width": S.w, "stroke-linejoin": "round", "stroke-linecap": S.dash ? "butt" : "round", opacity: S.op }, gb);
+        if (S.dash) p.setAttribute("stroke-dasharray", S.dash);
+        const h = el("circle", { r: s.key === "exact" ? 5 : 4, fill: css(S.color) }, svg);
+        st.heads.push({ s, h });
+      }
+      legend.innerHTML = "";
+      for (const s of spec.series) {
+        const S = STY[s.key];
+        const row = document.createElement("div"); row.className = "lg " + s.key;
+        row.innerHTML = `<svg width="26" height="8" aria-hidden="true"><line x1="1" y1="4" x2="25" y2="4" stroke="${css(S.color)}" stroke-width="${Math.min(S.w, 4)}" ${S.dash ? `stroke-dasharray="${S.dash}"` : ""} stroke-linecap="${S.dash ? "butt" : "round"}"/></svg><div><div class="name">${S.name}</div><div class="val">${s.label}</div></div>`;
+        legend.appendChild(row);
+      }
+      set(frac);
+    }
+
+    function set(f) {
+      frac = f; if (!st) return;
+      const T = f * st.T;
+      st.clip.setAttribute("width", Math.max(0, st.x(T) - 52));
+      for (const { s, h } of st.heads) {
+        const v = interp(s.t, s.n, T);
+        const show = v !== null && v >= st.y0 && v <= st.y1 && f > 0.002 && f < 0.999;
+        h.setAttribute("opacity", show ? 1 : 0);
+        if (v !== null) { h.setAttribute("cx", st.x(T)); h.setAttribute("cy", st.y(Math.max(st.y0, Math.min(st.y1, v)))); }
+      }
+      slider.value = Math.round(f * 1000);
+    }
+
+    function play() {
+      cancelAnimationFrame(raf);
+      if (reduce) { set(1); return; }
+      const dur = 3600, t0 = performance.now();
+      const step = now => { const f = Math.min(1, (now - t0) / dur); set(f); if (f < 1) raf = requestAnimationFrame(step); };
+      raf = requestAnimationFrame(step);
+    }
+
+    slider.addEventListener("input", () => { cancelAnimationFrame(raf); set(slider.value / 1000); });
+    button.addEventListener("click", play);
+    return { render, play, set };
+  }
+
+  // Start an animation the first time a chart scrolls into view.
+  function onView(node, fn) {
+    if (!("IntersectionObserver" in window)) return fn();
+    const io = new IntersectionObserver(es => { if (es.some(e => e.isIntersecting)) { io.disconnect(); fn(); } }, { threshold: .35 });
+    io.observe(node);
+  }
+
+  const $ = id => document.getElementById(id);
+
+  fetch("data/showcase.json").then(r => r.json()).then(sc => {
+    const c = Chart($("sc-svg"), $("sc-t"), $("sc-play"), $("sc-legend"));
+    const M = sc.methods;
+    const order = ["exact", "v7", "plain", "t3", "t4"];
+    const label = k => k === "exact" ? M.exact.npeak.toFixed(2) + " photons" : k === "t4" ? pct(M.t4.err, 0) + ", then blows up" : pct(M[k].err);
+    c.render({ T: 12, xs: 2, y0: -0.2, y1: 4.9, yt: [0, 1, 2, 3, 4],
+               series: order.map(k => ({ key: k, t: M[k].t, n: M[k].n, label: label(k) })) });
+    c.set(1);
+    $("sc-meta").textContent = `${sc.M} atoms, g = ${sc.g_c}, κ = ${sc.kappa}, γφ = ${sc.gamma_phi}, disorder σ = ${sc.sigma}`;
+    onView($("sc-svg"), c.play);
+  });
+
+  fetch("data/heldout.json").then(r => r.json()).then(H => {
+    const c = Chart($("ex-svg"), $("ex-t"), $("ex-play"), $("ex-legend"));
+    const tiles = $("tiles");
+    const CLS = { B: "inside the training range", C: "outside along one axis", D: "outside along two axes" };
+    const sorted = H.cells;
+    let cur = null;
+    function select(cell, animate) {
+      cur = cell;
+      for (const b of tiles.children) b.setAttribute("aria-pressed", b.dataset.id === cell.id);
+      const ymax = Math.max(cell.exact.npeak, cell.plain.npeak, cell.v7.npeak);
+      const y1 = Math.ceil(ymax * 1.12 * 2) / 2;
+      const yt = []; for (let v = 0; v <= y1 + 1e-9; v += (y1 > 4 ? 1 : .5)) yt.push(+v.toFixed(1));
+      c.render({ T: 15, xs: 3, y0: -0.1, y1, yt, series: [
+        { key: "exact", t: cell.t, n: cell.exact.n, label: cell.exact.npeak.toFixed(2) + " photons" },
+        { key: "v7", t: cell.t, n: cell.v7.n, label: pct(cell.v7.err, 2) },
+        { key: "plain", t: cell.t, n: cell.plain.n, label: pct(cell.plain.err) },
+      ]});
+      $("ex-title").textContent = `System ${cell.id}: ${CLS[cell.cls]}`;
+      $("ex-meta").textContent = `${H.M} atoms, g = ${cell.g_c}, κ = ${cell.kappa}, γφ = ${cell.gamma_phi}, σ = ${cell.sigma}, ${cell.branch === "v6" ? "memory branch" : "memoryless branch"}`;
+      if (animate) c.play(); else c.set(1);
+    }
+    for (const cell of sorted) {
+      const b = document.createElement("button");
+      b.type = "button"; b.className = "tile"; b.dataset.id = cell.id; b.setAttribute("aria-pressed", "false");
+      b.setAttribute("aria-label", `System ${cell.id}, learned closure error ${pct(cell.v7.err, 2)}`);
+      b.innerHTML = `<div class="id">${cell.id}</div><div class="e">${(100 * Math.abs(cell.v7.err)).toFixed(2)}%</div>`;
+      b.addEventListener("click", () => select(cell, true));
+      tiles.appendChild(b);
+    }
+    const wins = H.cells.filter(x => Math.abs(x.v7.err) < Math.abs(x.plain.err)).length;
+    $("ex-src").textContent = `${wins}/${H.cells.length} won. Re-run from the frozen models; matches the committed record exactly.`;
+    const first = H.cells.find(x => x.id === "H11") || H.cells[0];
+    select(first, false);
+    onView($("ex-svg"), c.play);
+  });
+
+  fetch("data/scaling.json").then(r => r.json()).then(rows => {
+    const svg = $("sc2-svg"); const W = 1000, Ht = 380, m = { l: 64, r: 24, t: 24, b: 54 };
+    const iw = W - m.l - m.r, ih = Ht - m.t - m.b;
+    const x = M => m.l + (M - 4) / (17 - 4) * iw, y = v => m.t + ih - v / 38 * ih;
+    const ax = el("g", { class: "axis" }, svg);
+    for (const v of [0, 10, 20, 30]) { el("line", { x1: m.l, x2: W - m.r, y1: y(v), y2: y(v), class: "gridline" }, ax); const t = el("text", { x: m.l - 12, y: y(v) + 4, "text-anchor": "end" }, ax); t.textContent = v + "%"; }
+    for (const M of [5, 8, 10, 12, 16]) { const t = el("text", { x: x(M), y: Ht - m.b + 24, "text-anchor": "middle" }, ax); t.textContent = M; }
+    el("line", { x1: m.l, x2: W - m.r, y1: m.t + ih, y2: m.t + ih }, ax);
+    const xl = el("text", { x: m.l + iw / 2, y: Ht - 8, "text-anchor": "middle", class: "axlabel" }, svg); xl.textContent = "number of atoms (trained on up to 5)";
+    const yl = el("text", { x: 16, y: m.t + ih / 2, transform: `rotate(-90 16 ${m.t + ih / 2})`, "text-anchor": "middle", class: "axlabel" }, svg); yl.textContent = "burst-peak error";
+    el("rect", { x: x(4), y: m.t, width: x(5.5) - x(4), height: ih, fill: "#3b82f6", opacity: .07 }, svg);
+    for (const [k, col] of [["plain", css("--plain")], ["v7", css("--v7")]]) {
+      for (const reg of ["CONTROL", "POCKET"]) {
+        const e = rows.filter(r => r.regime === reg && !r.disorder).sort((a, b) => a.M - b.M);
+        el("path", { d: e.map((r, i) => (i ? "L" : "M") + x(r.M) + "," + y(100 * Math.abs(r[k]))).join(""), fill: "none", stroke: col, "stroke-width": 2.4, opacity: .9 }, svg);
+        for (const r of e) el(k === "plain" ? "rect" : "circle", k === "plain" ? { x: x(r.M) - 5, y: y(100 * Math.abs(r[k])) - 5, width: 10, height: 10, fill: col } : { cx: x(r.M), cy: y(100 * Math.abs(r[k])), r: 5.5, fill: col }, svg);
+        for (const r of rows.filter(r => r.regime === reg && r.disorder))
+          el(k === "plain" ? "rect" : "circle", k === "plain" ? { x: x(r.M) - 5, y: y(100 * Math.abs(r[k])) - 5, width: 10, height: 10, fill: "var(--panel)", stroke: col, "stroke-width": 2 } : { cx: x(r.M), cy: y(100 * Math.abs(r[k])), r: 5.5, fill: "var(--panel)", stroke: col, "stroke-width": 2 }, svg);
+      }
+    }
+    const lab = (t, X, Y, col) => { const e = el("text", { x: X, y: Y, fill: col, "font-size": 15, "font-weight": 600, "font-family": "Geist, sans-serif" }, svg); e.textContent = t; };
+    lab("2nd-order closure (standard)", x(4.25), y(35.2), css("--plain"));
+    lab("learned closure", x(13.2), y(2.2), css("--v7"));
+    const tr = el("text", { x: x(4.25), y: y(17), fill: css("--dim"), "font-size": 12.5, "font-family": "Geist, sans-serif" }, svg); tr.textContent = "trained here";
+  });
+})();
+</script>
+</body>
+</html>
